@@ -5,14 +5,14 @@ This project has been created as part of my MSc thesis. This simulator has been 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
-Python and the needed Python packages were installed through [Anaconda](https://www.anaconda.com/distribution/). The ML-Agents Toolkit can be found on their [GitHub](https://github.com/Unity-Technologies/ml-agents), where it is **highly recommended to go through the installation instructions in the documentation**. You should clone their repository since you'll need to download it anyway because of the Unity package. Unity was installed using Unity Hub. 
+Python and the needed Python packages were installed through [Anaconda](https://www.anaconda.com/distribution/). The ML Agents Toolkit can be found on their [GitHub](https://github.com/Unity-Technologies/ml-agents), where it is **highly recommended to go through the installation instructions in the documentation**. You should clone their repository since you'll need to download it anyway because of the Unity package. Unity was installed using Unity Hub. 
 
 ### Installation
 The following software was used to create this project:
-* `Python` version 3.6.10
-* `Tensorflow` version 1.7.1
-* `Unity` version 2019.3.5f1
-* `[ml-agents]`(https://github.com/Unity-Technologies/ml-agents) version 0.15.0
+* Python version 3.6.10
+* Tensorflow version 1.7.1
+* Unity version 2019.3.5f1
+* [ml-agents](https://github.com/Unity-Technologies/ml-agents) version 0.15.0
 	* `mlagents` Python package
 	* `gym_unity` Python package
 	* `com.unity.ml-agents` Unity package
