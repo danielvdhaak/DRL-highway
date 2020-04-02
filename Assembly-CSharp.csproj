@@ -91,6 +91,7 @@
     <Compile Include="Assets\RoadArchitect\Spline\GSDSplineF.cs" />
     <Compile Include="Assets\RoadArchitect\Spline\GSDSplineI.cs" />
     <Compile Include="Assets\RoadArchitect\Spline\GSDSplineN.cs" />
+    <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\VehicleControl.cs" />
     <Compile Include="Assets\Scripts\VehicleWheels.cs" />
     <None Include="Assets\RoadArchitect\Shaders\GSDShoulderDirtDX11.shader" />

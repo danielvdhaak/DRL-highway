@@ -44,7 +44,7 @@ namespace CarBehaviour {
 
         [Header("Behaviour")]
         [Tooltip("Curve starts at x=0 and y>0, then x=topspeed and y=0 and finally x>topspeed and y<0")]
-        [SerializeField] AnimationCurve motorTorque = new AnimationCurve(new Keyframe(0, 200), new Keyframe(50, 300), new Keyframe(200, 0));
+        [SerializeField] AnimationCurve motorTorque = new AnimationCurve(new Keyframe(0, 200), new Keyframe(70, 300), new Keyframe(250, 0), new Keyframe(280, -50));
         [Range(2, 16)]
         [SerializeField] float diffGearing = 4.0f;
         [SerializeField] float brakeForce = 1500.0f;
@@ -173,7 +173,7 @@ namespace CarBehaviour {
             }
 
             // Set values (needs rework for external setting!)
-            steeringAngle = turnInputCurve.Evaluate(steering) * maxSteerAngle;
+            steeringAngle = turnInputCurve.Evaluate(steering) * maxSteerAngle; // Add smoothing later??
             throttleValue = engine;
 
             // Turn and accelerate
