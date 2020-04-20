@@ -96,8 +96,8 @@ namespace CarBehaviour {
             driveWheelCols = new WheelCollider[] { backLeftWheelCol, backRightWheelCol };
 
             // Calculate wheel seperation w and base l
-            w = Math.Abs(frontLeftWheelCol.transform.position.x - frontRightWheelCol.transform.position.x);
-            l = Math.Abs(frontLeftWheelCol.transform.position.z - backLeftWheelCol.transform.position.z);
+            w = Math.Abs(frontLeftWheel.transform.localPosition.x - frontRightWheel.transform.localPosition.x);
+            l = Math.Abs(frontLeftWheel.transform.localPosition.z - backLeftWheel.transform.localPosition.z);
 
 
             // Initialize wheel turning class

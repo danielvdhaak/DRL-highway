@@ -26,6 +26,7 @@ All assets used in this project are free and as follows:
 | [Arcade Car Physics (ACP)](https://github.com/Saarg/Arcade_Car_Physics) | Saarg | MIT
 | [Low-poly Civilian vehicle #5](https://assetstore.unity.com/packages/3d/vehicles/land/low-poly-civilian-vehicle-5-124987) | Pro 3D models | Unity asset
 | [Low-poly Sports car #20](https://assetstore.unity.com/packages/3d/vehicles/land/low-poly-sports-car-20-144253) | Pro 3D models | Unity asset
+| [Terrain Tools Sample Asset Pack](https://assetstore.unity.com/packages/2d/textures-materials/terrain-tools-sample-asset-pack-145808) | Unity Technologies | Unity asset
 
 ## Acknowledgements
 Big thanks to Bazilinskyy et al. (2020) for providing me with their project [couped-sim](https://github.com/bazilinskyy/coupled-sim) as a reference.
