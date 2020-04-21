@@ -12,8 +12,6 @@ public class Driver : MonoBehaviour
     [Header("Properties")]
     public float steeringAngle;
     public float velocity;
-    public float maxSpeed;
-    public bool laneChanging = false;
 
     [Header("Initial Conditions")]
     [SerializeField] private float initVelocity = 0f;
@@ -26,7 +24,8 @@ public class Driver : MonoBehaviour
     private WheelCollider wheelcolFL, wheelcolFR, wheelcolBL, wheelcolBR;
 
     [Header("Car behaviour")]
-    [SerializeField] private float downForce = 0.0f;
+    public float desiredSpeed = 100f;
+    public float proptionalGain, integralGain, derivativeGain;
     [SerializeField] private Transform centerOfMass;
 
     [Header("Trajectory Tracking Behavior")]
@@ -45,9 +44,12 @@ public class Driver : MonoBehaviour
     private List<Vector3> trajectoryPoints = new List<Vector3>();
     private int currentNode = 0;
     private Vector3 error;
+    private Vector3 delta = Vector3.zero;
 
     private float l, w;
     private Rigidbody rigidBody;
+
+    private float[] speedError = new float[] { 0f, 0f, 0f, 0f};
 
     //private TrajectoryManager trajectoryManager;
 
@@ -74,9 +76,7 @@ public class Driver : MonoBehaviour
         //trajectoryManager = GetComponent<TrajectoryManager>();
 
         // Set initial conditions
-        rigidBody.velocity = transform.TransformDirection(initVelocity*Vector3.forward);
-
-        CalcLCTrajectory();
+        rigidBody.velocity = transform.TransformDirection(initVelocity/3.6f*Vector3.forward);
     }
 
     private void FixedUpdate()
@@ -84,13 +84,13 @@ public class Driver : MonoBehaviour
         GetSpeed();
         FollowTrajectory();
         //SteerWheels();
-        //Accelerate();
+        Accelerate();
     }
 
 
     private void GetSpeed()
     {
-        // Receives vehicle velocity in km/h
+        // Receives vehicle velocity in m/s
         velocity = transform.InverseTransformDirection(rigidBody.velocity).z * 3.6f;
     }
 
@@ -104,71 +104,64 @@ public class Driver : MonoBehaviour
 
     private void Accelerate()
     {
-        wheelcolBL.motorTorque = 100;
-        wheelcolBR.motorTorque = 100;
-    }
+        speedError[0] = desiredSpeed - velocity;
+        speedError[2] = speedError[2] + speedError[0] * Time.deltaTime;
+        speedError[3] = (speedError[0] - speedError[1]) / Time.deltaTime;
+        speedError[1] = speedError[0];
 
-    private void ChangeLane()
-    {
-        laneChanging = true;
+        // PID control
+        float correction = speedError[0] * proptionalGain + speedError[2] * integralGain + speedError[3] * derivativeGain;
+        Debug.Log(correction);
 
-        trackingTime = 0.0f;
-    }
-
-    public void StanleyMethod(Transform target)
-    {
-        
+        wheelcolBL.motorTorque = correction;
+        wheelcolBR.motorTorque = correction;
     }
 
 
     private void FollowTrajectory()
     {
+
+        if (trackingTime == 0.0f) { delta = transform.position; }
+
         switch (trackingMode)
         {
             case TrackingMode.laneKeeping:
-                Debug.Log("Keeping lane");
+                trackingTime = 0.0f;
                 break;
             case TrackingMode.leftLaneChange:
-                Debug.Log("Switching to left lane");
+                
+                float t = trackingTime;
+                float x = -lc_Width * (10 * Mathf.Pow((t / lc_Time), 3) - 15 * Mathf.Pow((t / lc_Time), 4) + 6 * Mathf.Pow((t / lc_Time), 5));
+                float y = transform.position.y;
+                float z = t * v + (lc_Length - lc_Time * v) * (10 * Mathf.Pow((t / lc_Time), 3) - 15 * Mathf.Pow((t / lc_Time), 4) + 6 * Mathf.Pow((t / lc_Time), 5));
+                float angle = (float)-Math.Atan((30*Math.Pow(t,2)*lc_Width*Math.Pow(t-lc_Time,2))/((Math.Pow(lc_Time,5)*(v + (30*Math.Pow(t,2)*(lc_Length- v * lc_Time)*Math.Pow(t-lc_Time,2))/(Math.Pow(lc_Time,5))))));
 
+                Vector3 pos = new Vector3(x, y, z);
+                Quaternion rotation = Quaternion.Euler(0, angle, 0);
+
+                target.transform.position = pos + delta;
+                target.transform.rotation = rotation;
+
+                trackingTime += Time.deltaTime;
 
                 break;
             case TrackingMode.rightLaneChange:
-                Debug.Log("Switching to right lane");
+                trackingTime += Time.fixedDeltaTime;
+
                 break;
             default:
                 Debug.Log("No tracking mode set");
                 break;
         }
 
-
-
-
-        float errorRadius = 0;
-
-        Vector3 target = trajectoryPoints[currentNode];
-        error = target - wayPointTracker.position;
-
-        if (error.magnitude <= errorRadius)
+        if (trackingTime >= lc_Time & trackingMode != TrackingMode.laneKeeping)
         {
-            currentNode += 1;
-
-            if (currentNode >= trajectoryPoints.Count -1)
-            {
-                currentNode = trajectoryPoints.Count - 1;
-            }
+            trackingMode = TrackingMode.laneKeeping;
+            return;
         }
 
-        Vector3 headingAngle = transform.TransformDirection(Vector3.forward);
 
-        if (error.x >= 0)
-        {
-            steeringAngle = Vector3.Angle(error.normalized, headingAngle);
-        } else
-        {
-            steeringAngle = - Vector3.Angle(error.normalized, headingAngle);
-        }
-        
+
     }
 
     private void CalcLCTrajectory()
@@ -200,19 +193,7 @@ public class Driver : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        float errorRadius = 0;
-
         Gizmos.color = Color.green;
-
-        foreach (Vector3 pos in trajectoryPoints)
-        {
-            Gizmos.DrawSphere(pos, 0.1f);
-        }
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + error);
-
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(wayPointTracker.position, errorRadius);
+        Gizmos.DrawSphere(target.position, 1.0f);
     }
 }

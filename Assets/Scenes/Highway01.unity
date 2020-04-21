@@ -6569,6 +6569,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &333993253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 333993254}
+  m_Layer: 0
+  m_Name: TargetTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &333993254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333993253}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1172647321}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &386997896
 GameObject:
   m_ObjectHideFlags: 0
@@ -6624,7 +6654,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387391270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.296753}
+  m_LocalPosition: {x: 0, y: 0, z: 1.389739}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1172647321}
@@ -7525,20 +7555,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steeringAngle: 0
   velocity: 0
-  maxSpeed: 0
+  initVelocity: 100
   wheelFrontLeft: {fileID: 482564415}
   wheelFrontRight: {fileID: 1192265919}
   wheelBackLeft: {fileID: 1022844396}
   wheelBackRight: {fileID: 847518718}
-  downForce: 0
+  desiredSpeed: 100
+  proptionalGain: 300
+  integralGain: 1
+  derivativeGain: 1
   centerOfMass: {fileID: 1182667942}
-  Kp: 1
+  trackingMode: 0
   wayPointTracker: {fileID: 387391271}
-  errorRadius: 0.3
-  advancePoint: {x: 0, y: 0, z: 5}
+  target: {fileID: 333993254}
+  gainParameter: 1
+  advancePoint: {x: 0, y: 0, z: 0}
   lc_Width: 3.5
   lc_Time: 3
-  v: 10
+  v: 27.8
   lc_Length: 100
 --- !u!1 &1022844396 stripped
 GameObject:
@@ -7559,7 +7593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4407244999693362, guid: f17dfaf4c25d15e41a1cfe4f7597bcd6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.99
+      value: 5.46
       objectReference: {fileID: 0}
     - target: {fileID: 4407244999693362, guid: f17dfaf4c25d15e41a1cfe4f7597bcd6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7599,6 +7633,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4407244999693362, guid: f17dfaf4c25d15e41a1cfe4f7597bcd6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973052611085280089, guid: f17dfaf4c25d15e41a1cfe4f7597bcd6,
+        type: 3}
+      propertyPath: m_Drag
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8387812306609768519, guid: f17dfaf4c25d15e41a1cfe4f7597bcd6,
