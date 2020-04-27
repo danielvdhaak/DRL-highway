@@ -6,15 +6,14 @@ using TMPro;
 public class EnvironmentManager : MonoBehaviour
 {
     [Header("Environment setup")]
-    [Tooltip("The car agent in the environment")]
-    public CarAgent carAgent;
+    [Tooltip("The car agent in the environment")] public CarAgent carAgent;
+
     //[Tooltip("Car prefab for other cars")]
     // public carPrefab;
-    [Tooltip("The TextMeshPro text that shows the cumulative reward of the agent")]
-    public TextMeshPro cumulativeRewardText;
+    [Tooltip("The TextMeshPro text that shows the cumulative reward of the agent")] public TextMeshPro cumulativeRewardText;
 
     private List<GameObject> carList = new List<GameObject>();
-    [HideInInspector] public List<Ray> laneCenterList = new List<Ray>();
+    [HideInInspector] public List<float> laneCenterList = new List<float>();
 
 
 
@@ -38,16 +37,13 @@ public class EnvironmentManager : MonoBehaviour
     {
         // Initialise lane change center rays
         Vector3 centerPosition = transform.position;
-        Quaternion rotation = Quaternion.Euler(0, m_Direction, 0);
+        Quaternion rotation = transform.rotation;
         Vector3 direction = rotation * Vector3.forward;
 
         for (int i = 0; i < m_NumberOfLanes; i++)
         {
-            Ray ray = new Ray(
-                centerPosition + rotation * (0.5f * m_NumberOfLanes * m_LaneWidth * Vector3.left)
-                + (((float)i + 0.5f) * m_LaneWidth * Vector3.right), direction);
-            laneCenterList.Add(ray);
-            //Debug.Log("Pos: " + ray.origin + "Dir: " + ray.direction);
+            float localPos = -0.5f * m_NumberOfLanes * m_LaneWidth + ((float)i + 0.5f) * m_LaneWidth;
+            laneCenterList.Add(localPos);
         }
 
     }
@@ -71,13 +67,14 @@ public class EnvironmentManager : MonoBehaviour
         Gizmos.DrawRay(centerPosition + rotation * (0.5f * m_NumberOfLanes * m_LaneWidth * Vector3.right), 100 * direction);
         Gizmos.DrawRay(centerPosition + rotation * (0.5f * m_NumberOfLanes * m_LaneWidth * Vector3.left), 100 * direction);
 
-        /*DEBUG: 
+        // Draw lane centers
         Gizmos.color = Color.cyan;
         InitRays();
-        foreach(Ray LC in laneCenterList)
+        foreach(float LC in laneCenterList)
         {
             //Debug.Log("Pos: " + LC.origin + "Dir: " + LC.direction);
-            Gizmos.DrawRay(LC);
-        } */
+            Ray ray = new Ray(new Vector3(0, LC, 0), Vector3.forward);
+            Gizmos.DrawRay(ray);
+        } 
     }
 }

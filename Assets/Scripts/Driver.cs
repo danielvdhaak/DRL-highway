@@ -12,6 +12,7 @@ public class Driver : MonoBehaviour
     [Header("Properties")]
     public float steeringAngle;
     public float velocity;
+    public int targetLane = 2;
 
     [Header("Initial Conditions")]
     [SerializeField] private float initVelocity = 0f;
@@ -25,31 +26,29 @@ public class Driver : MonoBehaviour
 
     [Header("Car behaviour")]
     public float desiredSpeed = 100f;
-    public float proptionalGain, integralGain, derivativeGain;
+    [SerializeField] private float proptionalGain, integralGain, derivativeGain;
     [SerializeField] private Transform centerOfMass;
+    private float[] speedError = new float[] { 0f, 0f, 0f, 0f };
 
     [Header("Trajectory Tracking Behavior")]
     public TrackingMode trackingMode = TrackingMode.laneKeeping;
     [SerializeField] private Transform wayPointTracker;
     [SerializeField] private Transform target;
-    [SerializeField] private float gainParameter = 1.0f;
+    [SerializeField] private float gainParameter = 0.2f;
+    [SerializeField] private GameObject environmentManager;
+    private List<float> laneCenterlist = new List<float>();
     private float trackingTime = 0.0f;
+    private Vector3 error;
+    private float cte;
+    private Vector3 delta = Vector3.zero;
+    private Vector3 progress;
 
     [Header("Lane change parameters")]
-    [SerializeField] private Vector3 advancePoint;
     [SerializeField] private float lc_Width = 3.5f;
-    [SerializeField] private float lc_Time = 3f;
-    [SerializeField] private float v = 10f;
     [SerializeField] private float lc_Length = 100;
-    private List<Vector3> trajectoryPoints = new List<Vector3>();
-    private int currentNode = 0;
-    private Vector3 error;
-    private Vector3 delta = Vector3.zero;
 
     private float l, w;
     private Rigidbody rigidBody;
-
-    private float[] speedError = new float[] { 0f, 0f, 0f, 0f};
 
     //private TrajectoryManager trajectoryManager;
 
@@ -72,8 +71,14 @@ public class Driver : MonoBehaviour
         w = Math.Abs(wheelFrontLeft.transform.localPosition.x - wheelFrontRight.transform.localPosition.x);
         l = Math.Abs(wheelFrontLeft.transform.localPosition.z - wheelBackLeft.transform.localPosition.z);
 
-        // Initialize trajectory manager class
-        //trajectoryManager = GetComponent<TrajectoryManager>();
+        // Initialize environment mananger and lanes
+        if (environmentManager != null)
+        {
+            laneCenterlist = environmentManager.GetComponent<EnvironmentManager>().laneCenterList;
+        } else
+        {
+            Debug.LogError("Class environmentManager not referenced!");
+        }
 
         // Set initial conditions
         rigidBody.velocity = transform.TransformDirection(initVelocity/3.6f*Vector3.forward);
@@ -83,8 +88,8 @@ public class Driver : MonoBehaviour
     {
         GetSpeed();
         FollowTrajectory();
-        //SteerWheels();
-        Accelerate();
+        SteerWheels();
+        SetSpeed();
     }
 
 
@@ -102,7 +107,7 @@ public class Driver : MonoBehaviour
         wheelcolFR.steerAngle = (float)Math.Atan((2 * l * Math.Sin(angle)) / (2 * l * Math.Cos(angle) - w * Math.Sin(angle))) * Mathf.Rad2Deg;
     }
 
-    private void Accelerate()
+    private void SetSpeed()
     {
         speedError[0] = desiredSpeed - velocity;
         speedError[2] = speedError[2] + speedError[0] * Time.deltaTime;
@@ -111,7 +116,7 @@ public class Driver : MonoBehaviour
 
         // PID control
         float correction = speedError[0] * proptionalGain + speedError[2] * integralGain + speedError[3] * derivativeGain;
-        Debug.Log(correction);
+        //Debug.Log(correction);
 
         wheelcolBL.motorTorque = correction;
         wheelcolBR.motorTorque = correction;
@@ -120,80 +125,111 @@ public class Driver : MonoBehaviour
 
     private void FollowTrajectory()
     {
+        float x, y, z, angle;
+        Vector3 pos;
+        Quaternion rotation;
 
-        if (trackingTime == 0.0f) { delta = transform.position; }
+        // Calculate starting position
+        if (trackingTime == 0.0f)
+        {
+            progress = environmentManager.transform.InverseTransformPoint(wayPointTracker.transform.position);
+            delta = progress;
+            delta.x = laneCenterlist[targetLane - 1];
+            //delta = environmentManager.transform.TransformPoint(new Vector3())
+            //delta = wayPointTracker.transform.position;
+        }
 
         switch (trackingMode)
         {
             case TrackingMode.laneKeeping:
                 trackingTime = 0.0f;
+           
+                pos = delta + new Vector3(0, 0, 5);
+                pos = environmentManager.transform.TransformPoint(pos);
+
+                target.transform.position = pos;
+                target.transform.rotation = environmentManager.transform.rotation;
+
+                //cte = target.transform.InverseTransformDirection(target.transform.position - wayPointTracker.transform.position).x;
+                cte = -(target.transform.InverseTransformPoint(wayPointTracker.transform.position)).x;
+                //Debug.Log(cte);
+
+                // Stanley method
+                Debug.Log("cte: " + cte + ", 1st term: " + (0 - transform.rotation.eulerAngles.y) + ", 2nd term: " + (Mathf.Rad2Deg * (float)Math.Atan(gainParameter * cte / velocity)));
+                steeringAngle = environmentManager.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y + Mathf.Rad2Deg * (float)Math.Atan(gainParameter * cte / velocity);
                 break;
             case TrackingMode.leftLaneChange:
+                // Calculate target coordinates
+                z = wayPointTracker.transform.position.z - delta.z;
+                y = transform.position.y;
+                x = -lc_Width * (10 * Mathf.Pow((z / lc_Length), 3) - 15 * Mathf.Pow((z / lc_Length), 4) + 6 * Mathf.Pow((z / lc_Length), 5));
+                pos = new Vector3(x, y, z);
+                pos = environmentManager.transform.TransformPoint(pos);
+                angle = -Mathf.Rad2Deg * (float)Math.Atan(30 * lc_Width * Math.Pow(z, 2) * Math.Pow(lc_Length - z, 2) * Math.Pow(lc_Length, -5));
+                rotation = Quaternion.Euler(0, angle, 0);
                 
-                float t = trackingTime;
-                float x = -lc_Width * (10 * Mathf.Pow((t / lc_Time), 3) - 15 * Mathf.Pow((t / lc_Time), 4) + 6 * Mathf.Pow((t / lc_Time), 5));
-                float y = transform.position.y;
-                float z = t * v + (lc_Length - lc_Time * v) * (10 * Mathf.Pow((t / lc_Time), 3) - 15 * Mathf.Pow((t / lc_Time), 4) + 6 * Mathf.Pow((t / lc_Time), 5));
-                float angle = (float)-Math.Atan((30*Math.Pow(t,2)*lc_Width*Math.Pow(t-lc_Time,2))/((Math.Pow(lc_Time,5)*(v + (30*Math.Pow(t,2)*(lc_Length- v * lc_Time)*Math.Pow(t-lc_Time,2))/(Math.Pow(lc_Time,5))))));
+                target.transform.position = pos + delta;
+                target.transform.rotation = rotation;
 
-                Vector3 pos = new Vector3(x, y, z);
-                Quaternion rotation = Quaternion.Euler(0, angle, 0);
+                // Stanley method
+                //error = rotation * (target.transform.position - wayPointTracker.transform.position);
+                //cte = error.x;
+                cte = -(target.transform.InverseTransformPoint(wayPointTracker.transform.position)).x;
+                Debug.Log("cte: " + cte + ", 1st term: " + (0 - transform.rotation.eulerAngles.y) + ", 2nd term: " + (Mathf.Rad2Deg * (float)Math.Atan(gainParameter * cte / velocity)));
+                steeringAngle = angle - transform.rotation.eulerAngles.y + Mathf.Rad2Deg * (float)Math.Atan(gainParameter * cte / velocity);
+
+                trackingTime += Time.deltaTime;
+
+                if (wayPointTracker.transform.position.z - delta.z >= lc_Length)
+                {
+                    trackingMode = TrackingMode.laneKeeping;
+                    targetLane = targetLane - 1;
+                    //steeringAngle = 0.0f;
+                    trackingTime = 0.0f;
+                }
+                break;
+            case TrackingMode.rightLaneChange:
+                // Calculate target coordinates
+                z = wayPointTracker.transform.position.z - delta.z;
+                y = transform.position.y;
+                x = lc_Width * (10 * Mathf.Pow((z / lc_Length), 3) - 15 * Mathf.Pow((z / lc_Length), 4) + 6 * Mathf.Pow((z / lc_Length), 5));
+                pos = new Vector3(x, y, z);
+                pos = environmentManager.transform.TransformPoint(pos);
+                angle = Mathf.Rad2Deg*(float)Math.Atan(30 * lc_Width * Math.Pow(z, 2) * Math.Pow(lc_Length - z, 2) * Math.Pow(lc_Length, -5));
+                rotation = Quaternion.Euler(0, angle, 0);
 
                 target.transform.position = pos + delta;
                 target.transform.rotation = rotation;
 
+                // Stanley method
+                error = rotation * (target.transform.position - wayPointTracker.transform.position);
+                cte = error.x;
+                steeringAngle = angle - transform.rotation.eulerAngles.y + Mathf.Rad2Deg * (float)Math.Atan(gainParameter * cte / velocity);
+
                 trackingTime += Time.deltaTime;
 
-                break;
-            case TrackingMode.rightLaneChange:
-                trackingTime += Time.fixedDeltaTime;
-
+                if (wayPointTracker.transform.position.z - delta.z >= lc_Length)
+                {
+                    trackingMode = TrackingMode.laneKeeping;
+                    targetLane = targetLane + 1;
+                    //steeringAngle = 0.0f;
+                    trackingTime = 0.0f;
+                }
                 break;
             default:
                 Debug.Log("No tracking mode set");
                 break;
         }
 
-        if (trackingTime >= lc_Time & trackingMode != TrackingMode.laneKeeping)
-        {
-            trackingMode = TrackingMode.laneKeeping;
-            return;
-        }
-
-
-
     }
 
-    private void CalcLCTrajectory()
-    {
-        currentNode = 0;
-        trajectoryPoints.Clear();
-
-        if (advancePoint == null)
-        {
-            Debug.LogError("Missing <Vector3> advancePoint!");
-            Debug.Break();
-        }
-
-        float x;
-        float z;
-        Vector3 startingPoint = transform.position;
-
-        for (float t = 0; t < lc_Time; t += 0.1f)
-        {
-            x = lc_Width * (10 * Mathf.Pow((t / lc_Time), 3) - 15 * Mathf.Pow((t / lc_Time), 4) + 6 * Mathf.Pow((t / lc_Time), 5));
-            z = t * v + (lc_Length - lc_Time * v) * (10 * Mathf.Pow((t / lc_Time), 3) - 15 * Mathf.Pow((t / lc_Time), 4) + 6 * Mathf.Pow((t / lc_Time), 5));
-
-            Vector3 pos = new Vector3(x, transform.position.y, z);
-            pos = pos + advancePoint + startingPoint;
-
-            trajectoryPoints.Add(pos);
-        }
-    }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(target.position, 1.0f);
+        Gizmos.DrawSphere(target.position, 0.2f);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(wayPointTracker.transform.position, target.transform.position);
     }
 }

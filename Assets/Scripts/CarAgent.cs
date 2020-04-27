@@ -5,6 +5,7 @@ using MLAgents;
 using MLAgents.Sensors;
 using System.Linq;
 
+//[RequireComponent(typeof(Driver))]
 public class CarAgent : Agent
 {
     private Rigidbody rBody;
@@ -32,7 +33,7 @@ public class CarAgent : Agent
         Debug.Log("OnEpisodeBegin() executed!");
 
         // Debugging for now, should probably move to CollectObservations()
-        laneCenterList = environmentManager.laneCenterList;
+        //laneCenterList = environmentManager.laneCenterList;
         latErrorList = CalculateLateralError(laneCenterList);
         currentLaneNr = DetermineCurrentLane(latErrorList);
 

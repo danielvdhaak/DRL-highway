@@ -7555,6 +7555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steeringAngle: 0
   velocity: 0
+  targetLane: 4
   initVelocity: 100
   wheelFrontLeft: {fileID: 482564415}
   wheelFrontRight: {fileID: 1192265919}
@@ -7565,14 +7566,12 @@ MonoBehaviour:
   integralGain: 1
   derivativeGain: 1
   centerOfMass: {fileID: 1182667942}
-  trackingMode: 0
+  trackingMode: 1
   wayPointTracker: {fileID: 387391271}
   target: {fileID: 333993254}
   gainParameter: 1
-  advancePoint: {x: 0, y: 0, z: 0}
+  environmentManager: {fileID: 1372384192}
   lc_Width: 3.5
-  lc_Time: 3
-  v: 27.8
   lc_Length: 100
 --- !u!1 &1022844396 stripped
 GameObject:
@@ -7593,7 +7592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4407244999693362, guid: f17dfaf4c25d15e41a1cfe4f7597bcd6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.46
+      value: 1.9
       objectReference: {fileID: 0}
     - target: {fileID: 4407244999693362, guid: f17dfaf4c25d15e41a1cfe4f7597bcd6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7601,7 +7600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4407244999693362, guid: f17dfaf4c25d15e41a1cfe4f7597bcd6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -45.22
+      value: -44.5
       objectReference: {fileID: 0}
     - target: {fileID: 4407244999693362, guid: f17dfaf4c25d15e41a1cfe4f7597bcd6, type: 3}
       propertyPath: m_LocalRotation.x
@@ -7799,6 +7798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carAgent: {fileID: 0}
   cumulativeRewardText: {fileID: 0}
+  laneCenterList: []
   m_NumberOfLanes: 6
   m_LaneWidth: 3.5
   m_Direction: 0
