@@ -14,23 +14,27 @@ public class Driver : MonoBehaviour
     public float velocity;
     public int targetLane = 2;
 
-    [Header("Initial Conditions")]
+    [Header("Initial conditions")]
     [SerializeField] private float initVelocity = 0f;
 
-    [Header("Wheels")]
+    [Header("Car components")]
     [SerializeField] private GameObject wheelFrontLeft;
     [SerializeField] private GameObject wheelFrontRight;
     [SerializeField] private GameObject wheelBackLeft;
     [SerializeField] private GameObject wheelBackRight;
     private WheelCollider wheelcolFL, wheelcolFR, wheelcolBL, wheelcolBR;
-
-    [Header("Car behaviour")]
-    public float desiredSpeed = 100f;
-    [SerializeField] private float proptionalGain, integralGain, derivativeGain;
     [SerializeField] private Transform centerOfMass;
-    private float[] speedError = new float[] { 0f, 0f, 0f, 0f };
+    [SerializeField] private Transform frontRadar;
 
-    [Header("Trajectory Tracking Behavior")]
+    [Header("Car velocity control")]
+    public float targetVelocity = 100f;
+    public float desiredVelocity = 100f;
+    [SerializeField] private float timeToCollision = 2.0f;
+    private bool frontWarning = false;
+    [SerializeField] private float proptionalGain, integralGain, derivativeGain;
+    private float[] velocityError = new float[] { 0f, 0f, 0f, 0f };
+
+    [Header("Trajectory tracking Behavior")]
     public TrackingMode trackingMode = TrackingMode.laneKeeping;
     [SerializeField] private Transform wayPointTracker;
     [SerializeField] private Transform target;
@@ -38,9 +42,8 @@ public class Driver : MonoBehaviour
     [SerializeField] private GameObject environmentManager;
     private List<float> laneCenterlist = new List<float>();
     private float trackingTime = 0.0f;
-    private Vector3 error;
     private float cte;
-    private Vector3 delta = Vector3.zero;
+    private Vector3 delta;
     private Vector3 progress;
 
     [Header("Lane change parameters")]
@@ -89,13 +92,14 @@ public class Driver : MonoBehaviour
         GetSpeed();
         FollowTrajectory();
         SteerWheels();
+        SpeedControl();
         SetSpeed();
     }
 
 
     private void GetSpeed()
     {
-        // Receives vehicle velocity in m/s
+        // Receives vehicle velocity in km/h
         velocity = transform.InverseTransformDirection(rigidBody.velocity).z * 3.6f;
     }
 
@@ -109,17 +113,29 @@ public class Driver : MonoBehaviour
 
     private void SetSpeed()
     {
-        speedError[0] = desiredSpeed - velocity;
-        speedError[2] = speedError[2] + speedError[0] * Time.deltaTime;
-        speedError[3] = (speedError[0] - speedError[1]) / Time.deltaTime;
-        speedError[1] = speedError[0];
+        velocityError[0] = targetVelocity - velocity;
+        velocityError[2] = velocityError[2] + velocityError[0] * Time.deltaTime;
+        velocityError[3] = (velocityError[0] - velocityError[1]) / Time.deltaTime;
+        velocityError[1] = velocityError[0];
 
         // PID control
-        float correction = speedError[0] * proptionalGain + speedError[2] * integralGain + speedError[3] * derivativeGain;
-        //Debug.Log(correction);
+        float correction = velocityError[0] * proptionalGain + velocityError[2] * integralGain + velocityError[3] * derivativeGain;
+        Debug.Log(correction);
 
-        wheelcolBL.motorTorque = correction;
-        wheelcolBR.motorTorque = correction;
+        if (correction >= 0)
+        {
+            wheelcolBL.motorTorque = correction;
+            wheelcolBR.motorTorque = correction;
+            wheelcolBL.brakeTorque = 0f;
+            wheelcolBR.brakeTorque = 0f;
+        } else
+        {
+            wheelcolBL.motorTorque = 0f;
+            wheelcolBR.motorTorque = 0f;
+            wheelcolBL.brakeTorque = 1000f;
+            wheelcolBR.brakeTorque = 1000f;
+        }
+
     }
 
 
@@ -175,7 +191,7 @@ public class Driver : MonoBehaviour
                 //error = rotation * (target.transform.position - wayPointTracker.transform.position);
                 //cte = error.x;
                 cte = -(target.transform.InverseTransformPoint(wayPointTracker.transform.position)).x;
-                Debug.Log("cte: " + cte + ", 1st term: " + (0 - transform.rotation.eulerAngles.y) + ", 2nd term: " + (Mathf.Rad2Deg * (float)Math.Atan(gainParameter * cte / velocity)));
+                //Debug.Log("cte: " + cte + ", 1st term: " + (0 - transform.rotation.eulerAngles.y) + ", 2nd term: " + (Mathf.Rad2Deg * (float)Math.Atan(gainParameter * cte / velocity)));
                 steeringAngle = angle - transform.rotation.eulerAngles.y + Mathf.Rad2Deg * (float)Math.Atan(gainParameter * cte / velocity);
 
                 trackingTime += Time.deltaTime;
@@ -202,8 +218,7 @@ public class Driver : MonoBehaviour
                 target.transform.rotation = rotation;
 
                 // Stanley method
-                error = rotation * (target.transform.position - wayPointTracker.transform.position);
-                cte = error.x;
+                cte = -(target.transform.InverseTransformPoint(wayPointTracker.transform.position)).x;
                 steeringAngle = angle - transform.rotation.eulerAngles.y + Mathf.Rad2Deg * (float)Math.Atan(gainParameter * cte / velocity);
 
                 trackingTime += Time.deltaTime;
@@ -223,13 +238,41 @@ public class Driver : MonoBehaviour
 
     }
 
+    private void SpeedControl()
+    {
+        float thresholdDistance = timeToCollision * velocity / 3.6f;
+        Vector3 origin = frontRadar.transform.position;
+        Vector3 direction = frontRadar.transform.TransformDirection(frontRadar.transform.forward);
+        RaycastHit hit;
+
+        if (trackingMode == TrackingMode.laneKeeping)
+        {
+            if (Physics.Raycast(origin, direction, out hit, thresholdDistance))
+            {
+                float carInfrontVelocity = hit.transform.InverseTransformDirection(hit.rigidbody.velocity).z * 3.6f;
+                Vector3 carInfrontPos = hit.transform.position;
+                targetVelocity = carInfrontVelocity;
+
+                Debug.DrawRay(origin, thresholdDistance * direction, Color.red);
+                frontWarning = true;
+            }
+            else
+            {
+                targetVelocity = desiredVelocity;
+                Debug.DrawRay(origin, thresholdDistance * direction, Color.green);
+                frontWarning = false;
+            }
+        } else
+        {
+            targetVelocity = desiredVelocity;
+            frontWarning = false;
+        }
+        
+    }
+
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(target.position, 0.2f);
-
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(wayPointTracker.transform.position, target.transform.position);
+        
     }
 }
