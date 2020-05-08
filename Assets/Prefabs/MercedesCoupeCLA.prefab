@@ -2390,12 +2390,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4407244999693362}
-  - component: {fileID: 95706739926863790}
   - component: {fileID: 205575112928326686}
   - component: {fileID: 2973052611085280089}
   - component: {fileID: 1561817356144033407}
-  - component: {fileID: 8387812306609768519}
-  - component: {fileID: 8179335024686408419}
+  - component: {fileID: 549873111793063612}
   m_Layer: 0
   m_Name: MercedesCoupeCLA
   m_TagString: Car
@@ -2431,25 +2429,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &95706739926863790
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223002772083156}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: f0783dff9be367d46b12b1755fc86c6c, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!205 &205575112928326686
 LODGroup:
   m_ObjectHideFlags: 0
@@ -2590,7 +2569,7 @@ Rigidbody:
   m_GameObject: {fileID: 1223002772083156}
   serializedVersion: 2
   m_Mass: 1200
-  m_Drag: 0.02
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -2611,7 +2590,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300208, guid: f0783dff9be367d46b12b1755fc86c6c, type: 3}
---- !u!114 &8387812306609768519
+--- !u!114 &549873111793063612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2620,107 +2599,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1223002772083156}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc75c577e7332874ba095cf12393ed92, type: 3}
+  m_Script: {fileID: 11500000, guid: 59fc73c89a53c47418af705a5ea288c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throttleValue: 0
-  brakingValue: 0
   steeringAngle: 0
   velocity: 0
-  isPlayer: 0
-  engineInput: Vertical
-  steeringInput: Horizontal
-  turnInputCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -1
-      value: -1
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  targetLane: 4
+  wheelFrontLeft: {fileID: 4840680471406994195}
+  wheelFrontRight: {fileID: 264233396423793272}
+  wheelBackLeft: {fileID: 2177765792648131625}
+  wheelBackRight: {fileID: 7262575724554624770}
   centerOfMass: {fileID: 1061776554841313289}
-  frontLeftWheel: {fileID: 4840680471406994195}
-  frontRightWheel: {fileID: 264233396423793272}
-  backLeftWheel: {fileID: 2177765792648131625}
-  backRightWheel: {fileID: 7262575724554624770}
-  motorTorque:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 200
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 70
-      value: 300
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 250
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 280
-      value: -50
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  diffGearing: 4
-  brakeForce: 1500
-  enableAckermannSteering: 1
-  maxSteerAngle: 30
-  steerSpeed: 0.6
-  downforce: 0
---- !u!114 &8179335024686408419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223002772083156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bd709b6d41fdf44b88021872586491c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderSteerAngle: 1
-  localRotOffset: {x: 0, y: 0, z: 0}
+  frontRadar: {fileID: 2158094761056775841}
+  throttle: 0
+  desiredVelocity: 0
+  measureDistance: 100
+  k: 50
+  kt: 1
+  kv: 60
+  kd: 30
+  trackingMode: 1
+  wayPointTracker: {fileID: 5748761414690288840}
+  target: {fileID: 3866849324554557707}
+  gainParameter: 0.2
+  environmentManager: {fileID: 0}
+  lc_Width: 3.5
+  lc_Length: 70
 --- !u!1 &1229904327595818
 GameObject:
   m_ObjectHideFlags: 0
@@ -10389,7 +10293,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -10454,7 +10358,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -10553,7 +10457,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -10745,7 +10649,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1

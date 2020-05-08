@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -15,22 +16,60 @@ public class EnvironmentManager : MonoBehaviour
     private List<GameObject> carList = new List<GameObject>();
     [HideInInspector] public List<float> laneCenterList = new List<float>();
 
-
-
     [Header("Highway parameters")]
     [Range(2,6)] public int m_NumberOfLanes = 5;
     public float m_LaneWidth = 3.5f;
     [Range(0,359)] public int m_Direction = 0;
 
+    [Header("Vehicle distribution")]
+    [SerializeField] [Range(2,10)] private int m_MaxVehiclesPerLane = 10;
+    [SerializeField] [Range(10, 50)] private int m_MinInterVehicleSpread = 25;
+    [SerializeField] [Range(51, 300)] private int m_MaxInterVehicleSpead = 200;
+    [SerializeField] private List<int> laneDistribution = new List<int>();
+    [SerializeField] private GameObject[] carPrefabs;
+
+    private System.Random rnd = new System.Random();
+
     public void ResetEnvironment()
     {
-        // Initialize lane rays
-        InitRays();
+        // Distribute cars per lane
+        for (int lane = 0; lane < m_NumberOfLanes; lane++)
+        {
+            int numberOfVehicles = rnd.Next(1, m_MaxVehiclesPerLane);
+            laneDistribution.Add(numberOfVehicles);
+
+            float dz = transform.position.z;
+
+            // Distribute cars on every lane
+            for(int vehicle = 0; vehicle < numberOfVehicles; vehicle++)
+            {
+                float x = laneCenterList[lane];
+                float y = transform.position.y;
+                float z = dz + rnd.Next(m_MinInterVehicleSpread, m_MaxInterVehicleSpead);
+
+                // Instantiate car prefab
+                GameObject vehicleInstance;
+                vehicleInstance = Instantiate(carPrefabs[0], new Vector3(x, y, z), transform.rotation) as GameObject;
+
+                // Set driver properties
+                Driver driver = vehicleInstance.GetComponent<Driver>();
+                driver.targetLane = lane + 1;
+                //driver.initVelocity = 0f;
+                driver.desiredVelocity = 0;
+                driver.velocity = 0f;
+
+                dz = z;
+            }
+        }
+
     }
 
     private void Awake()
     {
-        ResetEnvironment();
+        // Initialize lane rays
+        InitRays();
+
+        //ResetEnvironment();
     }
 
     private void InitRays()

@@ -62,17 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ArcadeCarPhysics\Scripts\DemoScripts\CameraFollow.cs" />
-    <Compile Include="Assets\ArcadeCarPhysics\Scripts\DemoScripts\CheckPointEvent.cs" />
-    <Compile Include="Assets\ArcadeCarPhysics\Scripts\DemoScripts\RaceTrackCheckpointsManager.cs" />
-    <Compile Include="Assets\ArcadeCarPhysics\Scripts\EngineSoundManager.cs" />
-    <Compile Include="Assets\ArcadeCarPhysics\Scripts\Ghost.cs" />
-    <Compile Include="Assets\ArcadeCarPhysics\Scripts\MotorBike.cs" />
-    <Compile Include="Assets\ArcadeCarPhysics\Scripts\Suspension.cs" />
-    <Compile Include="Assets\ArcadeCarPhysics\Scripts\Trailor.cs" />
-    <Compile Include="Assets\ArcadeCarPhysics\Scripts\Trails\Trail.cs" />
-    <Compile Include="Assets\ArcadeCarPhysics\Scripts\Trails\TrailEmitter.cs" />
-    <Compile Include="Assets\ArcadeCarPhysics\Scripts\WheelVehicle.cs" />
     <Compile Include="Assets\RoadArchitect\GSDRigidBody.cs" />
     <Compile Include="Assets\RoadArchitect\GSDRoad.cs" />
     <Compile Include="Assets\RoadArchitect\GSDRoadAutomation.cs" />

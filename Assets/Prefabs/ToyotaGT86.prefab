@@ -174,8 +174,8 @@ GameObject:
   - component: {fileID: 4539661262775328}
   - component: {fileID: 205659240027242542}
   - component: {fileID: 4389986791242625510}
-  - component: {fileID: 1813767617033328302}
-  - component: {fileID: 205863512948094161}
+  - component: {fileID: 8459485921000671633}
+  - component: {fileID: 1980956719342141434}
   m_Layer: 0
   m_Name: ToyotaGT86
   m_TagString: Car
@@ -203,6 +203,9 @@ Transform:
   - {fileID: 4256849250626292}
   - {fileID: 7360681420998173418}
   - {fileID: 4069157593635050}
+  - {fileID: 7535479139452653460}
+  - {fileID: 323435177915998849}
+  - {fileID: 1817830700021990952}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -283,14 +286,28 @@ Rigidbody:
   m_GameObject: {fileID: 1094918606176732}
   serializedVersion: 2
   m_Mass: 1200
-  m_Drag: 0.02
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1813767617033328302
+--- !u!64 &8459485921000671633
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094918606176732}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300016, guid: f119de429d72e0b4daed64783cf54fad, type: 3}
+--- !u!114 &1980956719342141434
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,107 +316,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1094918606176732}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc75c577e7332874ba095cf12393ed92, type: 3}
+  m_Script: {fileID: 11500000, guid: 59fc73c89a53c47418af705a5ea288c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throttleValue: 0
-  brakingValue: 0
   steeringAngle: 0
   velocity: 0
-  isPlayer: 0
-  engineInput: Vertical
-  steeringInput: Horizontal
-  turnInputCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -1
-      value: -1
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  targetLane: 4
+  wheelFrontLeft: {fileID: 1890649546845854}
+  wheelFrontRight: {fileID: 1288719004185982}
+  wheelBackLeft: {fileID: 1785908448937766}
+  wheelBackRight: {fileID: 1183162418364304}
   centerOfMass: {fileID: 7360681420998173418}
-  frontLeftWheel: {fileID: 1890649546845854}
-  frontRightWheel: {fileID: 1288719004185982}
-  backLeftWheel: {fileID: 1785908448937766}
-  backRightWheel: {fileID: 1183162418364304}
-  motorTorque:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 200
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 70
-      value: 300
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 250
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 280
-      value: -50
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  diffGearing: 4
-  brakeForce: 1500
-  enableAckermannSteering: 1
-  maxSteerAngle: 30
-  steerSpeed: 0.6
-  downforce: 0
---- !u!114 &205863512948094161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094918606176732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bd709b6d41fdf44b88021872586491c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderSteerAngle: 1
-  localRotOffset: {x: 0, y: 0, z: 0}
+  frontRadar: {fileID: 1817830700021990952}
+  throttle: 0
+  desiredVelocity: 100
+  measureDistance: 100
+  k: 50
+  kt: 1
+  kv: 60
+  kd: 30
+  trackingMode: 1
+  wayPointTracker: {fileID: 7535479139452653460}
+  target: {fileID: 323435177915998849}
+  gainParameter: 0.2
+  environmentManager: {fileID: 0}
+  lc_Width: 3.5
+  lc_Length: 70
 --- !u!1 &1105226973929536
 GameObject:
   m_ObjectHideFlags: 0
@@ -4763,6 +4705,36 @@ Transform:
   m_Father: {fileID: 4783930979861612}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6624897726210906830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 323435177915998849}
+  m_Layer: 0
+  m_Name: TargetTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &323435177915998849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6624897726210906830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4539661262775328}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7334459724290356067
 GameObject:
   m_ObjectHideFlags: 0
@@ -4801,4 +4773,64 @@ Transform:
   - {fileID: 4763543496942948}
   m_Father: {fileID: 4783930979861612}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7952144169827871005
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817830700021990952}
+  m_Layer: 0
+  m_Name: FrontRadar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1817830700021990952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7952144169827871005}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.525, z: 2.17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4539661262775328}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8826895376563657779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7535479139452653460}
+  m_Layer: 0
+  m_Name: WaypointTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7535479139452653460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8826895376563657779}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.245655}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4539661262775328}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
