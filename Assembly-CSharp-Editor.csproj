@@ -62,6 +62,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\EnvironmentManagerEditor.cs" />
+    <Compile Include="Assets\Editor\ExtendedEditor.cs" />
     <Compile Include="Assets\RoadArchitect\Editor\GSDEditorProgressWindow.cs" />
     <Compile Include="Assets\RoadArchitect\Editor\GSDHelpWindow.cs" />
     <Compile Include="Assets\RoadArchitect\Editor\GSDNotification.cs" />

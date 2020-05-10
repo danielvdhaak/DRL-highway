@@ -6,7 +6,7 @@ using MLAgents.Sensors;
 using System.Linq;
 
 //[RequireComponent(typeof(Driver))]
-public class CarAgent : Agent
+public class VehicleAgent : Agent
 {
     private Rigidbody rBody;
     public EnvironmentManager environmentManager;
@@ -90,7 +90,7 @@ public class CarAgent : Agent
     private int DetermineCurrentLane(List<float> latErrorList)
     {
         // Determines whether agent is on the highway and if so, determines current lane
-        float laneWidth = environmentManager.m_LaneWidth;
+        float laneWidth = environmentManager.laneWidth;
         float minLatError = latErrorList.Min();
         int lane = latErrorList.IndexOf(minLatError) + 1;
 

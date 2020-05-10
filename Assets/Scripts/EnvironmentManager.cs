@@ -6,86 +6,81 @@ using TMPro;
 
 public class EnvironmentManager : MonoBehaviour
 {
-    [Header("Environment setup")]
-    [Tooltip("The car agent in the environment")] public CarAgent carAgent;
+    [Serializable]
+    public class LaneInfo
+    {
+        public float center;
+        public int minVehicleNumber;
+        public int maxVehicleNumber;
+        public float minVehicleSpeed;
+        public float maxVehicleSpeed;
+        public int minVehicleSpread;
+        public int maxVehicleSpread;
+        public GameObject[] vehiclePrefabs;
+    }
 
-    //[Tooltip("Car prefab for other cars")]
-    // public carPrefab;
-    [Tooltip("The TextMeshPro text that shows the cumulative reward of the agent")] public TextMeshPro cumulativeRewardText;
-
-    private List<GameObject> carList = new List<GameObject>();
-    [HideInInspector] public List<float> laneCenterList = new List<float>();
-
-    [Header("Highway parameters")]
-    [Range(2,6)] public int m_NumberOfLanes = 5;
-    public float m_LaneWidth = 3.5f;
-    [Range(0,359)] public int m_Direction = 0;
-
-    [Header("Vehicle distribution")]
-    [SerializeField] [Range(2,10)] private int m_MaxVehiclesPerLane = 10;
-    [SerializeField] [Range(10, 50)] private int m_MinInterVehicleSpread = 25;
-    [SerializeField] [Range(51, 300)] private int m_MaxInterVehicleSpead = 200;
-    [SerializeField] private List<int> laneDistribution = new List<int>();
-    [SerializeField] private GameObject[] carPrefabs;
+    public VehicleAgent vehicleAgent;
+    public TextMeshPro cumulativeRewardText;
+    [Range(2,6)] public int numberOfLanes;
+    public float laneWidth = 3.5f;
+    public LaneInfo[] laneInfo;
 
     private System.Random rnd = new System.Random();
 
+    
     public void ResetEnvironment()
     {
         // Distribute cars per lane
-        for (int lane = 0; lane < m_NumberOfLanes; lane++)
+        int laneNr = 1;
+        foreach (LaneInfo lane in laneInfo)
         {
-            int numberOfVehicles = rnd.Next(1, m_MaxVehiclesPerLane);
-            laneDistribution.Add(numberOfVehicles);
-
+            int numberOfVehicles = rnd.Next(lane.minVehicleNumber, lane.maxVehicleNumber);
             float dz = transform.position.z;
 
             // Distribute cars on every lane
-            for(int vehicle = 0; vehicle < numberOfVehicles; vehicle++)
+            for (int vehicle = 0; vehicle < numberOfVehicles; vehicle++)
             {
-                float x = laneCenterList[lane];
+                // Determine position
+                float x = lane.center;
                 float y = transform.position.y;
-                float z = dz + rnd.Next(m_MinInterVehicleSpread, m_MaxInterVehicleSpead);
+                float z = dz + rnd.Next(lane.minVehicleSpread, lane.maxVehicleSpread);
+                Vector3 position = transform.TransformPoint(new Vector3(x, y, z));
+
+                // Determine vehicle prefab
+                int prefabIndex = rnd.Next(lane.vehiclePrefabs.Length);
+                GameObject vehiclePrefab = lane.vehiclePrefabs[prefabIndex];
 
                 // Instantiate car prefab
-                GameObject vehicleInstance;
-                vehicleInstance = Instantiate(carPrefabs[0], new Vector3(x, y, z), transform.rotation) as GameObject;
+                GameObject vehicleInstance = Instantiate(vehiclePrefab, new Vector3(x, y, z), transform.rotation) as GameObject;
 
-                // Set driver properties
-                Driver driver = vehicleInstance.GetComponent<Driver>();
-                driver.targetLane = lane + 1;
-                //driver.initVelocity = 0f;
-                driver.desiredVelocity = 0;
-                driver.velocity = 0f;
+                // Set car properties
+                VehicleControl vehiclecontrol = vehicleInstance.GetComponent<VehicleControl>();
+                vehiclecontrol.targetLane = laneNr;
+                vehiclecontrol.desiredVelocity = 10;
+                vehiclecontrol.velocity = 10f;
 
                 dz = z;
             }
+            laneNr++;
         }
-
     }
 
     private void Awake()
     {
-        // Initialize lane rays
-        InitRays();
-
-        //ResetEnvironment();
+        DetermineLaneCenters();
+        ResetEnvironment();
     }
 
-    private void InitRays()
+    private void DetermineLaneCenters()
     {
-        // Initialise lane change center rays
-        Vector3 centerPosition = transform.position;
-        Quaternion rotation = transform.rotation;
-        Vector3 direction = rotation * Vector3.forward;
-
-        for (int i = 0; i < m_NumberOfLanes; i++)
+        for (int i = 0; i < numberOfLanes; i++)
         {
-            float localPos = -0.5f * m_NumberOfLanes * m_LaneWidth + ((float)i + 0.5f) * m_LaneWidth;
-            laneCenterList.Add(localPos);
+            laneInfo[i].center = -0.5f * numberOfLanes * laneWidth + ((float)i + 0.5f) * laneWidth;
         }
 
     }
+
+
 
     private void Update()
     {
@@ -95,25 +90,23 @@ public class EnvironmentManager : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Vector3 centerPosition = transform.position;
-        Quaternion rotation = Quaternion.Euler(0, m_Direction, 0);
-        Vector3 direction = rotation * Vector3.forward;
+        Vector3 position = transform.position;
+        Vector3 direction = transform.TransformDirection(transform.forward);
 
-        // Draw highway borders
+        // Draw highway center and borders
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(centerPosition, 100 * direction);
+        Gizmos.DrawRay(position, 100 * direction);
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(centerPosition + rotation * (0.5f * m_NumberOfLanes * m_LaneWidth * Vector3.right), 100 * direction);
-        Gizmos.DrawRay(centerPosition + rotation * (0.5f * m_NumberOfLanes * m_LaneWidth * Vector3.left), 100 * direction);
+        Gizmos.DrawRay(transform.TransformPoint(new Vector3(-0.5f * numberOfLanes * laneWidth, position.y, position.z)), 100 * direction);
+        Gizmos.DrawRay(transform.TransformPoint(new Vector3(0.5f * numberOfLanes * laneWidth, position.y, position.z)), 100 * direction);
 
         // Draw lane centers
+        DetermineLaneCenters();
         Gizmos.color = Color.cyan;
-        InitRays();
-        foreach(float LC in laneCenterList)
+        foreach(LaneInfo lane in laneInfo)
         {
-            //Debug.Log("Pos: " + LC.origin + "Dir: " + LC.direction);
-            Ray ray = new Ray(new Vector3(0, LC, 0), Vector3.forward);
-            Gizmos.DrawRay(ray);
-        } 
-    }
+            float center = lane.center;
+            Gizmos.DrawRay(transform.TransformPoint(new Vector3(center, position.y, position.z)), 100 * direction);
+        }
+    } 
 }
