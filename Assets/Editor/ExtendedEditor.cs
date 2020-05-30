@@ -14,7 +14,6 @@ public class ExtendedEditor : Editor
 
     protected void DrawProperties(SerializedProperty prop, bool drawChildren)
     {
-
         string lastPropPath = string.Empty;
         foreach (SerializedProperty p in prop)
         {
@@ -27,9 +26,11 @@ public class ExtendedEditor : Editor
                 if (p.isExpanded)
                 {
                     EditorGUI.indentLevel++;
+                    p.arraySize = EditorGUILayout.IntField("Size", p.arraySize);
                     DrawProperties(p, drawChildren);
                     EditorGUI.indentLevel--;
                 }
+                lastPropPath = p.propertyPath;
             }
             else
             {

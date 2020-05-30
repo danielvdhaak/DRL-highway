@@ -24,6 +24,7 @@ public class EnvironmentManagerEditor : ExtendedEditor
         serializedObject.FindProperty("laneInfo").arraySize = serializedObject.FindProperty("numberOfLanes").intValue;
 
         currentProperty = serializedObject.FindProperty("laneInfo");
+
         EditorGUILayout.BeginHorizontal("box", GUILayout.ExpandHeight(true));
         EditorGUILayout.BeginVertical(GUILayout.MaxWidth(100), GUILayout.ExpandHeight(true));
         int i = 1;
@@ -36,6 +37,7 @@ public class EnvironmentManagerEditor : ExtendedEditor
             i++;
         }
         EditorGUILayout.EndVertical();
+        EditorGUILayout.Separator();
         EditorGUILayout.BeginVertical(GUILayout.ExpandHeight(true));
         if (!string.IsNullOrEmpty(selectedPropertyPath))
         {
@@ -51,7 +53,6 @@ public class EnvironmentManagerEditor : ExtendedEditor
         }
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndHorizontal();
-
 
         serializedObject.ApplyModifiedProperties();
         

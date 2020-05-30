@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * This code is part of DRL-Highway by Daniel (2020)
+ * 
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +15,8 @@ public class EnvironmentManager : MonoBehaviour
     public class LaneInfo
     {
         public float center;
-        public int minVehicleNumber;
-        public int maxVehicleNumber;
-        public float minVehicleSpeed;
-        public float maxVehicleSpeed;
-        public int minVehicleSpread;
-        public int maxVehicleSpread;
+        public float meanVehicleSpeed;
+        public float stdVehicleSpeed;
         public GameObject[] vehiclePrefabs;
     }
 
@@ -24,10 +25,55 @@ public class EnvironmentManager : MonoBehaviour
     [Range(2,6)] public int numberOfLanes;
     public float laneWidth = 3.5f;
     public LaneInfo[] laneInfo;
+    public float vehicleSpeeds;
 
+    private RandomNumber randomNumber = new RandomNumber();
     private System.Random rnd = new System.Random();
 
-    
+    private void Awake()
+    {
+        DetermineLaneCenters();
+        //ResetEnvironment();
+        DetermineSpeeds();
+    }
+
+    private void Update()
+    {
+        // Update cumulative reward text
+        //cumulativeRewardText.text = carAgent.GetCumulativeReward().ToString("0.00");
+    }
+
+    /// <summary>
+    /// Generates a N long float array whose sum is M.
+    /// </summary>
+    private float[] Disperse(int N, float M)
+    {
+        float[] array = new float[N];
+        float sum = 0f;
+
+        // Fill array with uniform numbers
+        for(int i = 0; i < N; i++)
+        {
+            array[i] = randomNumber.Uniform();
+            sum += array[i];
+        }
+
+        // Normalize sum to M
+        for (int i = 0; i < N; i++)
+        {
+            array[i] /= sum;
+            array[i] *= M;
+        }
+
+        return array;
+    }
+
+    private void DetermineSpeeds()
+    {
+        vehicleSpeeds = randomNumber.Gaussian();
+    }
+
+    /*
     public void ResetEnvironment()
     {
         // Distribute cars per lane
@@ -64,12 +110,7 @@ public class EnvironmentManager : MonoBehaviour
             laneNr++;
         }
     }
-
-    private void Awake()
-    {
-        DetermineLaneCenters();
-        ResetEnvironment();
-    }
+    */
 
     private void DetermineLaneCenters()
     {
@@ -78,14 +119,6 @@ public class EnvironmentManager : MonoBehaviour
             laneInfo[i].center = -0.5f * numberOfLanes * laneWidth + ((float)i + 0.5f) * laneWidth;
         }
 
-    }
-
-
-
-    private void Update()
-    {
-        // Update cumulative reward text
-        //cumulativeRewardText.text = carAgent.GetCumulativeReward().ToString("0.00");
     }
 
     private void OnDrawGizmosSelected()
