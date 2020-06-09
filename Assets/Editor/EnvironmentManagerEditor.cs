@@ -11,6 +11,7 @@ public class EnvironmentManagerEditor : ExtendedEditor
 {
     public override void OnInspectorGUI()
     {
+        /*
         serializedObject.Update();
 
         EditorGUILayout.LabelField("Environment setup", EditorStyles.boldLabel);
@@ -56,7 +57,7 @@ public class EnvironmentManagerEditor : ExtendedEditor
 
         serializedObject.ApplyModifiedProperties();
         
-
-        //DrawDefaultInspector();
+        */
+        DrawDefaultInspector();
     }
 }

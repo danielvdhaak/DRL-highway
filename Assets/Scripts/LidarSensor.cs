@@ -52,9 +52,15 @@ public class LidarSensor : MonoBehaviour
     [Header("Debugging")]
     public float gizmoSize = 0.05f;
     public bool displayInScene = false;
+    public bool displayInGame = false;
 
     [Header("Sensor data")]
     public Data data;
+
+    public void Update()
+    {
+        GetOutput();
+    }
 
     public void GetOutput()
     {
@@ -117,6 +123,9 @@ public class LidarSensor : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if (displayInScene == false)
+            return;
+
         GetOutput();
 
         for (int i = 0; i < data.points.Length; i++)
@@ -131,7 +140,7 @@ public class LidarSensor : MonoBehaviour
 
     private void OnRenderObject()
     {
-        if (displayInScene == false)
+        if (displayInGame == false)
             return;
 
         CreateLineMaterial();

@@ -12,35 +12,37 @@ using TMPro;
 public class EnvironmentManager : MonoBehaviour
 {
     [Serializable]
-    public class LaneInfo
+    public class VehicleParameters
+    {
+        public GameObject prefab;
+        public float pos;
+        public float speed;
+        public float headway;
+    }
+
+    [Serializable]
+    public class LaneData
     {
         public float center;
         public float meanVehicleSpeed;
         public float stdVehicleSpeed;
         public GameObject[] vehiclePrefabs;
+        public VehicleParameters[] vehicleParameters;
     }
 
     public VehicleAgent vehicleAgent;
     public TextMeshPro cumulativeRewardText;
+
     [Range(2,6)] public int numberOfLanes;
     public float laneWidth = 3.5f;
-    public LaneInfo[] laneInfo;
-    public float vehicleSpeeds;
+    public int density;
+    public LaneData[] laneData;
 
     private RandomNumber randomNumber = new RandomNumber();
-    private System.Random rnd = new System.Random();
 
     private void Awake()
     {
         DetermineLaneCenters();
-        //ResetEnvironment();
-        DetermineSpeeds();
-    }
-
-    private void Update()
-    {
-        // Update cumulative reward text
-        //cumulativeRewardText.text = carAgent.GetCumulativeReward().ToString("0.00");
     }
 
     /// <summary>
@@ -68,9 +70,22 @@ public class EnvironmentManager : MonoBehaviour
         return array;
     }
 
-    private void DetermineSpeeds()
+    private void SetTrafficParameters()
     {
-        vehicleSpeeds = randomNumber.Gaussian();
+        foreach(LaneData laneData in laneData)
+        {
+            // Initialize vehicleparameters array according to density
+            laneData.vehicleParameters = new VehicleParameters[density]; // Needs implementation of densityfactor!
+
+            // Set prefab and initial speed
+            foreach (VehicleParameters vehicleParameters in laneData.vehicleParameters)
+            {
+                vehicleParameters.prefab = laneData.vehiclePrefabs[0];
+                vehicleParameters.speed = randomNumber.Gaussian(laneData.meanVehicleSpeed, laneData.stdVehicleSpeed);
+            }
+        }
+
+
     }
 
     /*
@@ -116,7 +131,7 @@ public class EnvironmentManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfLanes; i++)
         {
-            laneInfo[i].center = -0.5f * numberOfLanes * laneWidth + ((float)i + 0.5f) * laneWidth;
+            laneData[i].center = -0.5f * numberOfLanes * laneWidth + ((float)i + 0.5f) * laneWidth;
         }
 
     }
@@ -136,7 +151,7 @@ public class EnvironmentManager : MonoBehaviour
         // Draw lane centers
         DetermineLaneCenters();
         Gizmos.color = Color.cyan;
-        foreach(LaneInfo lane in laneInfo)
+        foreach(LaneData lane in laneData)
         {
             float center = lane.center;
             Gizmos.DrawRay(transform.TransformPoint(new Vector3(center, position.y, position.z)), 100 * direction);

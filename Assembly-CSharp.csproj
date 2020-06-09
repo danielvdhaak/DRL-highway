@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\EnvironmentManager.cs" />
     <Compile Include="Assets\Scripts\LidarSensor.cs" />
     <Compile Include="Assets\Scripts\RandomNumber.cs" />
+    <Compile Include="Assets\Scripts\Traffic.cs" />
     <Compile Include="Assets\Scripts\VehicleAgent.cs" />
     <Compile Include="Assets\Scripts\VehicleControl.cs" />
     <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
