@@ -26,16 +26,23 @@ public class EnvironmentManager : MonoBehaviour
         public float center;
         public float meanVehicleSpeed;
         public float stdVehicleSpeed;
+        public float trafficFraction;
         public GameObject[] vehiclePrefabs;
         public VehicleParameters[] vehicleParameters;
+
+        public void Init(int N)
+        {
+            vehicleParameters = new VehicleParameters[N];
+        }
     }
 
     public VehicleAgent vehicleAgent;
     public TextMeshPro cumulativeRewardText;
 
-    [Range(2,6)] public int numberOfLanes;
+    [Range(2,6)] public int numberOfLanes = 5;
     public float laneWidth = 3.5f;
-    public int density;
+    public int trafficFlow = 6000;
+    public float minHeadway = 1f;
     public LaneData[] laneData;
 
     private RandomNumber randomNumber = new RandomNumber();
@@ -43,6 +50,12 @@ public class EnvironmentManager : MonoBehaviour
     private void Awake()
     {
         DetermineLaneCenters();
+        //SetTrafficParameters();
+    }
+
+    private void Update()
+    {
+        Debug.Log("Random number: " + randomNumber.Uniform(0.01f, 1.0f));
     }
 
     /// <summary>
@@ -70,71 +83,44 @@ public class EnvironmentManager : MonoBehaviour
         return array;
     }
 
-    private void SetTrafficParameters()
-    {
-        foreach(LaneData laneData in laneData)
-        {
-            // Initialize vehicleparameters array according to density
-            laneData.vehicleParameters = new VehicleParameters[density]; // Needs implementation of densityfactor!
-
-            // Set prefab and initial speed
-            foreach (VehicleParameters vehicleParameters in laneData.vehicleParameters)
-            {
-                vehicleParameters.prefab = laneData.vehiclePrefabs[0];
-                vehicleParameters.speed = randomNumber.Gaussian(laneData.meanVehicleSpeed, laneData.stdVehicleSpeed);
-            }
-        }
-
-
-    }
-
-    /*
-    public void ResetEnvironment()
-    {
-        // Distribute cars per lane
-        int laneNr = 1;
-        foreach (LaneInfo lane in laneInfo)
-        {
-            int numberOfVehicles = rnd.Next(lane.minVehicleNumber, lane.maxVehicleNumber);
-            float dz = transform.position.z;
-
-            // Distribute cars on every lane
-            for (int vehicle = 0; vehicle < numberOfVehicles; vehicle++)
-            {
-                // Determine position
-                float x = lane.center;
-                float y = transform.position.y;
-                float z = dz + rnd.Next(lane.minVehicleSpread, lane.maxVehicleSpread);
-                Vector3 position = transform.TransformPoint(new Vector3(x, y, z));
-
-                // Determine vehicle prefab
-                int prefabIndex = rnd.Next(lane.vehiclePrefabs.Length);
-                GameObject vehiclePrefab = lane.vehiclePrefabs[prefabIndex];
-
-                // Instantiate car prefab
-                GameObject vehicleInstance = Instantiate(vehiclePrefab, new Vector3(x, y, z), transform.rotation) as GameObject;
-
-                // Set car properties
-                VehicleControl vehiclecontrol = vehicleInstance.GetComponent<VehicleControl>();
-                vehiclecontrol.targetLane = laneNr;
-                vehiclecontrol.desiredVelocity = 10;
-                vehiclecontrol.velocity = 10f;
-
-                dz = z;
-            }
-            laneNr++;
-        }
-    }
-    */
-
     private void DetermineLaneCenters()
     {
         for (int i = 0; i < numberOfLanes; i++)
         {
             laneData[i].center = -0.5f * numberOfLanes * laneWidth + ((float)i + 0.5f) * laneWidth;
         }
-
     }
+
+    private void SetTrafficParameters()
+    {
+        foreach(LaneData laneData in laneData)
+        {
+            float laneTrafficFlow = trafficFlow * laneData.trafficFraction;     // [veh/h]
+            float laneDensity = laneTrafficFlow / laneData.meanVehicleSpeed;    // [veh/km]
+            float meanHeadway = 3600 / laneTrafficFlow;                         // [s/veh]
+
+            laneData.Init((int)laneDensity);
+            for (int i = 0; i < laneData.vehicleParameters.Length; i++)
+            {
+                laneData.vehicleParameters[i] = new VehicleParameters();
+
+                laneData.vehicleParameters[i].prefab = null;
+                laneData.vehicleParameters[i].speed = randomNumber.Gaussian(laneData.meanVehicleSpeed, laneData.stdVehicleSpeed);
+                laneData.vehicleParameters[i].headway = randomNumber.Exponential(meanHeadway, minHeadway);
+
+                try
+                {
+                    laneData.vehicleParameters[i].pos = laneData.vehicleParameters[i - 1].pos + laneData.vehicleParameters[i - 1].headway * (laneData.vehicleParameters[i - 1].speed / 3.6f);
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    laneData.vehicleParameters[i].pos = 0f;
+                }
+            }
+        }
+    }
+
+
 
     private void OnDrawGizmosSelected()
     {

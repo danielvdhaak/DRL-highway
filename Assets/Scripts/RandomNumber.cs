@@ -42,8 +42,8 @@ public class RandomNumber
     /// </summary>
     public float Gaussian()
     {
-        float U1 = Uniform(0.001f, 1.0f);
-        float U2 = Uniform(0.001f, 1.0f);
+        float U1 = Uniform(0.01f, 1.0f);
+        float U2 = Uniform(0.01f, 1.0f);
 
         return Mathf.Sqrt(-2.0f * Mathf.Log(U1)) * Mathf.Cos(2.0f * Mathf.PI * U2);
     }
@@ -54,20 +54,30 @@ public class RandomNumber
     /// </summary>
     public float Gaussian(float mean, float std)
     {
-        float U1 = Uniform(0.001f, 1.0f);
-        float U2 = Uniform(0.001f, 1.0f);
+        float U1 = Uniform(0.01f, 1.0f);
+        float U2 = Uniform(0.01f, 1.0f);
 
         return mean + std *  Mathf.Sqrt(-2.0f * Mathf.Log(U1)) * Mathf.Cos(2.0f * Mathf.PI * U2);
     }
 
     /// <summary>
-    /// Returns a random negative shifted exponentially distributed float number with a mean and minimum.
+    /// Returns a random standard exponentially distributed float number with a mean and minimum.
     /// </summary>
-    public float NegativeExponential(float mean, float min)
+    public float Exponential()
     {
-        float R = Uniform(0.001f, 1.0f);
+        float R = Uniform(0.01f, 1.0f);
 
-        return (mean - min) * (-Mathf.Log(R)) + mean - min;
+        return -Mathf.Log(R);
+    }
+
+    /// <summary>
+    /// Returns a random shifted exponentially distributed float number with a mean and minimum.
+    /// </summary>
+    public float Exponential(float mean, float min)
+    {
+        float R = Uniform(0.01f, 1.0f);
+
+        return (mean - min) * (-Mathf.Log(R)) + min;
     }
 
     /// <summary>

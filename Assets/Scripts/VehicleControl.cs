@@ -181,7 +181,7 @@ public class VehicleControl : MonoBehaviour
         {
             progress = environmentManager.transform.InverseTransformPoint(wayPointTracker.transform.position);
             delta = progress;
-            delta.x = environmentManager.GetComponent<EnvironmentManager>().laneInfo[targetLane - 1].center;
+            delta.x = environmentManager.GetComponent<EnvironmentManager>().laneData[targetLane - 1].center;
             //delta = environmentManager.transform.TransformPoint(new Vector3())
             //delta = wayPointTracker.transform.position;
         }

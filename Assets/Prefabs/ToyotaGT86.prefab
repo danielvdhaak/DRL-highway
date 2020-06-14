@@ -329,17 +329,19 @@ MonoBehaviour:
   centerOfMass: {fileID: 7360681420998173418}
   frontRadar: {fileID: 1817830700021990952}
   throttle: 0
-  desiredVelocity: 100
-  measureDistance: 100
-  k: 50
-  kt: 1
-  kv: 60
-  kd: 30
+  desiredVelocity: 0
+  m_MeasureDistance: 100
+  m_K: 50
+  m_Kt: 1
+  m_Kv: 60
+  m_Kd: 30
+  m_maxMotorTorque: 1000
+  m_maxBrakeTorque: 1000
   trackingMode: 1
   wayPointTracker: {fileID: 7535479139452653460}
   target: {fileID: 323435177915998849}
-  gainParameter: 0.2
   environmentManager: {fileID: 0}
+  m_GainParameter: 0.2
   lc_Width: 3.5
   lc_Length: 70
 --- !u!1 &1105226973929536

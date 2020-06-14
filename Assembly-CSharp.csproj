@@ -80,22 +80,28 @@
     <Compile Include="Assets\RoadArchitect\Spline\GSDSplineF.cs" />
     <Compile Include="Assets\RoadArchitect\Spline\GSDSplineI.cs" />
     <Compile Include="Assets\RoadArchitect\Spline\GSDSplineN.cs" />
-    <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
-    <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
-    <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />
-    <Compile Include="Assets\SampleScenes\Scripts\CameraSwitch.cs" />
-    <Compile Include="Assets\SampleScenes\Scripts\LevelReset.cs" />
-    <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
-    <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
-    <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\EnvironmentManager.cs" />
     <Compile Include="Assets\Scripts\LidarSensor.cs" />
     <Compile Include="Assets\Scripts\RandomNumber.cs" />
+    <Compile Include="Assets\Scripts\SimpleVehicle.cs" />
     <Compile Include="Assets\Scripts\Traffic.cs" />
     <Compile Include="Assets\Scripts\VehicleAgent.cs" />
     <Compile Include="Assets\Scripts\VehicleControl.cs" />
+    <Compile Include="Assets\Sketchfab For Unity\Scripts\AssetBrowser\SketchfabBrowserManager.cs" />
+    <Compile Include="Assets\Sketchfab For Unity\Scripts\AssetBrowser\SketchfabBrowserWindow.cs" />
+    <Compile Include="Assets\Sketchfab For Unity\Scripts\AssetBrowser\SketchfabModelWindow.cs" />
+    <Compile Include="Assets\Sketchfab For Unity\Scripts\Resizer.cs" />
+    <Compile Include="Assets\Sketchfab For Unity\Scripts\SketchfabApi.cs" />
+    <Compile Include="Assets\Sketchfab For Unity\Scripts\SketchfabExporter.cs" />
+    <Compile Include="Assets\Sketchfab For Unity\Scripts\SketchfabImporter.cs" />
+    <Compile Include="Assets\Sketchfab For Unity\Scripts\SketchfabImporterWindow.cs" />
+    <Compile Include="Assets\Sketchfab For Unity\Scripts\SketchfabLogger.cs" />
+    <Compile Include="Assets\Sketchfab For Unity\Scripts\SketchfabPlugin.cs" />
+    <Compile Include="Assets\Sketchfab For Unity\Scripts\SketchfabUI.cs" />
+    <None Include="Assets\Sketchfab For Unity\Dependencies\Shaders\GLTFFlipTexture.shader" />
     <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
+    <None Include="Assets\Sketchfab For Unity\Dependencies\Shaders\GLTFLinear2sRGB.shader" />
     <None Include="Assets\RoadArchitect\Shaders\GSDShoulderDirtDX11.shader" />
     <None Include="Assets\RoadArchitect\Shaders\GSDStandardTiling.shader" />
     <None Include="Assets\RoadArchitect\Shaders\GSDShoulderDirt.shader" />
@@ -103,9 +109,11 @@
     <None Include="Assets\RoadArchitect\Shaders\GSDRoadShaderDX11.shader" />
     <None Include="Assets\RoadArchitect\Shaders\GSDRoadShaderLowDX11.shader" />
     <None Include="Assets\RoadArchitect\Shaders\GSDTransparentWithShadows.shader" />
-    <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
     <None Include="Assets\RoadArchitect\Shaders\GSDRoadShaderLow.shader" />
+    <None Include="Assets\Sketchfab For Unity\Dependencies\Shaders\GLTFBumpToNormal.shader" />
     <None Include="Assets\RoadArchitect\Shaders\GSDTransparentWithShadowsZ.shader" />
+    <None Include="Assets\Sketchfab For Unity\Dependencies\Shaders\GLTFPackOccMetalRough.shader" />
+    <None Include="Assets\Sketchfab For Unity\Dependencies\Shaders\GLTFColorSpace.cginc" />
     <None Include="Assets\RoadArchitect\Shaders\GSDRoadShader.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
@@ -337,6 +345,18 @@
     </Reference>
     <Reference Include="UnityEngine.XRModule">
       <HintPath>D:/Program Files/Unity/2019.3.5f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="GLTFSerialization">
+      <HintPath>D:/GitHub/DRL-highway/Assets/Sketchfab For Unity/Dependencies/Libraries/GLTFSerialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip.Unity">
+      <HintPath>D:/GitHub/DRL-highway/Assets/Sketchfab For Unity/Dependencies/Libraries/Ionic.Zip.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>D:/GitHub/DRL-highway/Assets/Sketchfab For Unity/Dependencies/Libraries/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityGLTF">
+      <HintPath>D:/GitHub/DRL-highway/Assets/Sketchfab For Unity/Dependencies/Libraries/UnityGLTF.dll</HintPath>
     </Reference>
     <Reference Include="Google.Protobuf">
       <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.barracuda@0.6.1-preview/Barracuda/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
@@ -712,10 +732,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{075C944B-FC60-2264-7775-A65E0FF337AB}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.ML-Agents.CommunicatorObjects.csproj">
       <Project>{51D7E1B4-D73A-BC56-B90C-C6D11D23E96E}</Project>
       <Name>Unity.ML-Agents.CommunicatorObjects</Name>

@@ -23,7 +23,7 @@ All assets used in this project are free and as follows:
 | Name | Developer | License
 | --- | --- | ---
 | [RoadArchitect v1.7](https://github.com/MicroGSD/RoadArchitect) | MicroGSD | MIT
-| [Arcade Car Physics (ACP)](https://github.com/Saarg/Arcade_Car_Physics) | Saarg | MIT
+| [Audi RS5 2019](https://sketchfab.com/3d-models/audi-rs5-2019-fae1a4186d464a6aae351ce9e9ff2401) | Indians | CC Attribution
 | [Low-poly Civilian vehicle #5](https://assetstore.unity.com/packages/3d/vehicles/land/low-poly-civilian-vehicle-5-124987) | Pro 3D models | Unity asset
 | [Low-poly Sports car #20](https://assetstore.unity.com/packages/3d/vehicles/land/low-poly-sports-car-20-144253) | Pro 3D models | Unity asset
 | [Terrain Tools Sample Asset Pack](https://assetstore.unity.com/packages/2d/textures-materials/terrain-tools-sample-asset-pack-145808) | Unity Technologies | Unity asset

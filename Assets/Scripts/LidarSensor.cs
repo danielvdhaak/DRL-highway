@@ -14,8 +14,9 @@ public class LidarSensor : MonoBehaviour
     public class LidarPoint
     {
         public Vector3 position;
-        public Vector3 distance;
+        public float distance;
         public float normDistance;
+        public string tag;
     }
 
     [Serializable]
@@ -25,19 +26,13 @@ public class LidarSensor : MonoBehaviour
         public Vector3 sensorPos;
         public Vector3 sensorRotation;
 
-        // Data arrays
-        public Vector3[] points;
-        public float[] distances;
-        public float[] normDistances;
-        public string[] tags;
+        // Data array
+        public LidarPoint[] lidarPoints;
 
         // Initialize arrays
         public void Init(int nRays)
         {
-            points = new Vector3[nRays];
-            distances = new float[nRays];
-            normDistances = new float[nRays];
-            tags = new string[nRays];
+            lidarPoints = new LidarPoint[nRays];
         }
     }
 
@@ -88,7 +83,7 @@ public class LidarSensor : MonoBehaviour
         {
             for (int iA = 0; iA < 360/deltaAzimuthal; iA++)
             {
-                if (p >= data.points.Length)
+                if (p >= data.lidarPoints.Length)
                     break;
 
                 if (Physics.Raycast(lidarRay, out hit, range))
@@ -97,10 +92,13 @@ public class LidarSensor : MonoBehaviour
                     float distance = hit.distance + noise * Mathf.PerlinNoise(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
                     distance = Mathf.Clamp(distance, 0f, range);
 
-                    data.points[p] = lidarRay.GetPoint(distance);
-                    data.distances[p] = distance;
-                    data.normDistances[p] = distance / range;
-                    data.tags[p] = hit.transform.tag;
+                    LidarPoint point = new LidarPoint();
+                    point.position = lidarRay.GetPoint(distance);
+                    point.distance = distance;
+                    point.normDistance = distance / range;
+                    point.tag = hit.transform.tag;
+
+                    data.lidarPoints[p] = point;
 
                     lidarRay.direction = rotAzimuth * lidarRay.direction;
                     p++;
@@ -108,10 +106,13 @@ public class LidarSensor : MonoBehaviour
                 else
                 {
                     // Set hit info to sensor range as default
-                    data.points[p] = lidarRay.GetPoint(range);
-                    data.distances[p] = range;
-                    data.normDistances[p] = 1f;
-                    data.tags[p] = "Untagged";
+                    LidarPoint point = new LidarPoint();
+                    point.position = lidarRay.GetPoint(range);
+                    point.distance = range;
+                    point.normDistance = 1f;
+                    point.tag = "Untagged";
+
+                    data.lidarPoints[p] = point;
 
                     lidarRay.direction = rotAzimuth * lidarRay.direction;
                     p++;
@@ -128,13 +129,13 @@ public class LidarSensor : MonoBehaviour
 
         GetOutput();
 
-        for (int i = 0; i < data.points.Length; i++)
+        for (int i = 0; i < data.lidarPoints.Length; i++)
         {
-            if (data.points[i] == null ^ data.normDistances[i] == null)
+            if (data.lidarPoints[i] == null)
                 continue;
 
-            Gizmos.color = Color.HSVToRGB(data.normDistances[i], 1f, 1f);
-            Gizmos.DrawSphere(data.points[i], gizmoSize);
+            Gizmos.color = Color.HSVToRGB(data.lidarPoints[i].normDistance, 1f, 1f);
+            Gizmos.DrawSphere(data.lidarPoints[i].position, gizmoSize);
         }
     }
 
@@ -153,14 +154,14 @@ public class LidarSensor : MonoBehaviour
         if (data == null)
             return;
 
-        for (int i = 0; i < data.points.Length; i++)
+        for (int i = 0; i < data.lidarPoints.Length; i++)
         {
-            if (data.points[i] == null ^ data.normDistances[i] == null)
+            if (data.lidarPoints[i] == null)
                 continue;
 
-            GL.Color(Color.HSVToRGB(data.normDistances[i], 1f, 1f));
-            GL.Vertex3(data.points[i].x, data.points[i].y, data.points[i].z);
-            GL.Vertex3(data.points[i].x, data.points[i].y + gizmoSize, data.points[i].z);
+            GL.Color(Color.HSVToRGB(data.lidarPoints[i].normDistance, 1f, 1f));
+            GL.Vertex3(data.lidarPoints[i].position.x, data.lidarPoints[i].position.y, data.lidarPoints[i].position.z);
+            GL.Vertex3(data.lidarPoints[i].position.x, data.lidarPoints[i].position.y + gizmoSize, data.lidarPoints[i].position.z);
         }
 
         GL.End();
