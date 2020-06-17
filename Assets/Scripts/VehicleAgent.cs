@@ -1,31 +1,56 @@
-﻿using System.Collections;
+﻿/*
+ * This code is part of DRL-Highway by Daniel (2020)
+ * 
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
 using MLAgents.Sensors;
 using System.Linq;
 
-//[RequireComponent(typeof(Driver))]
+[RequireComponent(typeof(Rigidbody))]
 public class VehicleAgent : Agent
 {
-    private Rigidbody rBody;
-    public EnvironmentManager environmentManager;
-    private List<Ray> laneCenterList = new List<Ray>();
-    private List<float> latErrorList = new List<float>();
-    private int currentLaneNr = 99;
-
+    public EnvironmentManager environment;
     public Transform Target;
 
-    void Start()
+    [Header("Car components")]
+    private Rigidbody rBody;
+    [SerializeField] private GameObject wheelFrontLeft;
+    [SerializeField] private GameObject wheelFrontRight;
+    [SerializeField] private GameObject wheelBackLeft;
+    [SerializeField] private GameObject wheelBackRight;
+    private WheelCollider wheelcolFL, wheelcolFR, wheelcolBL, wheelcolBR;
+    [SerializeField] private Transform centerOfMass;
+    [SerializeField] private Transform frontRadar;
+
+    [Header("ACC parameters")]
+    public float throttle = 0f;
+    [Range(0, 200)] public int desiredVelocity = 100;
+    [SerializeField] [Range(50, 200)] private int m_MeasureDistance = 100;
+    [SerializeField] private float m_K = 50f;
+    [SerializeField] private float m_Kt = 1.0f;
+    [SerializeField] private float m_Kv = 60f;
+    [SerializeField] private float m_Kd = 30f;
+    [SerializeField] private int m_maxMotorTorque = 1000;
+    [SerializeField] private int m_maxBrakeTorque = 1000;
+
+    public override void Initialize()
     {
-        // Check whether class EnvironmentManager is correctly referenced
-        if (environmentManager == null)
+        // Check whether environment is correctly referenced
+        if (environment == null)
         {
-            Debug.LogError("Missing <GameObject> environmentManager reference!");
+            Debug.LogError("Missing <GameObject> environment reference!");
             Debug.Break();
         }
 
+        // Initialize rigidbody component
         rBody = GetComponent<Rigidbody>();
+        if (rBody != null && centerOfMass != null)
+            rBody.centerOfMass = centerOfMass.localPosition;
+
     }
 
     public override void OnEpisodeBegin()
@@ -34,8 +59,6 @@ public class VehicleAgent : Agent
 
         // Debugging for now, should probably move to CollectObservations()
         //laneCenterList = environmentManager.laneCenterList;
-        latErrorList = CalculateLateralError(laneCenterList);
-        currentLaneNr = DetermineCurrentLane(latErrorList);
 
 
         // If the agent falls
@@ -51,7 +74,6 @@ public class VehicleAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        latErrorList = CalculateLateralError(laneCenterList);
         sensor.AddObservation(rBody.velocity.x);
     }
 
@@ -65,32 +87,10 @@ public class VehicleAgent : Agent
         return base.Heuristic();
     }
 
-
-    private List<float> CalculateLateralError(List<Ray> laneCenterList)
-    {
-        // Calculates lateral errors to an input list of lane center rays
-        List<float> latErrorList = new List<float>();
-        Vector3 pos = transform.position;
-
-        if (laneCenterList.Count != 0)
-        {
-            foreach (Ray ray in laneCenterList)
-            {
-                latErrorList.Add(Vector3.Cross(ray.direction, pos - ray.origin).magnitude);
-                //Debug.Log("lat error: " + Vector3.Cross(ray.direction, pos - ray.origin).magnitude);
-            }
-        } else
-        {
-            Debug.LogError("laneCenterList is empty!");
-        }
-
-        return latErrorList;
-    }
-
     private int DetermineCurrentLane(List<float> latErrorList)
     {
         // Determines whether agent is on the highway and if so, determines current lane
-        float laneWidth = environmentManager.laneWidth;
+        float laneWidth = environment.laneWidth;
         float minLatError = latErrorList.Min();
         int lane = latErrorList.IndexOf(minLatError) + 1;
 
