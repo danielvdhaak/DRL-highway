@@ -50,7 +50,7 @@ public class VehicleControl : MonoBehaviour
 
     [Header("Trajectory tracking Behavior")]
     public TrackingMode trackingMode = TrackingMode.laneKeeping;
-    [SerializeField] private Transform wayPointTracker;
+    public Transform wayPointTracker;
     [SerializeField] private Transform target;
     [SerializeField] private GameObject environmentManager;
     [SerializeField] private float m_GainParameter = 0.2f;
@@ -107,19 +107,25 @@ public class VehicleControl : MonoBehaviour
     }
 
 
-    private void GetSpeed()
+    public float GetSpeed()
     {
         // Receives vehicle velocity in km/h
-        velocity = transform.InverseTransformDirection(rigidBody.velocity).z * 3.6f;
+        return transform.InverseTransformDirection(rigidBody.velocity).z * 3.6f;
     }
 
-    private void SteerWheels()
+    /// <summary>
+    /// Returns left- and right wheel steering angles calculated using Ackermann steering principle.
+    /// </summary>
+    public (float, float) Ackermann(float steeringAngle)
     {
-        // Steers wheels using Ackermann steering principle
         double angle = steeringAngle * Mathf.Deg2Rad;
-        wheelcolFL.steerAngle = (float)Math.Atan((2 * l * Math.Sin(angle)) / (2 * l * Math.Cos(angle) + w * Math.Sin(angle))) * Mathf.Rad2Deg;
-        wheelcolFR.steerAngle = (float)Math.Atan((2 * l * Math.Sin(angle)) / (2 * l * Math.Cos(angle) - w * Math.Sin(angle))) * Mathf.Rad2Deg;
+        float leftAngle = (float)Math.Atan((2 * l * Math.Sin(angle)) / (2 * l * Math.Cos(angle) + w * Math.Sin(angle))) * Mathf.Rad2Deg;
+        float rightAngle = (float)Math.Atan((2 * l * Math.Sin(angle)) / (2 * l * Math.Cos(angle) - w * Math.Sin(angle))) * Mathf.Rad2Deg;
+
+        return (leftAngle, rightAngle);
     }
+
+    public float CalcSteeringAngle(float CTE, )
 
     private void ACC()
     {
