@@ -11,6 +11,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class VehicleControl : MonoBehaviour
 {
+    /*
     public enum TrackingMode { leftLaneChange, laneKeeping, rightLaneChange };
 
     [Header("Properties")]
@@ -38,8 +39,8 @@ public class VehicleControl : MonoBehaviour
     */
 
     [Header("ACC parameters")]
-    public float throttle = 0f;
-    [Range(0,200)] public int desiredVelocity = 100;
+    //public float throttle = 0f;
+    //[Range(0,200)] public int desiredVelocity = 100;
     [SerializeField] [Range(50,200)] private int m_MeasureDistance = 100;
     [SerializeField] private float m_K = 50f;
     [SerializeField] private float m_Kt = 1.0f;
@@ -49,26 +50,26 @@ public class VehicleControl : MonoBehaviour
     [SerializeField] private int m_maxBrakeTorque = 1000;
 
     [Header("Trajectory tracking Behavior")]
-    public TrackingMode trackingMode = TrackingMode.laneKeeping;
-    public Transform wayPointTracker;
-    [SerializeField] private Transform target;
-    [SerializeField] private GameObject environmentManager;
+    //public TrackingMode trackingMode = TrackingMode.laneKeeping;
+    //public Transform wayPointTracker;
+    //[SerializeField] private Transform target;
+    //[SerializeField] private GameObject environmentManager;
     [SerializeField] private float m_GainParameter = 0.2f;
     
-    private float laneCenter;
-    private float trackingTime = 0.0f;
-    private float cte;
-    private Vector3 delta;
-    private Vector3 progress;
+    //private float laneCenter;
+    //private float trackingTime = 0.0f;
+    //private float cte;
+    //private Vector3 delta;
+    //private Vector3 progress;
 
-    [Header("Lane change parameters")]
-    [SerializeField] private float lc_Width = 3.5f;
-    [SerializeField] private float lc_Length = 100;
+    //[Header("Lane change parameters")]
+    //[SerializeField] private float lc_Width = 3.5f;
+    //[SerializeField] private float lc_Length = 100;
 
-    private float l, w;
-    private Rigidbody rigidBody;
+    //private float l, w;
+    //private Rigidbody rigidBody;
 
-
+    /*
     private void Start()
     {
         // Initialize rigid body and center of mass
@@ -97,26 +98,13 @@ public class VehicleControl : MonoBehaviour
         // Set initial conditions
         rigidBody.velocity = transform.TransformDirection(velocity/3.6f*Vector3.forward);
     }
+    */
 
-    private void FixedUpdate()
-    {
-        GetSpeed();
-        FollowTrajectory();
-        SteerWheels();
-        ACC();
-    }
-
-
-    public float GetSpeed()
-    {
-        // Receives vehicle velocity in km/h
-        return transform.InverseTransformDirection(rigidBody.velocity).z * 3.6f;
-    }
 
     /// <summary>
     /// Returns left- and right wheel steering angles calculated using Ackermann steering principle.
     /// </summary>
-    public (float, float) Ackermann(float steeringAngle)
+    public (float, float) Ackermann(float steeringAngle, float l, float w)
     {
         double angle = steeringAngle * Mathf.Deg2Rad;
         float leftAngle = (float)Math.Atan((2 * l * Math.Sin(angle)) / (2 * l * Math.Cos(angle) + w * Math.Sin(angle))) * Mathf.Rad2Deg;
@@ -125,8 +113,45 @@ public class VehicleControl : MonoBehaviour
         return (leftAngle, rightAngle);
     }
 
-    public float CalcSteeringAngle(float CTE, )
+    /// <summary>
+    /// Returns a steering angle calculated using the Stanley method.
+    /// </summary>
+    public float CalcSteeringAngle(float CTE, float headingError, float velocity)
+    {
+        float steeringAngle = headingError + Mathf.Rad2Deg * Mathf.Atan(m_GainParameter * CTE / (velocity / 3.6f));
+        if(Math.Abs(steeringAngle/360f) >= 1f)
+        {
 
+        }
+
+        return steeringAngle;
+    }
+
+    /// <summary>
+    /// Returns motor and braking torques calculated using Adaptive Cruise Control (ACC).
+    /// </summary>
+    public (float, float) CalcTorques(float velocity, float desVelocity, float gap, float fCarVelocity, float fCarThrottle)
+    {
+        float throttle;
+
+        float spacing = 3f + 0.0019f * (velocity / 3.6f) + 0.0448f * (float)Math.Pow(velocity / 3.6f, 2);
+        float freeThrottle = m_K * ((desVelocity - velocity) / 3.6f);
+        float referenceThrottle = m_Kt * fCarThrottle + m_Kv * ((fCarVelocity - velocity) / 3.6f) + m_Kd * (gap - spacing);
+
+        if (gap > m_MeasureDistance)
+            throttle = freeThrottle;
+        else
+            throttle = Mathf.Min(freeThrottle, referenceThrottle);
+
+        return (Mathf.Clamp(throttle, 0f, m_maxMotorTorque), -Mathf.Clamp(throttle, -m_maxBrakeTorque, 0f));
+    }
+    /*
+    public float GetSpeed()
+    {
+        // Receives vehicle velocity in km/h
+        return transform.InverseTransformDirection(rigidBody.velocity).z * 3.6f;
+    }
+    
     private void ACC()
     {
         float gap = 3f + 0.0019f * (velocity/3.6f) + 0.0448f * (float)Math.Pow(velocity/3.6f, 2);
@@ -273,5 +298,5 @@ public class VehicleControl : MonoBehaviour
                 break;
         }
 
-    }
+    }*/
 }

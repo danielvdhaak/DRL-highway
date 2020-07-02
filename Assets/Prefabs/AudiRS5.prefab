@@ -23362,9 +23362,12 @@ GameObject:
   - component: {fileID: 6659627004403888616}
   - component: {fileID: 5673160827042440466}
   - component: {fileID: 8131805886204210815}
+  - component: {fileID: 7550677827306913715}
+  - component: {fileID: 7371215330335361717}
+  - component: {fileID: 6918137807124011795}
   m_Layer: 0
   m_Name: AudiRS5
-  m_TagString: Car
+  m_TagString: Agent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23423,6 +23426,83 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -814935763317417967, guid: 0b828daacac3a2240a048b91685c54d0, type: 3}
+--- !u!114 &7550677827306913715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651869346091844603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38e8a48e27cd9a7459251e2abc969872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  maxStep: 0
+  Target: {fileID: 0}
+  reward: 0
+  steeringAngle: 0
+  velocity: 0
+  targetLane: 4
+  wheelFrontLeft: {fileID: 7791624992940219192}
+  wheelFrontRight: {fileID: 2525555415392278765}
+  wheelBackLeft: {fileID: 365039517544278387}
+  wheelBackRight: {fileID: 2817820717354144444}
+  centerOfMass: {fileID: 4280645223251348575}
+  frontRadar: {fileID: 4054425070728609498}
+  mTorque: 0
+  bTorque: 0
+  desiredVelocity: 100
+  tracker: {fileID: 6300847735248186717}
+  lc_Width: 3.5
+  lc_Length: 100
+--- !u!114 &7371215330335361717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651869346091844603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 03000000
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 1
+  m_BehaviorName: My Behavior
+  TeamId: 0
+  m_UseChildSensors: 1
+--- !u!114 &6918137807124011795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651869346091844603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fc73c89a53c47418af705a5ea288c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MeasureDistance: 100
+  m_K: 50
+  m_Kt: 1
+  m_Kv: 60
+  m_Kd: 30
+  m_maxMotorTorque: 1000
+  m_maxBrakeTorque: 1000
+  m_GainParameter: 0.4
 --- !u!1 &7689914650016505846
 GameObject:
   m_ObjectHideFlags: 0

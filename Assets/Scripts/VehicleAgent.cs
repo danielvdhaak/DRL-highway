@@ -11,9 +11,11 @@ using MLAgents;
 using MLAgents.Sensors;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(VehicleControl))]
 public class VehicleAgent : Agent
 {
-    public EnvironmentManager environment;
+    private EnvironmentManager environment;
+    private VehicleControl vehicle;
     public Transform Target;
     public float reward;
 
@@ -38,27 +40,20 @@ public class VehicleAgent : Agent
     [SerializeField] private Transform frontRadar;
 
     [Header("ACC parameters")]
-    public float throttle = 0f;
+    public float mTorque;
+    public float bTorque;
     [Range(0, 200)] public int desiredVelocity = 100;
-    [SerializeField] [Range(50, 200)] private int m_MeasureDistance = 100;
-    [SerializeField] private float m_K = 50f;
-    [SerializeField] private float m_Kt = 1.0f;
-    [SerializeField] private float m_Kv = 60f;
-    [SerializeField] private float m_Kd = 30f;
-    [SerializeField] private int m_maxMotorTorque = 1000;
-    [SerializeField] private int m_maxBrakeTorque = 1000;
 
     [Header("Trajectory tracking Behavior")]
-    private bool m_laneChanging;
+    private bool m_laneChanging = false;
     private float m_Delta;
+    private float m_CTE;
+    private float m_headingError;
     [SerializeField] private Transform tracker;
-    [SerializeField] private Transform waypoint;
-    [SerializeField] private float m_GainParameter = 0.2f;
 
     [Header("Lane change parameters")]
     [SerializeField] private float lc_Width = 3.5f;
     [SerializeField] private float lc_Length = 100;
-
 
     public override void Initialize()
     {
@@ -79,12 +74,16 @@ public class VehicleAgent : Agent
         w = Math.Abs(wheelFrontLeft.transform.localPosition.x - wheelFrontRight.transform.localPosition.x);
         l = Math.Abs(wheelFrontLeft.transform.localPosition.z - wheelBackLeft.transform.localPosition.z);
 
-        // Check whether environment is correctly referenced
+        // Initialize environment
+        environment = GetComponentInParent<EnvironmentManager>();
         if (environment == null)
         {
             Debug.LogError("Missing <GameObject> environment reference!");
             Debug.Break();
         }
+
+        // Initialize vehicle control module
+        vehicle = GetComponent<VehicleControl>();
     }
 
     public override void OnEpisodeBegin()
@@ -97,7 +96,7 @@ public class VehicleAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        
+        sensor.AddObservation(GetSpeed());
     }
 
     public override void CollectDiscreteActionMasks(DiscreteActionMasker actionMasker)
@@ -108,33 +107,67 @@ public class VehicleAgent : Agent
     public override void OnActionReceived(float[] vectorAction)
     {
         var action = Mathf.FloorToInt(vectorAction[0]);
+        //Debug.Log("Action: " + action);
+
+        Vector3 pos = environment.transform.InverseTransformPoint(tracker.position);
+        velocity = GetSpeed();
 
         // Shift LC delta point if not lanechanging
         if (!m_laneChanging)
-            m_Delta = environment.transform.InverseTransformPoint(vehicle.wayPointTracker.position).z;
+            m_Delta = pos.z;
+        //environment.laneData[targetLane-1].center,
+        //environment.transform.InverseTransformPoint(tracker.position).y,
+        //environment.transform.InverseTransformPoint(tracker.position).z
+        //);
 
-        float x, y, z, angle;
+        // Trajectory generation
+        float x, a;
         switch (action)
         {
             case k_KeepLane:
                 m_laneChanging = false;
+                pos = environment.transform.InverseTransformPoint(tracker.position);
+                x = environment.laneData[targetLane - 1].center;
+                a = 0f;
                 break;
             case k_LeftLaneChange:
                 m_laneChanging = true;
-
-                z = environment.transform.InverseTransformPoint(vehicle.wayPointTracker.position).z - m_Delta;
-                y = transform.position.y;
-                x = -lc_Width * (10 * Mathf.Pow((z / lc_Length), 3) - 15 * Mathf.Pow((z / lc_Length), 4) + 6 * Mathf.Pow((z / lc_Length), 5));
-
-
-
+                x = -lc_Width * (10 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 3) - 15 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 4) + 6 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 5)) + environment.laneData[targetLane - 1].center;
+                a = -(float)Math.Atan(30 * lc_Width * Math.Pow((pos.z - m_Delta), 2) * Math.Pow(lc_Length - (pos.z - m_Delta), 2) * Math.Pow(lc_Length, -5));
+                if (pos.z - m_Delta >= lc_Length)
+                {
+                    m_laneChanging = false;
+                    targetLane = targetLane - 1;
+                }
                 break;
             case k_RightLaneChange:
                 m_laneChanging = true;
+                x = lc_Width * (10 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 3) - 15 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 4) + 6 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 5)) + environment.laneData[targetLane - 1].center;
+                a = (float)Math.Atan(30 * lc_Width * Math.Pow((pos.z - m_Delta), 2) * Math.Pow(lc_Length - (pos.z - m_Delta), 2) * Math.Pow(lc_Length, -5));
+                if (pos.z - m_Delta >= lc_Length)
+                {
+                    m_laneChanging = false;
+                    targetLane = targetLane + 1;
+                }
                 break;
             default:
                 throw new ArgumentException("Invalid action value");
         }
+
+        // Steering
+        m_CTE = (x - pos.x) * Mathf.Cos(-a);
+        m_headingError = Mathf.Rad2Deg * a - transform.rotation.eulerAngles.y;
+        steeringAngle = vehicle.CalcSteeringAngle(m_CTE, m_headingError, velocity);
+        Debug.Log(steeringAngle);
+        (wheelcolFL.steerAngle, wheelcolFR.steerAngle) = vehicle.Ackermann(steeringAngle, l, w);
+
+        // Torque
+        (mTorque, bTorque) = vehicle.CalcTorques(velocity, desiredVelocity, Mathf.Infinity, 0f, 0f);
+        wheelcolBL.motorTorque = mTorque;
+        wheelcolBL.brakeTorque = bTorque;
+        wheelcolBR.motorTorque = mTorque;
+        wheelcolBR.brakeTorque = bTorque;
+
     }
 
 

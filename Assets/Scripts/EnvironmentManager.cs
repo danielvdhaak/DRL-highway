@@ -12,7 +12,7 @@ using TMPro;
 public class EnvironmentManager : MonoBehaviour
 {
     [Serializable]
-    public class VehicleParameters
+    public class StartParameters
     {
         public GameObject prefab;
         public float pos;
@@ -28,18 +28,18 @@ public class EnvironmentManager : MonoBehaviour
         public float stdVehicleSpeed;
         public float trafficFraction;
         public GameObject[] vehiclePrefabs;
-        public VehicleParameters[] vehicleParameters;
+        public StartParameters[] startParameters;
 
         public void Init(int N)
         {
-            vehicleParameters = new VehicleParameters[N];
+            startParameters = new StartParameters[N];
         }
     }
 
     public VehicleAgent vehicleAgent;
     public TextMeshPro cumulativeRewardText;
 
-    [Range(2,6)] public int numberOfLanes = 5;
+    public int numberOfLanes;
     public float laneWidth = 3.5f;
     public int trafficFlow = 6000;
     public float minHeadway = 1f;
@@ -55,7 +55,7 @@ public class EnvironmentManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Random number: " + randomNumber.Uniform(0.01f, 1.0f));
+        //Debug.Log("Random number: " + randomNumber.Uniform(0.01f, 1.0f));
     }
 
     /// <summary>
@@ -85,6 +85,8 @@ public class EnvironmentManager : MonoBehaviour
 
     private void DetermineLaneCenters()
     {
+        numberOfLanes = laneData.Length;
+
         for (int i = 0; i < numberOfLanes; i++)
         {
             laneData[i].center = -0.5f * numberOfLanes * laneWidth + ((float)i + 0.5f) * laneWidth;
@@ -100,27 +102,37 @@ public class EnvironmentManager : MonoBehaviour
             float meanHeadway = 3600 / laneTrafficFlow;                         // [s/veh]
 
             laneData.Init((int)laneDensity);
-            for (int i = 0; i < laneData.vehicleParameters.Length; i++)
+            for (int i = 0; i < laneData.startParameters.Length; i++)
             {
-                laneData.vehicleParameters[i] = new VehicleParameters();
+                laneData.startParameters[i] = new StartParameters();
 
-                laneData.vehicleParameters[i].prefab = null;
-                laneData.vehicleParameters[i].speed = randomNumber.Gaussian(laneData.meanVehicleSpeed, laneData.stdVehicleSpeed);
-                laneData.vehicleParameters[i].headway = randomNumber.Exponential(meanHeadway, minHeadway);
+                laneData.startParameters[i].prefab = null;
+                laneData.startParameters[i].speed = randomNumber.Gaussian(laneData.meanVehicleSpeed, laneData.stdVehicleSpeed);
+                laneData.startParameters[i].headway = randomNumber.Exponential(meanHeadway, minHeadway);
 
                 try
                 {
-                    laneData.vehicleParameters[i].pos = laneData.vehicleParameters[i - 1].pos + laneData.vehicleParameters[i - 1].headway * (laneData.vehicleParameters[i - 1].speed / 3.6f);
+                    laneData.startParameters[i].pos = laneData.startParameters[i - 1].pos + laneData.startParameters[i - 1].headway * (laneData.startParameters[i - 1].speed / 3.6f);
                 }
                 catch (IndexOutOfRangeException)
                 {
-                    laneData.vehicleParameters[i].pos = 0f;
+                    laneData.startParameters[i].pos = 0f;
                 }
             }
         }
     }
 
-
+    private void AddAgent(int startLane, int startPos)
+    {
+        float deltaZ = laneData[startLane - 1].startParameters[startPos - 1].pos;
+        foreach(LaneData lane in laneData)
+        {
+            for (int i = 0; i < lane.startParameters.Length; i++)
+            {
+                lane.startParameters[i].pos -= deltaZ;
+            }
+        }
+    }
 
     private void OnDrawGizmosSelected()
     {
