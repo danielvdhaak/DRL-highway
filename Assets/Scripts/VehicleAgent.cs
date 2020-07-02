@@ -24,9 +24,10 @@ public class VehicleAgent : Agent
     const int k_RightLaneChange = 3;
 
     [Header("Properties")]
-    public float steeringAngle;
-    public float velocity;
+    public float steeringAngle = 0f;
+    public float velocity = 0f;
     public int targetLane = 2;
+    public bool m_laneChanging = false;
 
     [Header("Car components")]
     private Rigidbody rBody;
@@ -40,20 +41,21 @@ public class VehicleAgent : Agent
     [SerializeField] private Transform frontRadar;
 
     [Header("ACC parameters")]
+    public GameObject velTarget;
     public float mTorque;
     public float bTorque;
     [Range(0, 200)] public int desiredVelocity = 100;
 
     [Header("Trajectory tracking Behavior")]
-    private bool m_laneChanging = false;
     private float m_Delta;
     private float m_CTE;
     private float m_headingError;
     [SerializeField] private Transform tracker;
 
     [Header("Lane change parameters")]
-    [SerializeField] private float lc_Width = 3.5f;
-    [SerializeField] private float lc_Length = 100;
+    private float lc_Width;
+    private float lc_Length;
+    [SerializeField] private float lc_Time = 2.5f;
 
     public override void Initialize()
     {
@@ -81,6 +83,7 @@ public class VehicleAgent : Agent
             Debug.LogError("Missing <GameObject> environment reference!");
             Debug.Break();
         }
+        lc_Width = environment.laneWidth;
 
         // Initialize vehicle control module
         vehicle = GetComponent<VehicleControl>();
@@ -92,6 +95,19 @@ public class VehicleAgent : Agent
             // - speed
             // - position
             // - rotation
+    }
+
+    private void FixedUpdate()
+    {
+        // Only requests a new decision if agent is not performing a lane change
+        if (m_laneChanging)
+        {
+            RequestAction();
+        }
+        else
+        {
+            RequestDecision();
+        }
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -112,26 +128,22 @@ public class VehicleAgent : Agent
         Vector3 pos = environment.transform.InverseTransformPoint(tracker.position);
         velocity = GetSpeed();
 
-        // Shift LC delta point if not lanechanging
-        if (!m_laneChanging)
-            m_Delta = pos.z;
-        //environment.laneData[targetLane-1].center,
-        //environment.transform.InverseTransformPoint(tracker.position).y,
-        //environment.transform.InverseTransformPoint(tracker.position).z
-        //);
-
         // Trajectory generation
         float x, a;
         switch (action)
         {
             case k_KeepLane:
                 m_laneChanging = false;
-                pos = environment.transform.InverseTransformPoint(tracker.position);
                 x = environment.laneData[targetLane - 1].center;
                 a = 0f;
                 break;
             case k_LeftLaneChange:
-                m_laneChanging = true;
+                if (!m_laneChanging)
+                {
+                    m_laneChanging = true;
+                    lc_Length = (velocity / 3.6f) * lc_Time;
+                    m_Delta = pos.z;
+                }
                 x = -lc_Width * (10 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 3) - 15 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 4) + 6 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 5)) + environment.laneData[targetLane - 1].center;
                 a = -(float)Math.Atan(30 * lc_Width * Math.Pow((pos.z - m_Delta), 2) * Math.Pow(lc_Length - (pos.z - m_Delta), 2) * Math.Pow(lc_Length, -5));
                 if (pos.z - m_Delta >= lc_Length)
@@ -141,7 +153,12 @@ public class VehicleAgent : Agent
                 }
                 break;
             case k_RightLaneChange:
-                m_laneChanging = true;
+                if (!m_laneChanging)
+                {
+                    m_laneChanging = true;
+                    lc_Length = (velocity / 3.6f) * lc_Time;
+                    m_Delta = pos.z;
+                }
                 x = lc_Width * (10 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 3) - 15 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 4) + 6 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 5)) + environment.laneData[targetLane - 1].center;
                 a = (float)Math.Atan(30 * lc_Width * Math.Pow((pos.z - m_Delta), 2) * Math.Pow(lc_Length - (pos.z - m_Delta), 2) * Math.Pow(lc_Length, -5));
                 if (pos.z - m_Delta >= lc_Length)
@@ -158,7 +175,6 @@ public class VehicleAgent : Agent
         m_CTE = (x - pos.x) * Mathf.Cos(-a);
         m_headingError = Mathf.Rad2Deg * a - transform.rotation.eulerAngles.y;
         steeringAngle = vehicle.CalcSteeringAngle(m_CTE, m_headingError, velocity);
-        Debug.Log(steeringAngle);
         (wheelcolFL.steerAngle, wheelcolFR.steerAngle) = vehicle.Ackermann(steeringAngle, l, w);
 
         // Torque
@@ -179,18 +195,6 @@ public class VehicleAgent : Agent
             return new float[] { k_RightLaneChange };
         else
             return new float[] { k_KeepLane };
-    }
-
-    private void FixedUpdate()
-    {
-        // Only requests a new decision if agent is not performing a lane change
-        if (m_laneChanging)
-        {
-            RequestAction();
-        } else
-        {
-            RequestDecision();
-        }
     }
 
     private int DetermineCurrentLane(List<float> latErrorList)
@@ -218,7 +222,5 @@ public class VehicleAgent : Agent
     {
         return transform.InverseTransformDirection(rBody.velocity).z * 3.6f;
     }
-
-
 
 }

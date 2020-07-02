@@ -134,6 +134,28 @@ public class EnvironmentManager : MonoBehaviour
         }
     }
 
+    public void SpawnTraffic()
+    {
+        /*
+        // Instantiate car prefab
+        GameObject vehicleInstance;
+        vehicleInstance = Instantiate(carPrefabs[0], new Vector3(x, y, z), transform.rotation) as GameObject;
+        GameObject vehicleInstance = Instantiate(vehiclePrefab, new Vector3(x, y, z), transform.rotation) as GameObject;
+
+        // Set driver properties
+        Driver driver = vehicleInstance.GetComponent<Driver>();
+        driver.targetLane = lane + 1;
+        //driver.initVelocity = 0f;
+        driver.desiredVelocity = 0;
+        driver.velocity = 0f;
+        // Set car properties
+        VehicleControl vehiclecontrol = vehicleInstance.GetComponent<VehicleControl>();
+        vehiclecontrol.targetLane = laneNr;
+        vehiclecontrol.desiredVelocity = 10;
+        vehiclecontrol.velocity = 10f;
+        */
+    }
+
     private void OnDrawGizmosSelected()
     {
         Vector3 position = transform.position;

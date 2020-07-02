@@ -119,10 +119,11 @@ public class VehicleControl : MonoBehaviour
     public float CalcSteeringAngle(float CTE, float headingError, float velocity)
     {
         float steeringAngle = headingError + Mathf.Rad2Deg * Mathf.Atan(m_GainParameter * CTE / (velocity / 3.6f));
-        if(Math.Abs(steeringAngle/360f) >= 1f)
-        {
-
-        }
+        
+        if (steeringAngle > 180f)
+            steeringAngle -= 360f;
+        else if (steeringAngle < -180f)
+            steeringAngle += 360f;
 
         return steeringAngle;
     }
