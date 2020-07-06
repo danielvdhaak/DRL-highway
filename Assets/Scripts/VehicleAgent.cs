@@ -14,10 +14,13 @@ using MLAgents.Sensors;
 [RequireComponent(typeof(VehicleControl))]
 public class VehicleAgent : Agent
 {
+    [Header("ML-Agents")]
     private EnvironmentManager environment;
     private VehicleControl vehicle;
     public Transform Target;
     public float reward;
+    [SerializeField] private List<int> startingLanes = new List<int>();
+    [SerializeField] private List<int> startingPos = new List<int>();
 
     const int k_LeftLaneChange = 1;
     const int k_KeepLane = 2;
@@ -40,13 +43,13 @@ public class VehicleAgent : Agent
     [SerializeField] private Transform centerOfMass;
     [SerializeField] private Transform frontRadar;
 
-    [Header("ACC parameters")]
+    [Header("ACC")]
     public GameObject velTarget;
     public float mTorque;
     public float bTorque;
     [Range(0, 200)] public int desiredVelocity = 100;
 
-    [Header("Trajectory tracking Behavior")]
+    [Header("Trajectory tracking")]
     private float m_Delta;
     private float m_CTE;
     private float m_headingError;
@@ -56,6 +59,8 @@ public class VehicleAgent : Agent
     private float lc_Width;
     private float lc_Length;
     [SerializeField] private float lc_Time = 2.5f;
+
+    private RandomNumber randomNumber = new RandomNumber();
 
     public override void Initialize()
     {
@@ -91,10 +96,10 @@ public class VehicleAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        // Set initial conditions:
-            // - speed
-            // - position
-            // - rotation
+
+        int startLane = startingLanes[randomNumber.Next(startingLanes.Count - 1)];
+        int startPos = startingPos[randomNumber.Next(startingPos.Count - 1)];
+        environment.ResetArea(startLane, startPos);
     }
 
     private void FixedUpdate()

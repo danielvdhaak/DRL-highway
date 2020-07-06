@@ -3,8 +3,7 @@
  * 
  */
 
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -12,12 +11,14 @@ using UnityEngine;
 /// </summary>
 public class RandomNumber
 {
+    System.Random rnd = new System.Random();
+
     /// <summary>
     /// Returns a random uniformly distributed float number on the interval [0, 1], i.e. including 0 and 1.
     /// </summary>
     public float Uniform()
     {
-        return Random.Range(0.0f, 1.0f);
+        return UnityEngine.Random.Range(0.0f, 1.0f);
     }
 
     /// <summary>
@@ -25,7 +26,7 @@ public class RandomNumber
     /// </summary>
     public float Uniform(float max)
     {
-        return Random.Range(0.0f, max);
+        return UnityEngine.Random.Range(0.0f, max);
     }
 
     /// <summary>
@@ -33,7 +34,23 @@ public class RandomNumber
     /// </summary>
     public float Uniform(float min, float max)
     {
-        return Random.Range(min, max);
+        return UnityEngine.Random.Range(min, max);
+    }
+
+    /// <summary>
+    /// Returns a random uniformly distributed 32-bit signed integer on the interval [0, max], i.e. including 0 and max.
+    /// </summary>
+    public int Next(int max)
+    {
+        return rnd.Next(max + 1);
+    }
+
+    /// <summary>
+    /// Returns a random uniformly distributed 32-bit signed integer on the interval [min, max], i.e. including min and max.
+    /// </summary>
+    public int Next(int min, int max)
+    {
+        return rnd.Next(min, max + 1);
     }
 
     /// <summary>
@@ -42,8 +59,8 @@ public class RandomNumber
     /// </summary>
     public float Gaussian()
     {
-        float U1 = Uniform(0.01f, 1.0f);
-        float U2 = Uniform(0.01f, 1.0f);
+        float U1 = 1 - (float)rnd.NextDouble();
+        float U2 = 1 - (float)rnd.NextDouble();
 
         return Mathf.Sqrt(-2.0f * Mathf.Log(U1)) * Mathf.Cos(2.0f * Mathf.PI * U2);
     }
@@ -54,10 +71,7 @@ public class RandomNumber
     /// </summary>
     public float Gaussian(float mean, float std)
     {
-        float U1 = Uniform(0.01f, 1.0f);
-        float U2 = Uniform(0.01f, 1.0f);
-
-        return mean + std *  Mathf.Sqrt(-2.0f * Mathf.Log(U1)) * Mathf.Cos(2.0f * Mathf.PI * U2);
+        return mean + std * Gaussian();
     }
 
     /// <summary>
@@ -65,7 +79,7 @@ public class RandomNumber
     /// </summary>
     public float Exponential()
     {
-        float R = Uniform(0.01f, 1.0f);
+        float R = 1 - (float)rnd.NextDouble();
 
         return -Mathf.Log(R);
     }
@@ -75,9 +89,7 @@ public class RandomNumber
     /// </summary>
     public float Exponential(float mean, float min)
     {
-        float R = Uniform(0.01f, 1.0f);
-
-        return (mean - min) * (-Mathf.Log(R)) + min;
+        return (mean - min) * Exponential() + min;
     }
 
     /// <summary>

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(VehicleControl))]
 public class SimpleVehicle : MonoBehaviour
 {
     [Header("Properties")]
@@ -31,6 +32,7 @@ public class SimpleVehicle : MonoBehaviour
     [SerializeField] [Range(50, 200)] private int m_MeasureDistance = 100;
     [SerializeField] private float m_Exponent = 4f;
     [SerializeField] private float m_SafeHeadway = 1.6f;
+    public float desiredVelocity;
 
     [Header("Stanley steering parameters")]
     [SerializeField] private Transform tracker;
@@ -39,6 +41,7 @@ public class SimpleVehicle : MonoBehaviour
     private float laneCenter;
 
     private GameObject environment;
+    private VehicleControl vehicle;
 
     private float l, w;
     private Rigidbody rigidBody;
@@ -58,25 +61,25 @@ public class SimpleVehicle : MonoBehaviour
         wheelcolBL = wheelBackLeft.GetComponent<WheelCollider>();
         wheelcolBR = wheelBackRight.GetComponent<WheelCollider>();
 
+        // Calculate wheel seperation w and base l
+        w = Math.Abs(wheelFrontLeft.transform.localPosition.x - wheelFrontRight.transform.localPosition.x);
+        l = Math.Abs(wheelFrontLeft.transform.localPosition.z - wheelBackLeft.transform.localPosition.z);
+
         // Initialize environment
         environment = transform.parent.gameObject;
         if (environment == null)
         {
             Debug.LogError("Can not reference environment!");
         }
+
+        // Initialize vehicle control module
+        vehicle = GetComponent<VehicleControl>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        // Calculate wheel seperation w and base l
-        w = Math.Abs(wheelFrontLeft.transform.localPosition.x - wheelFrontRight.transform.localPosition.x);
-        l = Math.Abs(wheelFrontLeft.transform.localPosition.z - wheelBackLeft.transform.localPosition.z);
-
         // Get targetlane center
         laneCenter = environment.GetComponent<EnvironmentManager>().laneData[targetLane - 1].center;
-
-        // Set initial conditions
-        rigidBody.velocity = transform.TransformDirection(velocity / 3.6f * Vector3.forward);
     }
 
     private void FixedUpdate()
@@ -84,6 +87,18 @@ public class SimpleVehicle : MonoBehaviour
         // Do physics related tasks
         GetSpeed();
         FollowTrajectory();
+    }
+
+    public void OnSpawn()
+    {
+        transform.gameObject.SetActive(true);
+    }
+
+    public void OnDespawn()
+    {
+        rigidBody.velocity = Vector3.zero;
+        rigidBody.angularVelocity = Vector3.zero;
+        transform.gameObject.SetActive(false);
     }
 
     private void GetSpeed()

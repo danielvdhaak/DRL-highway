@@ -11,76 +11,112 @@ using TMPro;
 
 public class EnvironmentManager : MonoBehaviour
 {
-    [Serializable]
-    public class StartParameters
-    {
-        public GameObject prefab;
-        public float pos;
-        public float speed;
-        public float headway;
-    }
+
 
     [Serializable]
     public class LaneData
     {
+        [Serializable]
+        public class StartParameters
+        {
+            public float pos;
+            public float speed;
+            public float headway;
+        }
+
         public float center;
         public float meanVehicleSpeed;
         public float stdVehicleSpeed;
         public float trafficFraction;
-        public GameObject[] vehiclePrefabs;
         public StartParameters[] startParameters;
-
-        public void Init(int N)
-        {
-            startParameters = new StartParameters[N];
-        }
     }
 
+    [Serializable]
+    public class VehiclePosition
+    {
+        public GameObject gameObject;
+        public float x;
+        public float z;
+        public int lane;
+    }
+
+    [Header("ML-Agents")]
     public VehicleAgent vehicleAgent;
     public TextMeshPro cumulativeRewardText;
 
-    public int numberOfLanes;
+    [Header("Environment parameters")]
+    [HideInInspector] public int numberOfLanes;
     public float laneWidth = 3.5f;
     public int trafficFlow = 6000;
     public float minHeadway = 1f;
+    public GameObject[] vehiclePrefabs;
     public LaneData[] laneData;
+
+    [Header("Traffic")]
+    private List<GameObject> vehicleList = new List<GameObject>();
+    public VehiclePosition[] vehiclePositions;
+
 
     private RandomNumber randomNumber = new RandomNumber();
 
     private void Awake()
     {
         DetermineLaneCenters();
-        //SetTrafficParameters();
+
+        // Initialize arrays
+        int numberOfCars = 0;
+        foreach (LaneData laneData in laneData)
+        {
+            float laneTrafficFlow = trafficFlow * laneData.trafficFraction;     // [veh/h]
+            float laneDensity = laneTrafficFlow / laneData.meanVehicleSpeed;    // [veh/km]
+            laneData.startParameters = new LaneData.StartParameters[(int)laneDensity];
+
+            numberOfCars += (int)laneDensity;
+        }
+        vehiclePositions = new VehiclePosition[numberOfCars];
+
+        // Seed vehicle list
+        vehicleList.Clear();
+        for (int i = 0; i < numberOfCars; i++)
+        {
+            GameObject obj = Instantiate(vehiclePrefabs[randomNumber.Next(vehiclePrefabs.Length - 1)]);
+            obj.SetActive(false);
+            vehicleList.Add(obj);
+        }
     }
 
-    private void Update()
+    public void ResetArea(int startLane, int startPos)
     {
-        //Debug.Log("Random number: " + randomNumber.Uniform(0.01f, 1.0f));
-    }
-
-    /// <summary>
-    /// Generates a N long float array whose sum is M.
-    /// </summary>
-    private float[] Disperse(int N, float M)
-    {
-        float[] array = new float[N];
-        float sum = 0f;
-
-        // Fill array with uniform numbers
-        for(int i = 0; i < N; i++)
+        // Despawn cars
+        foreach (GameObject obj in vehicleList)
         {
-            array[i] = randomNumber.Uniform();
-            sum += array[i];
+            Despawn(obj);
         }
 
-        // Normalize sum to M
-        for (int i = 0; i < N; i++)
+        SetStartParameters();
+
+        // Shift all positions so that agent starts at z=0
+        float deltaZ = laneData[startLane - 1].startParameters[startPos - 1].pos;
+        foreach (LaneData lane in laneData)
         {
-            array[i] /= sum;
-            array[i] *= M;
+            for (int i = 0; i < lane.startParameters.Length; i++)
+            {
+                lane.startParameters[i].pos -= deltaZ;
+            }
         }
 
-        return array;
+        // Spawn cars
+        int vID = 0;
+        for (int l = 0; l < numberOfLanes; l++)
+        {
+            for (int p = 0; p < laneData[l].startParameters.Length; p++)
+            {
+                Vector3 pos = new Vector3(laneData[l].center, 0f, laneData[l].startParameters[p].pos);
+                Spawn(vehicleList[vID], pos, l + 1, laneData[l].startParameters[p].speed);
+                vID++;
+            }
+        }
+
     }
 
     private void DetermineLaneCenters()
@@ -93,7 +129,7 @@ public class EnvironmentManager : MonoBehaviour
         }
     }
 
-    private void SetTrafficParameters()
+    private void SetStartParameters()
     {
         foreach(LaneData laneData in laneData)
         {
@@ -101,12 +137,10 @@ public class EnvironmentManager : MonoBehaviour
             float laneDensity = laneTrafficFlow / laneData.meanVehicleSpeed;    // [veh/km]
             float meanHeadway = 3600 / laneTrafficFlow;                         // [s/veh]
 
-            laneData.Init((int)laneDensity);
             for (int i = 0; i < laneData.startParameters.Length; i++)
             {
-                laneData.startParameters[i] = new StartParameters();
+                laneData.startParameters[i] = new LaneData.StartParameters();
 
-                laneData.startParameters[i].prefab = null;
                 laneData.startParameters[i].speed = randomNumber.Gaussian(laneData.meanVehicleSpeed, laneData.stdVehicleSpeed);
                 laneData.startParameters[i].headway = randomNumber.Exponential(meanHeadway, minHeadway);
 
@@ -122,20 +156,18 @@ public class EnvironmentManager : MonoBehaviour
         }
     }
 
-    private void AddAgent(int startLane, int startPos)
+    public void Spawn(GameObject obj, Vector3 pos, int targetLane, float velocity)
     {
-        float deltaZ = laneData[startLane - 1].startParameters[startPos - 1].pos;
-        foreach(LaneData lane in laneData)
-        {
-            for (int i = 0; i < lane.startParameters.Length; i++)
-            {
-                lane.startParameters[i].pos -= deltaZ;
-            }
-        }
-    }
+        obj.transform.localPosition = pos;
+        obj.transform.localRotation = Quaternion.identity;
 
-    public void SpawnTraffic()
-    {
+        SimpleVehicle vehicle = obj.GetComponent<SimpleVehicle>();
+        vehicle.desiredVelocity = velocity;
+        vehicle.targetLane = targetLane;
+
+        obj.SetActive(true);
+
+        // POS IS LOCAL!!
         /*
         // Instantiate car prefab
         GameObject vehicleInstance;
@@ -154,6 +186,11 @@ public class EnvironmentManager : MonoBehaviour
         vehiclecontrol.desiredVelocity = 10;
         vehiclecontrol.velocity = 10f;
         */
+    }
+
+    public void Despawn(GameObject obj)
+    {
+        obj.SetActive(false);
     }
 
     private void OnDrawGizmosSelected()

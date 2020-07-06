@@ -7020,8 +7020,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7550677827306913715, guid: d11d818e4769d0340983a8482edcbbfb,
         type: 3}
+      propertyPath: startingLanes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550677827306913715, guid: d11d818e4769d0340983a8482edcbbfb,
+        type: 3}
+      propertyPath: startingPos.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550677827306913715, guid: d11d818e4769d0340983a8482edcbbfb,
+        type: 3}
       propertyPath: lc_Time
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550677827306913715, guid: d11d818e4769d0340983a8482edcbbfb,
+        type: 3}
+      propertyPath: startingLanes.Array.data[0]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550677827306913715, guid: d11d818e4769d0340983a8482edcbbfb,
+        type: 3}
+      propertyPath: startingPos.Array.data[0]
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7651869346091844603, guid: d11d818e4769d0340983a8482edcbbfb,
         type: 3}
@@ -7530,43 +7550,40 @@ MonoBehaviour:
   laneWidth: 3.5
   trafficFlow: 6000
   minHeadway: 1
+  vehiclePrefabs:
+  - {fileID: 1223002772083156, guid: f17dfaf4c25d15e41a1cfe4f7597bcd6, type: 3}
   laneData:
   - center: -8.75
-    meanVehicleSpeed: 0
+    meanVehicleSpeed: 100
     stdVehicleSpeed: 0
-    trafficFraction: 0
-    vehiclePrefabs: []
+    trafficFraction: 0.1
     startParameters: []
   - center: -5.25
-    meanVehicleSpeed: 0
+    meanVehicleSpeed: 100
     stdVehicleSpeed: 0
-    trafficFraction: 0
-    vehiclePrefabs: []
+    trafficFraction: 0.1
     startParameters: []
   - center: -1.75
-    meanVehicleSpeed: 0
+    meanVehicleSpeed: 100
     stdVehicleSpeed: 0
-    trafficFraction: 0
-    vehiclePrefabs: []
+    trafficFraction: 0.2
     startParameters: []
   - center: 1.75
-    meanVehicleSpeed: 0
+    meanVehicleSpeed: 100
     stdVehicleSpeed: 0
-    trafficFraction: 0
-    vehiclePrefabs: []
+    trafficFraction: 0.2
     startParameters: []
   - center: 5.25
-    meanVehicleSpeed: 0
+    meanVehicleSpeed: 100
     stdVehicleSpeed: 0
-    trafficFraction: 0
-    vehiclePrefabs: []
+    trafficFraction: 0.2
     startParameters: []
   - center: 8.75
-    meanVehicleSpeed: 0
+    meanVehicleSpeed: 100
     stdVehicleSpeed: 0
-    trafficFraction: 0
-    vehiclePrefabs: []
+    trafficFraction: 0.2
     startParameters: []
+  vehiclePositions: []
 --- !u!4 &1223542930
 Transform:
   m_ObjectHideFlags: 0
