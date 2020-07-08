@@ -79,9 +79,9 @@ public class EnvironmentManager : MonoBehaviour
         vehicleList.Clear();
         for (int i = 0; i < numberOfCars; i++)
         {
-            GameObject obj = Instantiate(vehiclePrefabs[randomNumber.Next(vehiclePrefabs.Length - 1)]);
-            obj.SetActive(false);
-            vehicleList.Add(obj);
+            //GameObject obj = Instantiate(vehiclePrefabs[randomNumber.Next(vehiclePrefabs.Length - 1)]);
+            //obj.SetActive(false);
+            //vehicleList.Add(obj);
         }
     }
 

@@ -11,13 +11,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class VehicleControl : MonoBehaviour
 {
-    /*
-    public enum TrackingMode { leftLaneChange, laneKeeping, rightLaneChange };
+    public enum TrackingMode { leftLaneChange, keepLane, rightLaneChange };
 
     [Header("Properties")]
     public float steeringAngle;
     public float velocity;
-    public int targetLane = 2;
+    public int targetLane;
 
     [Header("Car components")]
     [SerializeField] private GameObject wheelFrontLeft;
@@ -26,21 +25,14 @@ public class VehicleControl : MonoBehaviour
     [SerializeField] private GameObject wheelBackRight;
     private WheelCollider wheelcolFL, wheelcolFR, wheelcolBL, wheelcolBR;
     [SerializeField] private Transform centerOfMass;
-    [SerializeField] private Transform frontRadar;
+    private float l, w;
+    private Rigidbody rBody;
 
-    /*
-    [Header("Car velocity control")]
-    public float desiredVelocity = 100f;
-    [SerializeField] private float timeToCollision = 2.0f;
-    private bool frontWarning = false;
-    [SerializeField] private float proptionalGain, integralGain, derivativeGain;
-    [SerializeField] private int brakingForce = 1000;
-    private float[] velocityError = new float[] { 0f, 0f, 0f, 0f };
-    */
-
-    [Header("ACC parameters")]
-    //public float throttle = 0f;
-    //[Range(0,200)] public int desiredVelocity = 100;
+    [Header("ACC")]
+    public VehicleControl followTarget;
+    public float mTorque;
+    public float bTorque;
+    [Range(0,200)] public int desiredVelocity;
     [SerializeField] [Range(50,200)] private int m_MeasureDistance = 100;
     [SerializeField] private float m_K = 50f;
     [SerializeField] private float m_Kt = 1.0f;
@@ -49,34 +41,41 @@ public class VehicleControl : MonoBehaviour
     [SerializeField] private int m_maxMotorTorque = 1000;
     [SerializeField] private int m_maxBrakeTorque = 1000;
 
-    [Header("Trajectory tracking Behavior")]
-    //public TrackingMode trackingMode = TrackingMode.laneKeeping;
-    //public Transform wayPointTracker;
-    //[SerializeField] private Transform target;
-    //[SerializeField] private GameObject environmentManager;
-    [SerializeField] private float m_GainParameter = 0.2f;
-    
-    //private float laneCenter;
-    //private float trackingTime = 0.0f;
-    //private float cte;
-    //private Vector3 delta;
-    //private Vector3 progress;
+    [Header("Trajectory tracking")]
+    public TrackingMode trackingMode = TrackingMode.keepLane;
+    [SerializeField] private Transform tracker;
+    public Transform environmentSpace;
+    [SerializeField] private float m_GainParameter = 0.4f;
+    private float m_Delta;
+    private float m_CTE;
+    private float m_HeadingError;
+    [HideInInspector] public float laneCenter;
 
-    //[Header("Lane change parameters")]
-    //[SerializeField] private float lc_Width = 3.5f;
-    //[SerializeField] private float lc_Length = 100;
+    [Header("Lane change parameters")]
+    private float lc_Width = 3.5f;
+    private float lc_Length;
+    [SerializeField] private float lc_Time = 2.5f;
+    private int k_RightLC = 1;
+    private int k_LeftLC = -1;
 
-    //private float l, w;
-    //private Rigidbody rigidBody;
+    // Setter that calls event upon value change
+    public TrackingMode _TrackingMode
+    {
+        get { return trackingMode; }
+        set
+        {
+            trackingMode = value;
+            OnTrackingModeChanged(trackingMode);
+        }
+    }
 
-    /*
-    private void Start()
+    private void Awake()
     {
         // Initialize rigid body and center of mass
-        rigidBody = GetComponent<Rigidbody>();
-        if (rigidBody != null && centerOfMass != null)
+        rBody = GetComponent<Rigidbody>();
+        if (rBody != null && centerOfMass != null)
         {
-            rigidBody.centerOfMass = centerOfMass.localPosition;
+            rBody.centerOfMass = centerOfMass.localPosition;
         }
 
         // Initialize wheelcolliders
@@ -88,18 +87,93 @@ public class VehicleControl : MonoBehaviour
         // Calculate wheel seperation w and base l
         w = Math.Abs(wheelFrontLeft.transform.localPosition.x - wheelFrontRight.transform.localPosition.x);
         l = Math.Abs(wheelFrontLeft.transform.localPosition.z - wheelBackLeft.transform.localPosition.z);
-
-        // Initialize environment mananger
-        if (environmentManager == null)
-        {
-            Debug.LogError("Class environmentManager not referenced!");
-        } 
-
-        // Set initial conditions
-        rigidBody.velocity = transform.TransformDirection(velocity/3.6f*Vector3.forward);
     }
-    */
 
+    private void OnEnable()
+    {
+        // Set initial speed
+        // Set lane center
+        // Import vehicle control list with other traffic
+        environmentSpace = GetComponentInParent<EnvironmentManager>().transform;
+        rBody.velocity = new Vector3(0f, 0f, 10f);
+        _TrackingMode = TrackingMode.keepLane;
+
+    }
+
+    private void FixedUpdate()
+    {
+        velocity = GetSpeed();
+
+        // Torque
+        (mTorque, bTorque) = CalcTorques(velocity, desiredVelocity, Mathf.Infinity, 0f, 0f);
+        wheelcolBL.motorTorque = mTorque;
+        wheelcolBL.brakeTorque = bTorque;
+        wheelcolBR.motorTorque = mTorque;
+        wheelcolBR.brakeTorque = bTorque;
+
+        // Steering is handled seperately in designated coroutines
+        if (Input.GetKey(KeyCode.A))
+            _TrackingMode = TrackingMode.leftLaneChange;
+        if (Input.GetKey(KeyCode.D))
+            _TrackingMode = TrackingMode.rightLaneChange;
+    }
+
+    protected void OnTrackingModeChanged(TrackingMode trackingMode)
+    {
+        switch (trackingMode)
+        {
+            case TrackingMode.keepLane:
+                Debug.Log("Keep lane!");
+                StopAllCoroutines();
+                StartCoroutine(KeepLane(laneCenter));
+                break;
+            case TrackingMode.leftLaneChange:
+                Debug.Log("Left lane change!");
+                StopAllCoroutines();
+                StartCoroutine(ChangeLane(k_LeftLC, laneCenter));
+                break;
+            case TrackingMode.rightLaneChange:
+                Debug.Log("Right lane change!");
+                StartCoroutine(ChangeLane(k_RightLC, laneCenter));
+                break;
+        }
+    }
+
+    IEnumerator KeepLane (float center)
+    {
+        while (true)
+        {
+            m_CTE = center - environmentSpace.InverseTransformPoint(tracker.position).x;
+            m_HeadingError = -transform.localEulerAngles.y;
+            steeringAngle = CalcSteeringAngle(m_CTE, m_HeadingError, velocity);
+            (wheelcolFL.steerAngle, wheelcolFR.steerAngle) = Ackermann(steeringAngle, l, w);
+
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    IEnumerator ChangeLane (int dir, float center)
+    {
+        lc_Length = (velocity / 3.6f) * lc_Time;
+        m_Delta = environmentSpace.InverseTransformPoint(tracker.position).z;
+
+        while (environmentSpace.InverseTransformPoint(tracker.position).z - m_Delta <= lc_Length)
+        {
+            Vector3 pos = environmentSpace.InverseTransformPoint(tracker.position);
+            float x = dir * lc_Width * (10 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 3) - 15 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 4) + 6 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 5)) + center;
+            float a = dir * (float)Math.Atan(30 * lc_Width * Math.Pow((pos.z - m_Delta), 2) * Math.Pow(lc_Length - (pos.z - m_Delta), 2) * Math.Pow(lc_Length, -5));
+
+            m_CTE = (x - pos.x) * Mathf.Cos(-a);
+            m_HeadingError = Mathf.Rad2Deg * a - transform.localEulerAngles.y;
+            steeringAngle = CalcSteeringAngle(m_CTE, m_HeadingError, velocity);
+            (wheelcolFL.steerAngle, wheelcolFR.steerAngle) = Ackermann(steeringAngle, l, w);
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        targetLane = targetLane + dir;
+        _TrackingMode = TrackingMode.keepLane;
+    }
 
     /// <summary>
     /// Returns left- and right wheel steering angles calculated using Ackermann steering principle.
@@ -146,158 +220,11 @@ public class VehicleControl : MonoBehaviour
 
         return (Mathf.Clamp(throttle, 0f, m_maxMotorTorque), -Mathf.Clamp(throttle, -m_maxBrakeTorque, 0f));
     }
-    /*
+
     public float GetSpeed()
     {
         // Receives vehicle velocity in km/h
-        return transform.InverseTransformDirection(rigidBody.velocity).z * 3.6f;
-    }
-    
-    private void ACC()
-    {
-        float gap = 3f + 0.0019f * (velocity/3.6f) + 0.0448f * (float)Math.Pow(velocity/3.6f, 2);
-        Vector3 origin = frontRadar.transform.position;
-        Vector3 direction = frontRadar.transform.TransformDirection(frontRadar.transform.forward);
-        RaycastHit hit;
-
-        float freeThrottle;
-        float referenceThrottle;
-
-        if (trackingMode == TrackingMode.laneKeeping)
-        {
-            if (Physics.Raycast(origin, direction, out hit, m_MeasureDistance) && hit.transform.tag == "Car")
-            {
-                Debug.DrawRay(origin, gap * direction, Color.red);
-
-                // Gather preceding car information
-                Vector3 carInfrontPos = hit.transform.position;
-                float carInfrontVelocity = hit.transform.InverseTransformDirection(hit.rigidbody.velocity).z * 3.6f;
-                VehicleControl carInfront = hit.transform.GetComponent<VehicleControl>();
-                float carInfrontThrottle = carInfront.throttle;
-                
-
-                // Determine minimum and throttle
-                freeThrottle = m_K * (desiredVelocity - velocity);
-                referenceThrottle = m_Kt * carInfrontThrottle + m_Kv * ((carInfrontVelocity - velocity)/3.6f) + m_Kd * (hit.distance - gap);
-
-                throttle = Mathf.Min(freeThrottle, referenceThrottle);
-            }
-            else
-            {
-                throttle = m_K * (desiredVelocity - velocity);
-            }
-        }
-        else
-        {
-            throttle = m_K * (desiredVelocity - velocity);
-        }
-
-        // Apply throttle
-        float motorTorque = Mathf.Clamp(throttle, 0f, m_maxMotorTorque);
-        float brakeTorque = Mathf.Clamp(throttle, -m_maxBrakeTorque, 0f);
-
-        wheelcolBL.motorTorque = motorTorque;
-        wheelcolBR.motorTorque = motorTorque;
-        wheelcolBL.brakeTorque = -brakeTorque;
-        wheelcolBR.brakeTorque = -brakeTorque;
+        return transform.InverseTransformDirection(rBody.velocity).z * 3.6f;
     }
 
-    private void FollowTrajectory()
-    {
-        float x, y, z, angle;
-        Vector3 pos;
-        Quaternion rotation;
-
-        // Calculate starting position
-        if (trackingTime == 0.0f)
-        {
-            progress = environmentManager.transform.InverseTransformPoint(wayPointTracker.transform.position);
-            delta = progress;
-            delta.x = environmentManager.GetComponent<EnvironmentManager>().laneData[targetLane - 1].center;
-            //delta = environmentManager.transform.TransformPoint(new Vector3())
-            //delta = wayPointTracker.transform.position;
-        }
-
-        switch (trackingMode)
-        {
-            case TrackingMode.laneKeeping:
-                trackingTime = 0.0f;
-           
-                pos = delta + new Vector3(0, 0, 5);
-                pos = environmentManager.transform.TransformPoint(pos);
-
-                target.transform.position = pos;
-                target.transform.rotation = environmentManager.transform.rotation;
-
-                //cte = target.transform.InverseTransformDirection(target.transform.position - wayPointTracker.transform.position).x;
-                cte = -(target.transform.InverseTransformPoint(wayPointTracker.transform.position)).x;
-                //Debug.Log(cte);
-
-                // Stanley method
-                //Debug.Log("cte: " + cte + ", 1st term: " + (0 - transform.rotation.eulerAngles.y) + ", 2nd term: " + (Mathf.Rad2Deg * (float)Math.Atan(gainParameter * cte / velocity)));
-                steeringAngle = environmentManager.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y + Mathf.Rad2Deg * (float)Math.Atan(m_GainParameter * cte / velocity);
-                break;
-            case TrackingMode.leftLaneChange:
-                // Calculate target coordinates
-                z = environmentManager.transform.InverseTransformPoint(wayPointTracker.transform.position).z - delta.z;
-                y = transform.position.y;
-                x = -lc_Width * (10 * Mathf.Pow((z / lc_Length), 3) - 15 * Mathf.Pow((z / lc_Length), 4) + 6 * Mathf.Pow((z / lc_Length), 5));
-                pos = new Vector3(x, y, z);
-                pos = environmentManager.transform.TransformPoint(pos);
-                angle = -Mathf.Rad2Deg * (float)Math.Atan(30 * lc_Width * Math.Pow(z, 2) * Math.Pow(lc_Length - z, 2) * Math.Pow(lc_Length, -5));
-                rotation = Quaternion.Euler(0, angle, 0);
-                
-                target.transform.position = pos + delta;
-                target.transform.rotation = rotation;
-
-                // Stanley method
-                //error = rotation * (target.transform.position - wayPointTracker.transform.position);
-                //cte = error.x;
-                cte = -(target.transform.InverseTransformPoint(wayPointTracker.transform.position)).x;
-                //Debug.Log("cte: " + cte + ", 1st term: " + (0 - transform.rotation.eulerAngles.y) + ", 2nd term: " + (Mathf.Rad2Deg * (float)Math.Atan(gainParameter * cte / velocity)));
-                steeringAngle = angle - transform.rotation.eulerAngles.y + Mathf.Rad2Deg * (float)Math.Atan(m_GainParameter * cte / velocity);
-
-                trackingTime += Time.deltaTime;
-
-                if (environmentManager.transform.InverseTransformPoint(wayPointTracker.transform.position).z - delta.z >= lc_Length)
-                {
-                    trackingMode = TrackingMode.laneKeeping;
-                    targetLane = targetLane - 1;
-                    //steeringAngle = 0.0f;
-                    trackingTime = 0.0f;
-                }
-                break;
-            case TrackingMode.rightLaneChange:
-                // Calculate target coordinates
-                z = environmentManager.transform.InverseTransformPoint(wayPointTracker.transform.position).z - delta.z;
-                y = transform.position.y;
-                x = lc_Width * (10 * Mathf.Pow((z / lc_Length), 3) - 15 * Mathf.Pow((z / lc_Length), 4) + 6 * Mathf.Pow((z / lc_Length), 5));
-                pos = new Vector3(x, y, z);
-                pos = environmentManager.transform.TransformPoint(pos);
-                angle = Mathf.Rad2Deg*(float)Math.Atan(30 * lc_Width * Math.Pow(z, 2) * Math.Pow(lc_Length - z, 2) * Math.Pow(lc_Length, -5));
-                rotation = Quaternion.Euler(0, angle, 0);
-
-                target.transform.position = pos + delta;
-                target.transform.rotation = rotation;
-
-                // Stanley method
-                cte = -(target.transform.InverseTransformPoint(wayPointTracker.transform.position)).x;
-                steeringAngle = angle - transform.rotation.eulerAngles.y + Mathf.Rad2Deg * (float)Math.Atan(m_GainParameter * cte / velocity);
-
-                trackingTime += Time.deltaTime;
-
-                if (environmentManager.transform.InverseTransformPoint(wayPointTracker.transform.position).z - delta.z >= lc_Length)
-                {
-                    trackingMode = TrackingMode.laneKeeping;
-                    targetLane = targetLane + 1;
-                    //steeringAngle = 0.0f;
-                    trackingTime = 0.0f;
-                }
-                break;
-            default:
-                Debug.Log("No tracking mode set");
-                break;
-        }
-
-    }*/
 }

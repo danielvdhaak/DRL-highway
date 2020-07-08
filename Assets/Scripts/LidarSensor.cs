@@ -139,6 +139,11 @@ public class LidarSensor : MonoBehaviour
         }
     }
 
+    public void Read()
+    {
+        // Return sensor data vector
+    }
+
     private void OnRenderObject()
     {
         if (displayInGame == false)

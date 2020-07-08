@@ -99,7 +99,7 @@ public class VehicleAgent : Agent
 
         int startLane = startingLanes[randomNumber.Next(startingLanes.Count - 1)];
         int startPos = startingPos[randomNumber.Next(startingPos.Count - 1)];
-        environment.ResetArea(startLane, startPos);
+        //environment.ResetArea(startLane, startPos);
     }
 
     private void FixedUpdate()

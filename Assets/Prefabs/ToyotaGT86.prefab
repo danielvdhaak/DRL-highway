@@ -318,17 +318,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fc73c89a53c47418af705a5ea288c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trackingMode: 1
   steeringAngle: 0
   velocity: 0
-  targetLane: 4
-  wheelFrontLeft: {fileID: 1890649546845854}
-  wheelFrontRight: {fileID: 1288719004185982}
-  wheelBackLeft: {fileID: 1785908448937766}
-  wheelBackRight: {fileID: 1183162418364304}
-  centerOfMass: {fileID: 7360681420998173418}
-  frontRadar: {fileID: 1817830700021990952}
-  throttle: 0
-  desiredVelocity: 0
+  targetLane: 2
+  wheelFrontLeft: {fileID: 0}
+  wheelFrontRight: {fileID: 0}
+  wheelBackLeft: {fileID: 0}
+  wheelBackRight: {fileID: 0}
+  centerOfMass: {fileID: 0}
+  followTarget: {fileID: 0}
+  mTorque: 0
+  bTorque: 0
+  desiredVelocity: 100
   m_MeasureDistance: 100
   m_K: 50
   m_Kt: 1
@@ -336,13 +338,9 @@ MonoBehaviour:
   m_Kd: 30
   m_maxMotorTorque: 1000
   m_maxBrakeTorque: 1000
-  trackingMode: 1
-  wayPointTracker: {fileID: 7535479139452653460}
-  target: {fileID: 323435177915998849}
-  environmentManager: {fileID: 0}
-  m_GainParameter: 0.2
-  lc_Width: 3.5
-  lc_Length: 70
+  tracker: {fileID: 0}
+  m_GainParameter: 0.4
+  lc_Time: 2.5
 --- !u!1 &1105226973929536
 GameObject:
   m_ObjectHideFlags: 0
