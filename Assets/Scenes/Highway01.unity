@@ -7563,7 +7563,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vehicleAgent: {fileID: 0}
   cumulativeRewardText: {fileID: 0}
-  numberOfLanes: 6
   laneWidth: 3.5
   trafficFlow: 6000
   minHeadway: 1
@@ -7574,33 +7573,58 @@ MonoBehaviour:
     meanVehicleSpeed: 100
     stdVehicleSpeed: 0
     trafficFraction: 0.1
+    laneDensity: 0
     startParameters: []
+    spawnParameters: []
+    spawnPos: []
+    spawnVel: []
   - center: -5.25
     meanVehicleSpeed: 100
     stdVehicleSpeed: 0
     trafficFraction: 0.1
+    laneDensity: 0
     startParameters: []
+    spawnParameters: []
+    spawnPos: []
+    spawnVel: []
   - center: -1.75
     meanVehicleSpeed: 100
     stdVehicleSpeed: 0
     trafficFraction: 0.2
+    laneDensity: 0
     startParameters: []
+    spawnParameters: []
+    spawnPos: []
+    spawnVel: []
   - center: 1.75
     meanVehicleSpeed: 100
     stdVehicleSpeed: 0
     trafficFraction: 0.2
+    laneDensity: 0
     startParameters: []
+    spawnParameters: []
+    spawnPos: []
+    spawnVel: []
   - center: 5.25
     meanVehicleSpeed: 100
     stdVehicleSpeed: 0
     trafficFraction: 0.2
+    laneDensity: 0
     startParameters: []
+    spawnParameters: []
+    spawnPos: []
+    spawnVel: []
   - center: 8.75
     meanVehicleSpeed: 100
     stdVehicleSpeed: 0
     trafficFraction: 0.2
+    laneDensity: 0
     startParameters: []
-  vehiclePositions: []
+    spawnParameters: []
+    spawnPos: []
+    spawnVel: []
+  trafficList: []
+  centerList: []
 --- !u!4 &1223542930
 Transform:
   m_ObjectHideFlags: 0
@@ -7727,7 +7751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1094918606176732, guid: 5bb1f14131476c74a95504263bf0558f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1129624275067034, guid: 5bb1f14131476c74a95504263bf0558f, type: 3}
       propertyPath: m_IsActive

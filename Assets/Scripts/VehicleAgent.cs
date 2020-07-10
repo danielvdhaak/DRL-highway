@@ -16,71 +16,26 @@ public class VehicleAgent : Agent
 {
     [Header("ML-Agents")]
     private EnvironmentManager environment;
-    private VehicleControl vehicle;
+    private VehicleControl control;
     public Transform Target;
     public float reward;
-    [SerializeField] private List<int> startingLanes = new List<int>();
-    [SerializeField] private List<int> startingPos = new List<int>();
 
     const int k_LeftLaneChange = 1;
     const int k_KeepLane = 2;
     const int k_RightLaneChange = 3;
 
     [Header("Properties")]
-    public float steeringAngle = 0f;
-    public float velocity = 0f;
-    public int targetLane = 2;
+    public int targetLane;
     public bool m_laneChanging = false;
 
-    [Header("Car components")]
-    private Rigidbody rBody;
-    private float l, w;
-    [SerializeField] private GameObject wheelFrontLeft;
-    [SerializeField] private GameObject wheelFrontRight;
-    [SerializeField] private GameObject wheelBackLeft;
-    [SerializeField] private GameObject wheelBackRight;
-    private WheelCollider wheelcolFL, wheelcolFR, wheelcolBL, wheelcolBR;
-    [SerializeField] private Transform centerOfMass;
-    [SerializeField] private Transform frontRadar;
-
-    [Header("ACC")]
-    public GameObject velTarget;
-    public float mTorque;
-    public float bTorque;
-    [Range(0, 200)] public int desiredVelocity = 100;
-
-    [Header("Trajectory tracking")]
-    private float m_Delta;
-    private float m_CTE;
-    private float m_headingError;
-    [SerializeField] private Transform tracker;
-
-    [Header("Lane change parameters")]
-    private float lc_Width;
-    private float lc_Length;
-    [SerializeField] private float lc_Time = 2.5f;
+    private float laneWidth;
+    private Vector3 initialLocalPos;
+    private float initialVelocity;
 
     private RandomNumber randomNumber = new RandomNumber();
 
     public override void Initialize()
     {
-        // Initialize rigid body and center of mass
-        rBody = GetComponent<Rigidbody>();
-        if (rBody != null && centerOfMass != null)
-        {
-            rBody.centerOfMass = centerOfMass.localPosition;
-        }
-
-        // Initialize wheelcolliders
-        wheelcolFL = wheelFrontLeft.GetComponent<WheelCollider>();
-        wheelcolFR = wheelFrontRight.GetComponent<WheelCollider>();
-        wheelcolBL = wheelBackLeft.GetComponent<WheelCollider>();
-        wheelcolBR = wheelBackRight.GetComponent<WheelCollider>();
-
-        // Calculate wheel seperation w and base l
-        w = Math.Abs(wheelFrontLeft.transform.localPosition.x - wheelFrontRight.transform.localPosition.x);
-        l = Math.Abs(wheelFrontLeft.transform.localPosition.z - wheelBackLeft.transform.localPosition.z);
-
         // Initialize environment
         environment = GetComponentInParent<EnvironmentManager>();
         if (environment == null)
@@ -88,18 +43,17 @@ public class VehicleAgent : Agent
             Debug.LogError("Missing <GameObject> environment reference!");
             Debug.Break();
         }
-        lc_Width = environment.laneWidth;
+        laneWidth = environment.laneWidth;
 
         // Initialize vehicle control module
-        vehicle = GetComponent<VehicleControl>();
+        control = GetComponent<VehicleControl>();
     }
 
     public override void OnEpisodeBegin()
     {
-
-        int startLane = startingLanes[randomNumber.Next(startingLanes.Count - 1)];
-        int startPos = startingPos[randomNumber.Next(startingPos.Count - 1)];
-        //environment.ResetArea(startLane, startPos);
+        // set position
+        (initialLocalPos, initialVelocity) = environment.ResetArea(2, 2);
+        control.SetInitialVelocity(initialVelocity);
     }
 
     private void FixedUpdate()
@@ -117,7 +71,7 @@ public class VehicleAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(GetSpeed());
+        //sensor.AddObservation(GetSpeed());
     }
 
     public override void CollectDiscreteActionMasks(DiscreteActionMasker actionMasker)
@@ -130,65 +84,20 @@ public class VehicleAgent : Agent
         var action = Mathf.FloorToInt(vectorAction[0]);
         //Debug.Log("Action: " + action);
 
-        Vector3 pos = environment.transform.InverseTransformPoint(tracker.position);
-        velocity = GetSpeed();
-
-        // Trajectory generation
-        float x, a;
         switch (action)
         {
             case k_KeepLane:
-                m_laneChanging = false;
-                x = environment.laneData[targetLane - 1].center;
-                a = 0f;
+
                 break;
             case k_LeftLaneChange:
-                if (!m_laneChanging)
-                {
-                    m_laneChanging = true;
-                    lc_Length = (velocity / 3.6f) * lc_Time;
-                    m_Delta = pos.z;
-                }
-                x = -lc_Width * (10 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 3) - 15 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 4) + 6 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 5)) + environment.laneData[targetLane - 1].center;
-                a = -(float)Math.Atan(30 * lc_Width * Math.Pow((pos.z - m_Delta), 2) * Math.Pow(lc_Length - (pos.z - m_Delta), 2) * Math.Pow(lc_Length, -5));
-                if (pos.z - m_Delta >= lc_Length)
-                {
-                    m_laneChanging = false;
-                    targetLane = targetLane - 1;
-                }
+
                 break;
             case k_RightLaneChange:
-                if (!m_laneChanging)
-                {
-                    m_laneChanging = true;
-                    lc_Length = (velocity / 3.6f) * lc_Time;
-                    m_Delta = pos.z;
-                }
-                x = lc_Width * (10 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 3) - 15 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 4) + 6 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 5)) + environment.laneData[targetLane - 1].center;
-                a = (float)Math.Atan(30 * lc_Width * Math.Pow((pos.z - m_Delta), 2) * Math.Pow(lc_Length - (pos.z - m_Delta), 2) * Math.Pow(lc_Length, -5));
-                if (pos.z - m_Delta >= lc_Length)
-                {
-                    m_laneChanging = false;
-                    targetLane = targetLane + 1;
-                }
+
                 break;
             default:
                 throw new ArgumentException("Invalid action value");
         }
-
-        // Steering
-        m_CTE = (x - pos.x) * Mathf.Cos(-a);
-        m_headingError = Mathf.Rad2Deg * a - transform.rotation.eulerAngles.y;
-        steeringAngle = vehicle.CalcSteeringAngle(m_CTE, m_headingError, velocity);
-        (wheelcolFL.steerAngle, wheelcolFR.steerAngle) = vehicle.Ackermann(steeringAngle, l, w);
-
-        // Torque
-        (mTorque, bTorque) = vehicle.CalcTorques(velocity, desiredVelocity, Mathf.Infinity, 0f, 0f);
-        wheelcolBL.motorTorque = mTorque;
-        wheelcolBL.brakeTorque = bTorque;
-        wheelcolBR.motorTorque = mTorque;
-        wheelcolBR.brakeTorque = bTorque;
-
     }
 
 
@@ -200,32 +109,6 @@ public class VehicleAgent : Agent
             return new float[] { k_RightLaneChange };
         else
             return new float[] { k_KeepLane };
-    }
-
-    private int DetermineCurrentLane(List<float> latErrorList)
-    {
-        // Determines whether agent is on the highway and if so, determines current lane
-        float laneWidth = environment.laneWidth;
-        float minLatError = latErrorList.Min();
-        int lane = latErrorList.IndexOf(minLatError) + 1;
-
-        if (minLatError <= 0.5*laneWidth)
-        {
-            //Debug.Log("Car is on lane " + lane);
-            return lane;
-        } else
-        {
-            //Debug.Log("Car is off the road");
-            return 99;
-        }
-    }
-
-    /// <summary>
-    /// Returns the vehicle speed in km/h.
-    /// </summary>
-    public float GetSpeed()
-    {
-        return transform.InverseTransformDirection(rBody.velocity).z * 3.6f;
     }
 
 }

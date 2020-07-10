@@ -13,10 +13,18 @@ public class VehicleControl : MonoBehaviour
 {
     public enum TrackingMode { leftLaneChange, keepLane, rightLaneChange };
 
-    [Header("Properties")]
+    [Header("Properties (READ ONLY)")]
     public float steeringAngle;
     public float velocity;
-    public int targetLane;
+    public float throttle;
+
+    [Header("Behavior parameters (INPUT)")]
+    public TrackingMode trackingMode;       // Set OnEnable;
+    public float lc_Width;                  // Set by environment
+    public float laneCenter;                // Set by brain
+    public float desiredVelocity;             // Set by environment
+    public VehicleControl followTarget;     // Set by brain
+    public Transform environmentSpace;      
 
     [Header("Car components")]
     [SerializeField] private GameObject wheelFrontLeft;
@@ -29,34 +37,28 @@ public class VehicleControl : MonoBehaviour
     private Rigidbody rBody;
 
     [Header("ACC")]
-    public VehicleControl followTarget;
-    public float mTorque;
-    public float bTorque;
-    [Range(0,200)] public int desiredVelocity;
+    private float mTorque;
+    private float bTorque;
     [SerializeField] [Range(50,200)] private int m_MeasureDistance = 100;
-    [SerializeField] private float m_K = 50f;
-    [SerializeField] private float m_Kt = 1.0f;
-    [SerializeField] private float m_Kv = 60f;
-    [SerializeField] private float m_Kd = 30f;
-    [SerializeField] private int m_maxMotorTorque = 1000;
-    [SerializeField] private int m_maxBrakeTorque = 1000;
+    [SerializeField] private readonly float m_K = 50f;
+    [SerializeField] private readonly float m_Kt = 1.0f;
+    [SerializeField] private readonly float m_Kv = 60f;
+    [SerializeField] private readonly float m_Kd = 30f;
+    [SerializeField] private readonly int m_maxMotorTorque = 1000;
+    [SerializeField] private readonly int m_maxBrakeTorque = 1000;
 
     [Header("Trajectory tracking")]
-    public TrackingMode trackingMode = TrackingMode.keepLane;
     [SerializeField] private Transform tracker;
-    public Transform environmentSpace;
-    [SerializeField] private float m_GainParameter = 0.4f;
+    [SerializeField] private readonly float m_GainParameter = 0.4f;
     private float m_Delta;
     private float m_CTE;
     private float m_HeadingError;
-    [HideInInspector] public float laneCenter;
 
     [Header("Lane change parameters")]
-    private float lc_Width = 3.5f;
+    [SerializeField] private readonly float lc_Time = 2.5f;
     private float lc_Length;
-    [SerializeField] private float lc_Time = 2.5f;
-    private int k_RightLC = 1;
-    private int k_LeftLC = -1;
+    private readonly int k_RightLC = 1;
+    private readonly int k_LeftLC = -1;
 
     // Setter that calls event upon value change
     public TrackingMode _TrackingMode
@@ -91,13 +93,7 @@ public class VehicleControl : MonoBehaviour
 
     private void OnEnable()
     {
-        // Set initial speed
-        // Set lane center
-        // Import vehicle control list with other traffic
-        environmentSpace = GetComponentInParent<EnvironmentManager>().transform;
-        rBody.velocity = new Vector3(0f, 0f, 10f);
         _TrackingMode = TrackingMode.keepLane;
-
     }
 
     private void FixedUpdate()
@@ -171,14 +167,18 @@ public class VehicleControl : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        targetLane = targetLane + dir;
         _TrackingMode = TrackingMode.keepLane;
+    }
+
+    public void SetInitialVelocity(float velocity)
+    {
+        rBody.velocity = transform.TransformDirection(new Vector3(0f, 0f, velocity / 3.6f));
     }
 
     /// <summary>
     /// Returns left- and right wheel steering angles calculated using Ackermann steering principle.
     /// </summary>
-    public (float, float) Ackermann(float steeringAngle, float l, float w)
+    private (float, float) Ackermann(float steeringAngle, float l, float w)
     {
         double angle = steeringAngle * Mathf.Deg2Rad;
         float leftAngle = (float)Math.Atan((2 * l * Math.Sin(angle)) / (2 * l * Math.Cos(angle) + w * Math.Sin(angle))) * Mathf.Rad2Deg;
@@ -190,7 +190,7 @@ public class VehicleControl : MonoBehaviour
     /// <summary>
     /// Returns a steering angle calculated using the Stanley method.
     /// </summary>
-    public float CalcSteeringAngle(float CTE, float headingError, float velocity)
+    private float CalcSteeringAngle(float CTE, float headingError, float velocity)
     {
         float steeringAngle = headingError + Mathf.Rad2Deg * Mathf.Atan(m_GainParameter * CTE / (velocity / 3.6f));
         
@@ -205,7 +205,7 @@ public class VehicleControl : MonoBehaviour
     /// <summary>
     /// Returns motor and braking torques calculated using Adaptive Cruise Control (ACC).
     /// </summary>
-    public (float, float) CalcTorques(float velocity, float desVelocity, float gap, float fCarVelocity, float fCarThrottle)
+    private (float, float) CalcTorques(float velocity, float desVelocity, float gap, float fCarVelocity, float fCarThrottle)
     {
         float throttle;
 
@@ -221,10 +221,11 @@ public class VehicleControl : MonoBehaviour
         return (Mathf.Clamp(throttle, 0f, m_maxMotorTorque), -Mathf.Clamp(throttle, -m_maxBrakeTorque, 0f));
     }
 
-    public float GetSpeed()
+    /// <summary>
+    /// Returns the vehicle speed in km/h.
+    /// </summary>
+    private float GetSpeed()
     {
-        // Receives vehicle velocity in km/h
         return transform.InverseTransformDirection(rBody.velocity).z * 3.6f;
     }
-
 }

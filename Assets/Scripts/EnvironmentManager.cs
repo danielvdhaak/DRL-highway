@@ -11,149 +11,148 @@ using TMPro;
 
 public class EnvironmentManager : MonoBehaviour
 {
-
-
     [Serializable]
-    public class LaneData
+    public class TrafficParameters
     {
         [Serializable]
-        public class StartParameters
+        public class SpawnParameters
         {
             public float pos;
             public float speed;
             public float headway;
+
+            public SpawnParameters(float pos, float speed, float headway)
+            {
+                this.pos = pos;
+                this.speed = speed;
+                this.headway = headway;
+            }
         }
 
-        public float center;
+        public float trafficFraction;
         public float meanVehicleSpeed;
         public float stdVehicleSpeed;
-        public float trafficFraction;
-        public StartParameters[] startParameters;
-    }
-
-    [Serializable]
-    public class VehiclePosition
-    {
-        public GameObject gameObject;
-        public float x;
-        public float z;
-        public int lane;
+        public int laneDensity;
+        public List<SpawnParameters> spawnParameters = new List<SpawnParameters>();
     }
 
     [Header("ML-Agents")]
-    public VehicleAgent vehicleAgent;
+    public VehicleAgent agent;
     public TextMeshPro cumulativeRewardText;
 
     [Header("Environment parameters")]
-    [HideInInspector] public int numberOfLanes;
-    public float laneWidth = 3.5f;
-    public int trafficFlow = 6000;
-    public float minHeadway = 1f;
-    public GameObject[] vehiclePrefabs;
-    public LaneData[] laneData;
+    private int numberOfLanes;
+    public readonly float laneWidth = 3.5f;
+    [SerializeField] private readonly int trafficFlow = 6000;
+    private int density;
+    [SerializeField] private readonly float minHeadway = 1f;
 
     [Header("Traffic")]
+    [SerializeField] private readonly List<GameObject> vehiclePrefabs = new List<GameObject>();
+    [SerializeField] private TrafficParameters[] trafficParameters;
     private List<GameObject> vehicleList = new List<GameObject>();
-    public VehiclePosition[] vehiclePositions;
-
+    public List<VehicleControl> trafficList = new List<VehicleControl>();
+    public List<float> centerList = new List<float>();
 
     private RandomNumber randomNumber = new RandomNumber();
 
     private void Awake()
     {
-        DetermineLaneCenters();
+        numberOfLanes = trafficParameters.Length;
+        centerList = DetermineLaneCenters();
 
-        // Initialize arrays
-        int numberOfCars = 0;
-        foreach (LaneData laneData in laneData)
+        // Determine total density and density per lane
+        density = 0;
+        foreach (TrafficParameters laneData in trafficParameters)
         {
-            float laneTrafficFlow = trafficFlow * laneData.trafficFraction;     // [veh/h]
-            float laneDensity = laneTrafficFlow / laneData.meanVehicleSpeed;    // [veh/km]
-            laneData.startParameters = new LaneData.StartParameters[(int)laneDensity];
-
-            numberOfCars += (int)laneDensity;
+            laneData.laneDensity = (int)((trafficFlow * laneData.trafficFraction) / laneData.meanVehicleSpeed);
+            density += laneData.laneDensity;
         }
-        vehiclePositions = new VehiclePosition[numberOfCars];
 
-        // Seed vehicle list
+        // Seed vehicle lists
         vehicleList.Clear();
-        for (int i = 0; i < numberOfCars; i++)
+        trafficList.Clear();
+        trafficList.Add(agent.GetComponent<VehicleControl>());
+        for (int i = 0; i < density - 1; i++)
         {
-            //GameObject obj = Instantiate(vehiclePrefabs[randomNumber.Next(vehiclePrefabs.Length - 1)]);
-            //obj.SetActive(false);
-            //vehicleList.Add(obj);
+            GameObject obj = Instantiate(vehiclePrefabs[randomNumber.Next(vehiclePrefabs.Count - 1)]);
+            obj.transform.parent = gameObject.transform;
+            VehicleControl vc = obj.GetComponent<VehicleControl>();
+            obj.SetActive(false);
+            vehicleList.Add(obj);
+            trafficList.Add(vc);
         }
     }
 
-    public void ResetArea(int startLane, int startPos)
+    private void Start()
+    {
+        foreach (TrafficParameters lane in trafficParameters)
+        {
+            GenerateSpawnParameters(lane);
+        }
+    }
+
+    private void GenerateSpawnParameters(TrafficParameters lane)
+    {
+        float meanHeadway = 3600 / (trafficFlow * lane.trafficFraction);
+
+        float pos = 0f;
+        float speed = randomNumber.Gaussian(lane.meanVehicleSpeed, lane.stdVehicleSpeed);
+        float headway = randomNumber.Exponential(meanHeadway, minHeadway);
+        for (int i = 0; i < lane.laneDensity; i++)
+        {
+            lane.spawnParameters.Add(new TrafficParameters.SpawnParameters(pos, speed, headway));
+
+            pos = pos + headway * (speed / 3.6f);
+            speed = randomNumber.Gaussian(lane.meanVehicleSpeed, lane.stdVehicleSpeed);
+            headway = randomNumber.Exponential(meanHeadway, minHeadway);
+        }
+    }
+
+    public (Vector3, float) ResetArea(int startLane, int startPos)
     {
         // Despawn cars
         foreach (GameObject obj in vehicleList)
         {
             Despawn(obj);
         }
-
-        SetStartParameters();
-
-        // Shift all positions so that agent starts at z=0
-        float deltaZ = laneData[startLane - 1].startParameters[startPos - 1].pos;
-        foreach (LaneData lane in laneData)
+        
+        // For each lane
+        foreach (TrafficParameters lane in trafficParameters)
         {
-            for (int i = 0; i < lane.startParameters.Length; i++)
-            {
-                lane.startParameters[i].pos -= deltaZ;
-            }
+            GenerateSpawnParameters(lane);
         }
 
-        // Spawn cars
+        // Spawn cars with offset
         int vID = 0;
         for (int l = 0; l < numberOfLanes; l++)
         {
-            for (int p = 0; p < laneData[l].startParameters.Length; p++)
+            for (int p = 0; p < trafficParameters[l].spawnParameters.Count; p++)
             {
-                Vector3 pos = new Vector3(laneData[l].center, 0f, laneData[l].startParameters[p].pos);
-                Spawn(vehicleList[vID], pos, l + 1, laneData[l].startParameters[p].speed);
+                if (l == startLane - 1 && p == startPos - 1)
+                    continue;
+
+                Vector3 location = new Vector3(
+                    centerList[l],
+                    0f,
+                    trafficParameters[l].spawnParameters[p].pos - trafficParameters[startLane - 1].spawnParameters[startPos - 1].pos);
+                Spawn(vehicleList[vID], location, l + 1, trafficParameters[l].spawnParameters[p].speed);
                 vID++;
             }
         }
 
+        return (new Vector3(centerList[startLane - 1], 0f, 0f), trafficParameters[startLane - 1].spawnParameters[startPos - 1].speed);
     }
 
-    private void DetermineLaneCenters()
+    private List<float> DetermineLaneCenters()
     {
-        numberOfLanes = laneData.Length;
-
-        for (int i = 0; i < numberOfLanes; i++)
+        List<float> list = new List<float>();
+        for (int i = 0; i < trafficParameters.Length; i++)
         {
-            laneData[i].center = -0.5f * numberOfLanes * laneWidth + ((float)i + 0.5f) * laneWidth;
+            centerList.Add(-0.5f * numberOfLanes * laneWidth + ((float)i + 0.5f) * laneWidth);
         }
-    }
 
-    private void SetStartParameters()
-    {
-        foreach(LaneData laneData in laneData)
-        {
-            float laneTrafficFlow = trafficFlow * laneData.trafficFraction;     // [veh/h]
-            float laneDensity = laneTrafficFlow / laneData.meanVehicleSpeed;    // [veh/km]
-            float meanHeadway = 3600 / laneTrafficFlow;                         // [s/veh]
-
-            for (int i = 0; i < laneData.startParameters.Length; i++)
-            {
-                laneData.startParameters[i] = new LaneData.StartParameters();
-
-                laneData.startParameters[i].speed = randomNumber.Gaussian(laneData.meanVehicleSpeed, laneData.stdVehicleSpeed);
-                laneData.startParameters[i].headway = randomNumber.Exponential(meanHeadway, minHeadway);
-
-                try
-                {
-                    laneData.startParameters[i].pos = laneData.startParameters[i - 1].pos + laneData.startParameters[i - 1].headway * (laneData.startParameters[i - 1].speed / 3.6f);
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    laneData.startParameters[i].pos = 0f;
-                }
-            }
-        }
+        return list;
     }
 
     public void Spawn(GameObject obj, Vector3 pos, int targetLane, float velocity)
@@ -161,31 +160,12 @@ public class EnvironmentManager : MonoBehaviour
         obj.transform.localPosition = pos;
         obj.transform.localRotation = Quaternion.identity;
 
-        SimpleVehicle vehicle = obj.GetComponent<SimpleVehicle>();
-        vehicle.desiredVelocity = velocity;
-        vehicle.targetLane = targetLane;
+        SimpleVehicle sv = obj.GetComponent<SimpleVehicle>();
+        sv.targetLane = targetLane;
+        sv.desiredVelocity = velocity;
+        sv.initialVelocity = velocity;
 
         obj.SetActive(true);
-
-        // POS IS LOCAL!!
-        /*
-        // Instantiate car prefab
-        GameObject vehicleInstance;
-        vehicleInstance = Instantiate(carPrefabs[0], new Vector3(x, y, z), transform.rotation) as GameObject;
-        GameObject vehicleInstance = Instantiate(vehiclePrefab, new Vector3(x, y, z), transform.rotation) as GameObject;
-
-        // Set driver properties
-        Driver driver = vehicleInstance.GetComponent<Driver>();
-        driver.targetLane = lane + 1;
-        //driver.initVelocity = 0f;
-        driver.desiredVelocity = 0;
-        driver.velocity = 0f;
-        // Set car properties
-        VehicleControl vehiclecontrol = vehicleInstance.GetComponent<VehicleControl>();
-        vehiclecontrol.targetLane = laneNr;
-        vehiclecontrol.desiredVelocity = 10;
-        vehiclecontrol.velocity = 10f;
-        */
     }
 
     public void Despawn(GameObject obj)
@@ -206,11 +186,11 @@ public class EnvironmentManager : MonoBehaviour
         Gizmos.DrawRay(transform.TransformPoint(new Vector3(0.5f * numberOfLanes * laneWidth, position.y, position.z)), 100 * direction);
 
         // Draw lane centers
-        DetermineLaneCenters();
+        List<float> centers = DetermineLaneCenters();
+
         Gizmos.color = Color.cyan;
-        foreach(LaneData lane in laneData)
+        foreach(float center in centers)
         {
-            float center = lane.center;
             Gizmos.DrawRay(transform.TransformPoint(new Vector3(center, position.y, position.z)), 100 * direction);
         }
     } 
