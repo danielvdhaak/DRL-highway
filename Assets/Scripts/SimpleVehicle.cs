@@ -6,15 +6,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(VehicleControl))]
 public class SimpleVehicle : MonoBehaviour
 { 
-    private GameObject environment;
     private VehicleControl control;
 
+    [Header("Environment parameters (INPUT)")]
     public List<VehicleControl> trafficList;
     public List<float> laneCenters;
     public float laneWidth;
@@ -25,34 +26,37 @@ public class SimpleVehicle : MonoBehaviour
     private float center;
     private float z;
     private float dz;
+    private int currentLane;
 
 
 
     private void Awake()
     {
-        // Initialize environment
-        environment = transform.parent.gameObject;
-        if (environment == null)
-        {
-            Debug.LogError("Can not reference environment!");
-        }
-
-        // Initialize vehicle control module
         control = GetComponent<VehicleControl>();
     }
 
     private void OnEnable()
     {
+        control.environmentSpace = transform.parent.transform;
         control.lc_Width = laneWidth;
         control.laneCenter = laneCenters[targetLane - 1];
+        control.currentLane = targetLane;
         control.desiredVelocity = desiredVelocity;
-        control.environmentSpace = transform.parent.transform;
         control.SetInitialVelocity(initialVelocity);
     }
 
     private void FixedUpdate()
     {
+        currentLane = GetCurrentLane();
+        control.currentLane = currentLane;
         control.followTarget = GetClosestVehicle(trafficList);
+    }
+
+    private int GetCurrentLane()
+    {
+        List<float> errors = laneCenters.Select(c => Math.Abs(c - transform.localPosition.x)).ToList();
+
+        return errors.IndexOf(errors.Min()) + 1;
     }
 
     private VehicleControl GetClosestVehicle(List<VehicleControl> vehicles)
@@ -63,17 +67,14 @@ public class SimpleVehicle : MonoBehaviour
 
         foreach(VehicleControl vehicle in vehicles)
         {
-            if (vehicle == control)
+            if (vehicle == control || vehicle.currentLane != currentLane)
                 continue;
 
-            if (vehicle.transform.localPosition.x >= center - 0.5f * laneWidth &&
-                vehicle.transform.localPosition.x <= center + 0.5f * laneWidth &&
-                vehicle.transform.localPosition.z - z < dz)
+            if (vehicle.transform.localPosition.z > z && Math.Abs(vehicle.transform.localPosition.z - z) < dz)
             {
                 target = vehicle;
-                dz = vehicle.transform.localPosition.z - z;
+                dz = Math.Abs(vehicle.transform.localPosition.z - z);
             }
-
         }
 
         return target;

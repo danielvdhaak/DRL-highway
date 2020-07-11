@@ -175,14 +175,15 @@ GameObject:
   - component: {fileID: 205659240027242542}
   - component: {fileID: 4389986791242625510}
   - component: {fileID: 8459485921000671633}
-  - component: {fileID: 1980956719342141434}
+  - component: {fileID: 520749032416667642}
+  - component: {fileID: 7783895216602977785}
   m_Layer: 0
   m_Name: ToyotaGT86
   m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4539661262775328
 Transform:
   m_ObjectHideFlags: 0
@@ -203,7 +204,6 @@ Transform:
   - {fileID: 7360681420998173418}
   - {fileID: 4069157593635050}
   - {fileID: 7535479139452653460}
-  - {fileID: 323435177915998849}
   - {fileID: 1817830700021990952}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -306,7 +306,25 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300016, guid: f119de429d72e0b4daed64783cf54fad, type: 3}
---- !u!114 &1980956719342141434
+--- !u!114 &520749032416667642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094918606176732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f5c0795f4b28d4fbb57c0e12094087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trafficList: []
+  laneCenters: []
+  laneWidth: 0
+  targetLane: 0
+  initialVelocity: 0
+  desiredVelocity: 0
+--- !u!114 &7783895216602977785
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -318,19 +336,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fc73c89a53c47418af705a5ea288c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackingMode: 1
   steeringAngle: 0
   velocity: 0
-  targetLane: 2
-  wheelFrontLeft: {fileID: 0}
-  wheelFrontRight: {fileID: 0}
-  wheelBackLeft: {fileID: 0}
-  wheelBackRight: {fileID: 0}
-  centerOfMass: {fileID: 0}
+  throttle: 0
+  currentLane: 0
+  trackingMode: 0
+  lc_Width: 0
+  laneCenter: 0
+  desiredVelocity: 0
   followTarget: {fileID: 0}
-  mTorque: 0
-  bTorque: 0
-  desiredVelocity: 100
+  environmentSpace: {fileID: 0}
+  wheelFrontLeft: {fileID: 1890649546845854}
+  wheelFrontRight: {fileID: 1288719004185982}
+  wheelBackLeft: {fileID: 1785908448937766}
+  wheelBackRight: {fileID: 1183162418364304}
+  centerOfMass: {fileID: 7360681420998173418}
   m_MeasureDistance: 100
   m_K: 50
   m_Kt: 1
@@ -338,7 +358,7 @@ MonoBehaviour:
   m_Kd: 30
   m_maxMotorTorque: 1000
   m_maxBrakeTorque: 1000
-  tracker: {fileID: 0}
+  tracker: {fileID: 7535479139452653460}
   m_GainParameter: 0.4
   lc_Time: 2.5
 --- !u!1 &1105226973929536
@@ -4610,36 +4630,6 @@ Transform:
   m_Father: {fileID: 4783930979861612}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6624897726210906830
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 323435177915998849}
-  m_Layer: 0
-  m_Name: TargetTracker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &323435177915998849
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6624897726210906830}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4539661262775328}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7334459724290356067
 GameObject:
   m_ObjectHideFlags: 0
@@ -4707,7 +4697,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4539661262775328}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8826895376563657779
 GameObject:

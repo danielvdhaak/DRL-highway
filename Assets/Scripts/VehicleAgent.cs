@@ -17,12 +17,15 @@ public class VehicleAgent : Agent
     [Header("ML-Agents")]
     private EnvironmentManager environment;
     private VehicleControl control;
-    public Transform Target;
+    private Transform Target;
     public float reward;
 
     const int k_LeftLaneChange = 1;
     const int k_KeepLane = 2;
     const int k_RightLaneChange = 3;
+
+    [Header("Parameters")]
+    public float desiredVelocity;
 
     [Header("Properties")]
     public int targetLane;
@@ -31,6 +34,10 @@ public class VehicleAgent : Agent
     private float laneWidth;
     private Vector3 initialLocalPos;
     private float initialVelocity;
+
+    private float center;
+    private float z;
+    private float dz;
 
     private RandomNumber randomNumber = new RandomNumber();
 
@@ -109,6 +116,30 @@ public class VehicleAgent : Agent
             return new float[] { k_RightLaneChange };
         else
             return new float[] { k_KeepLane };
+    }
+
+    private VehicleControl GetClosestVehicle(List<VehicleControl> vehicles)
+    {
+        VehicleControl target = null;
+        float z = transform.localPosition.z;
+        float dz = Mathf.Infinity;
+
+        foreach (VehicleControl vehicle in vehicles)
+        {
+            if (vehicle == control)
+                continue;
+
+            if (vehicle.transform.localPosition.x >= center - 0.5f * laneWidth &&
+                vehicle.transform.localPosition.x <= center + 0.5f * laneWidth &&
+                vehicle.transform.localPosition.z - z < dz)
+            {
+                target = vehicle;
+                dz = vehicle.transform.localPosition.z - z;
+            }
+
+        }
+
+        return target;
     }
 
 }

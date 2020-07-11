@@ -17,13 +17,14 @@ public class VehicleControl : MonoBehaviour
     public float steeringAngle;
     public float velocity;
     public float throttle;
+    public int currentLane;
 
     [Header("Behavior parameters (INPUT)")]
-    public TrackingMode trackingMode;       // Set OnEnable;
-    public float lc_Width;                  // Set by environment
-    public float laneCenter;                // Set by brain
-    public float desiredVelocity;             // Set by environment
-    public VehicleControl followTarget;     // Set by brain
+    public TrackingMode trackingMode;
+    public float lc_Width;
+    public float laneCenter;
+    [HideInInspector] public float desiredVelocity;
+    public VehicleControl followTarget;
     public Transform environmentSpace;      
 
     [Header("Car components")]
@@ -40,22 +41,22 @@ public class VehicleControl : MonoBehaviour
     private float mTorque;
     private float bTorque;
     [SerializeField] [Range(50,200)] private int m_MeasureDistance = 100;
-    [SerializeField] private readonly float m_K = 50f;
-    [SerializeField] private readonly float m_Kt = 1.0f;
-    [SerializeField] private readonly float m_Kv = 60f;
-    [SerializeField] private readonly float m_Kd = 30f;
-    [SerializeField] private readonly int m_maxMotorTorque = 1000;
-    [SerializeField] private readonly int m_maxBrakeTorque = 1000;
+    [SerializeField] private float m_K = 50f;
+    [SerializeField] private float m_Kt = 1.0f;
+    [SerializeField] private float m_Kv = 60f;
+    [SerializeField] private float m_Kd = 30f;
+    [SerializeField] private int m_maxMotorTorque = 1000;
+    [SerializeField] private int m_maxBrakeTorque = 1000;
 
     [Header("Trajectory tracking")]
     [SerializeField] private Transform tracker;
-    [SerializeField] private readonly float m_GainParameter = 0.4f;
+    [SerializeField] private float m_GainParameter = 0.4f;
     private float m_Delta;
     private float m_CTE;
     private float m_HeadingError;
 
     [Header("Lane change parameters")]
-    [SerializeField] private readonly float lc_Time = 2.5f;
+    [SerializeField] private float lc_Time = 2.5f;
     private float lc_Length;
     private readonly int k_RightLC = 1;
     private readonly int k_LeftLC = -1;
@@ -108,28 +109,30 @@ public class VehicleControl : MonoBehaviour
         wheelcolBR.brakeTorque = bTorque;
 
         // Steering is handled seperately in designated coroutines
-        if (Input.GetKey(KeyCode.A))
-            _TrackingMode = TrackingMode.leftLaneChange;
-        if (Input.GetKey(KeyCode.D))
-            _TrackingMode = TrackingMode.rightLaneChange;
+        //if (Input.GetKey(KeyCode.A))
+            //_TrackingMode = TrackingMode.leftLaneChange;
+        //if (Input.GetKey(KeyCode.D))
+            //_TrackingMode = TrackingMode.rightLaneChange;
     }
 
+    /// <summary>
+    /// Calls and stops coroutines upon changing the tracking mode enum.
+    /// </summary>
+    /// <param name="trackingMode"></param>
     protected void OnTrackingModeChanged(TrackingMode trackingMode)
     {
         switch (trackingMode)
         {
             case TrackingMode.keepLane:
-                Debug.Log("Keep lane!");
                 StopAllCoroutines();
                 StartCoroutine(KeepLane(laneCenter));
                 break;
             case TrackingMode.leftLaneChange:
-                Debug.Log("Left lane change!");
                 StopAllCoroutines();
                 StartCoroutine(ChangeLane(k_LeftLC, laneCenter));
                 break;
             case TrackingMode.rightLaneChange:
-                Debug.Log("Right lane change!");
+                StopAllCoroutines();
                 StartCoroutine(ChangeLane(k_RightLC, laneCenter));
                 break;
         }
@@ -172,7 +175,11 @@ public class VehicleControl : MonoBehaviour
 
     public void SetInitialVelocity(float velocity)
     {
-        rBody.velocity = transform.TransformDirection(new Vector3(0f, 0f, velocity / 3.6f));
+        if (rBody == null)
+            rBody = GetComponent<Rigidbody>();
+
+        rBody.angularVelocity = Vector3.zero;
+        rBody.velocity = transform.TransformDirection((velocity / 3.6f) * Vector3.forward);
     }
 
     /// <summary>
@@ -207,8 +214,6 @@ public class VehicleControl : MonoBehaviour
     /// </summary>
     private (float, float) CalcTorques(float velocity, float desVelocity, float gap, float fCarVelocity, float fCarThrottle)
     {
-        float throttle;
-
         float spacing = 3f + 0.0019f * (velocity / 3.6f) + 0.0448f * (float)Math.Pow(velocity / 3.6f, 2);
         float freeThrottle = m_K * ((desVelocity - velocity) / 3.6f);
         float referenceThrottle = m_Kt * fCarThrottle + m_Kv * ((fCarVelocity - velocity) / 3.6f) + m_Kd * (gap - spacing);
