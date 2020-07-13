@@ -408,6 +408,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 102414469}
   m_Mesh: {fileID: 491139363}
+--- !u!1 &106806271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 106806272}
+  - component: {fileID: 106806273}
+  m_Layer: 0
+  m_Name: Target
+  m_TagString: Target
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &106806272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106806271}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 1000}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1223542930}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &106806273
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106806271}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 30, y: 6, z: 1}
+  m_Center: {x: 0, y: 3, z: 0}
 --- !u!1 &177828245
 GameObject:
   m_ObjectHideFlags: 0
@@ -7564,37 +7608,37 @@ MonoBehaviour:
   agent: {fileID: 998356458}
   cumulativeRewardText: {fileID: 0}
   laneWidth: 3.5
-  trafficFlow: 1000
+  trafficFlow: 200
   minHeadway: 1
   vehiclePrefabs:
   - {fileID: 1094918606176732, guid: 5bb1f14131476c74a95504263bf0558f, type: 3}
   trafficParameters:
-  - trafficFraction: 0.1
+  - trafficFraction: 1
     meanVehicleSpeed: 120
     stdVehicleSpeed: 1
     laneDensity: 0
     spawnParameters: []
-  - trafficFraction: 0.1
+  - trafficFraction: 0.5
     meanVehicleSpeed: 110
     stdVehicleSpeed: 3
     laneDensity: 0
     spawnParameters: []
-  - trafficFraction: 0.2
+  - trafficFraction: 0
     meanVehicleSpeed: 100
     stdVehicleSpeed: 3
     laneDensity: 0
     spawnParameters: []
-  - trafficFraction: 0.2
+  - trafficFraction: 0
     meanVehicleSpeed: 100
     stdVehicleSpeed: 2
     laneDensity: 0
     spawnParameters: []
-  - trafficFraction: 0.2
+  - trafficFraction: 0
     meanVehicleSpeed: 90
     stdVehicleSpeed: 1
     laneDensity: 0
     spawnParameters: []
-  - trafficFraction: 0.2
+  - trafficFraction: 0
     meanVehicleSpeed: 80
     stdVehicleSpeed: 1
     laneDensity: 0
@@ -7615,6 +7659,7 @@ Transform:
   - {fileID: 514418832}
   - {fileID: 311766398}
   - {fileID: 2126403654}
+  - {fileID: 106806272}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

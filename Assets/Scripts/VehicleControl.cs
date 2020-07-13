@@ -13,19 +13,19 @@ public class VehicleControl : MonoBehaviour
 {
     public enum TrackingMode { leftLaneChange, keepLane, rightLaneChange };
 
+    private EnvironmentManager environment;     
+
     [Header("Properties (READ ONLY)")]
     public float steeringAngle;
     public float velocity;
     public float throttle;
-    public int currentLane;
+    [HideInInspector] public int currentLane;
 
-    [Header("Behavior parameters (INPUT)")]
+    [Header("Parameters (INPUT)")]
     public TrackingMode trackingMode;
-    public float lc_Width;
-    public float laneCenter;
-    [HideInInspector] public float desiredVelocity;
     public VehicleControl followTarget;
-    public Transform environmentSpace;      
+    public float laneCenter;
+    [HideInInspector] public float targetVelocity;
 
     [Header("Car components")]
     [SerializeField] private GameObject wheelFrontLeft;
@@ -34,14 +34,15 @@ public class VehicleControl : MonoBehaviour
     [SerializeField] private GameObject wheelBackRight;
     private WheelCollider wheelcolFL, wheelcolFR, wheelcolBL, wheelcolBR;
     [SerializeField] private Transform centerOfMass;
+    public Transform frontOffset;
+    public Transform backOffset;
     private float l, w;
     private Rigidbody rBody;
 
     [Header("ACC")]
     private float mTorque;
     private float bTorque;
-    [SerializeField] [Range(50,200)] private int m_MeasureDistance = 100;
-    [SerializeField] private float m_K = 50f;
+    [SerializeField] private float m_K = 120f;
     [SerializeField] private float m_Kt = 1.0f;
     [SerializeField] private float m_Kv = 60f;
     [SerializeField] private float m_Kd = 30f;
@@ -56,6 +57,7 @@ public class VehicleControl : MonoBehaviour
     private float m_HeadingError;
 
     [Header("Lane change parameters")]
+    private float lc_Width;
     [SerializeField] private float lc_Time = 2.5f;
     private float lc_Length;
     private readonly int k_RightLC = 1;
@@ -74,6 +76,9 @@ public class VehicleControl : MonoBehaviour
 
     private void Awake()
     {
+        environment = GetComponentInParent<EnvironmentManager>();
+        lc_Width = environment.laneWidth;
+
         // Initialize rigid body and center of mass
         rBody = GetComponent<Rigidbody>();
         if (rBody != null && centerOfMass != null)
@@ -101,18 +106,20 @@ public class VehicleControl : MonoBehaviour
     {
         velocity = GetSpeed();
 
-        // Torque
-        (mTorque, bTorque) = CalcTorques(velocity, desiredVelocity, Mathf.Infinity, 0f, 0f);
+        // Torques
+        if (followTarget != null)
+        {
+            float gap = environment.transform.InverseTransformDirection(followTarget.backOffset.position - frontOffset.position).z;
+            (mTorque, bTorque) = CalcTorques(velocity, targetVelocity, gap, followTarget.velocity, followTarget.throttle);
+        }
+        else
+            (mTorque, bTorque) = CalcTorques(velocity, targetVelocity, Mathf.Infinity, 0f, 0f);
+            
         wheelcolBL.motorTorque = mTorque;
         wheelcolBL.brakeTorque = bTorque;
         wheelcolBR.motorTorque = mTorque;
         wheelcolBR.brakeTorque = bTorque;
 
-        // Steering is handled seperately in designated coroutines
-        //if (Input.GetKey(KeyCode.A))
-            //_TrackingMode = TrackingMode.leftLaneChange;
-        //if (Input.GetKey(KeyCode.D))
-            //_TrackingMode = TrackingMode.rightLaneChange;
     }
 
     /// <summary>
@@ -142,7 +149,7 @@ public class VehicleControl : MonoBehaviour
     {
         while (true)
         {
-            m_CTE = center - environmentSpace.InverseTransformPoint(tracker.position).x;
+            m_CTE = center - environment.transform.InverseTransformPoint(tracker.position).x;
             m_HeadingError = -transform.localEulerAngles.y;
             steeringAngle = CalcSteeringAngle(m_CTE, m_HeadingError, velocity);
             (wheelcolFL.steerAngle, wheelcolFR.steerAngle) = Ackermann(steeringAngle, l, w);
@@ -154,11 +161,11 @@ public class VehicleControl : MonoBehaviour
     IEnumerator ChangeLane (int dir, float center)
     {
         lc_Length = (velocity / 3.6f) * lc_Time;
-        m_Delta = environmentSpace.InverseTransformPoint(tracker.position).z;
+        m_Delta = environment.transform.InverseTransformPoint(tracker.position).z;
 
-        while (environmentSpace.InverseTransformPoint(tracker.position).z - m_Delta <= lc_Length)
+        while (environment.transform.InverseTransformPoint(tracker.position).z - m_Delta <= lc_Length)
         {
-            Vector3 pos = environmentSpace.InverseTransformPoint(tracker.position);
+            Vector3 pos = environment.transform.InverseTransformPoint(tracker.position);
             float x = dir * lc_Width * (10 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 3) - 15 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 4) + 6 * Mathf.Pow(((pos.z - m_Delta) / lc_Length), 5)) + center;
             float a = dir * (float)Math.Atan(30 * lc_Width * Math.Pow((pos.z - m_Delta), 2) * Math.Pow(lc_Length - (pos.z - m_Delta), 2) * Math.Pow(lc_Length, -5));
 
@@ -215,13 +222,11 @@ public class VehicleControl : MonoBehaviour
     private (float, float) CalcTorques(float velocity, float desVelocity, float gap, float fCarVelocity, float fCarThrottle)
     {
         float spacing = 3f + 0.0019f * (velocity / 3.6f) + 0.0448f * (float)Math.Pow(velocity / 3.6f, 2);
+        Debug.DrawLine(frontOffset.position, frontOffset.position + frontOffset.forward * spacing, Color.red);
+
         float freeThrottle = m_K * ((desVelocity - velocity) / 3.6f);
         float referenceThrottle = m_Kt * fCarThrottle + m_Kv * ((fCarVelocity - velocity) / 3.6f) + m_Kd * (gap - spacing);
-
-        if (gap > m_MeasureDistance)
-            throttle = freeThrottle;
-        else
-            throttle = Mathf.Min(freeThrottle, referenceThrottle);
+        throttle = Mathf.Min(freeThrottle, referenceThrottle);
 
         return (Mathf.Clamp(throttle, 0f, m_maxMotorTorque), -Mathf.Clamp(throttle, -m_maxBrakeTorque, 0f));
     }

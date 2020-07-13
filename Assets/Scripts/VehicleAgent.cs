@@ -20,21 +20,21 @@ public class VehicleAgent : Agent
     private Transform Target;
     public float reward;
 
-    const int k_LeftLaneChange = 1;
-    const int k_KeepLane = 2;
-    const int k_RightLaneChange = 3;
+    private const int k_LeftLaneChange = 1;
+    private const int k_KeepLane = 2;
+    private const int k_RightLaneChange = 3;
 
     [Header("Parameters")]
-    public float desiredVelocity;
-
-    [Header("Properties")]
     public int targetLane;
-    public bool m_laneChanging = false;
+    public float targetVelocity;
+    private List<float> laneCenters;
 
-    private float laneWidth;
+    private const float m_MaxFollowDistance = 100f;
+
     private Vector3 initialLocalPos;
     private float initialVelocity;
 
+    private int currentLane;
     private float center;
     private float z;
     private float dz;
@@ -46,61 +46,76 @@ public class VehicleAgent : Agent
         // Initialize environment
         environment = GetComponentInParent<EnvironmentManager>();
         if (environment == null)
-        {
-            Debug.LogError("Missing <GameObject> environment reference!");
-            Debug.Break();
-        }
-        laneWidth = environment.laneWidth;
+            Debug.LogError("Missing environment reference!");
+        laneCenters = environment.centerList;
 
         // Initialize vehicle control module
         control = GetComponent<VehicleControl>();
+
+        // Find target
+        Target = GameObject.FindGameObjectWithTag("Target").transform;
     }
 
     public override void OnEpisodeBegin()
     {
         // set position
         (initialLocalPos, initialVelocity) = environment.ResetArea(2, 2);
+        transform.localPosition = initialLocalPos;
+        transform.localRotation = Quaternion.identity;
         control.SetInitialVelocity(initialVelocity);
     }
 
     private void FixedUpdate()
     {
-        // Only requests a new decision if agent is not performing a lane change
-        if (m_laneChanging)
+
+
+        // Only request a new decision if agent is not performing a lane change
+        if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
         {
-            RequestAction();
-        }
-        else
-        {
+            control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1);
             RequestDecision();
         }
+            
+        else
+            RequestAction();
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         //sensor.AddObservation(GetSpeed());
+        
     }
 
     public override void CollectDiscreteActionMasks(DiscreteActionMasker actionMasker)
     {
         // Ensures the car does not crash into the barriers
+        int leftMostLane = 1;
+        int rightMostLane = laneCenters.Count;
+
+        if (targetLane == leftMostLane)
+            actionMasker.SetMask(0, new int[] { k_LeftLaneChange });
+
+        if (targetLane == rightMostLane)
+            actionMasker.SetMask(0, new int[] { k_RightLaneChange });
     }
 
     public override void OnActionReceived(float[] vectorAction)
     {
         var action = Mathf.FloorToInt(vectorAction[0]);
-        //Debug.Log("Action: " + action);
 
         switch (action)
         {
             case k_KeepLane:
-
+                control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1);
+                // Allocate reward for driving normalized velocity
                 break;
             case k_LeftLaneChange:
-
+                control._TrackingMode = VehicleControl.TrackingMode.leftLaneChange;
+                // set acc target
+                // negative reward for commiting a lane change
                 break;
             case k_RightLaneChange:
-
+                control._TrackingMode = VehicleControl.TrackingMode.rightLaneChange;
                 break;
             default:
                 throw new ArgumentException("Invalid action value");
@@ -118,7 +133,15 @@ public class VehicleAgent : Agent
             return new float[] { k_KeepLane };
     }
 
-    private VehicleControl GetClosestVehicle(List<VehicleControl> vehicles)
+    private int GetCurrentLane()
+    {
+        List<float> errors = laneCenters.Select(c => Math.Abs(c - transform.localPosition.x)).ToList();
+
+
+        return errors.IndexOf(errors.Min()) + 1;
+    }
+
+    private VehicleControl GetClosestVehicle(List<VehicleControl> vehicles, int lane, int dir)
     {
         VehicleControl target = null;
         float z = transform.localPosition.z;
@@ -126,20 +149,38 @@ public class VehicleAgent : Agent
 
         foreach (VehicleControl vehicle in vehicles)
         {
-            if (vehicle == control)
+            if (vehicle == control || vehicle.currentLane != lane || !vehicle.isActiveAndEnabled)
                 continue;
 
-            if (vehicle.transform.localPosition.x >= center - 0.5f * laneWidth &&
-                vehicle.transform.localPosition.x <= center + 0.5f * laneWidth &&
-                vehicle.transform.localPosition.z - z < dz)
+            if (vehicle.transform.localPosition.z > z && Math.Abs(vehicle.transform.localPosition.z - z) <= m_MaxFollowDistance)
             {
-                target = vehicle;
-                dz = vehicle.transform.localPosition.z - z;
+                if (Math.Abs(vehicle.transform.localPosition.z - z) < dz)
+                {
+                    target = vehicle;
+                    dz = Math.Abs(vehicle.transform.localPosition.z - z);
+                }
             }
-
         }
 
         return target;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Target"))
+        {
+            // Add reward
+            EndEpisode();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Vehicle"))
+        {
+            // Add penalty
+            EndEpisode();
+        }
     }
 
 }

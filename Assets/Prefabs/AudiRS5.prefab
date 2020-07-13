@@ -23442,23 +23442,10 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   maxStep: 0
-  Target: {fileID: 0}
   reward: 0
-  steeringAngle: 0
-  velocity: 0
-  targetLane: 4
-  wheelFrontLeft: {fileID: 7791624992940219192}
-  wheelFrontRight: {fileID: 2525555415392278765}
-  wheelBackLeft: {fileID: 365039517544278387}
-  wheelBackRight: {fileID: 2817820717354144444}
-  centerOfMass: {fileID: 4280645223251348575}
-  frontRadar: {fileID: 4054425070728609498}
-  mTorque: 0
-  bTorque: 0
   desiredVelocity: 100
-  tracker: {fileID: 6300847735248186717}
-  lc_Width: 3.5
-  lc_Length: 100
+  targetLane: 4
+  m_laneChanging: 0
 --- !u!114 &7371215330335361717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23495,14 +23482,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fc73c89a53c47418af705a5ea288c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeasureDistance: 100
+  steeringAngle: 0
+  velocity: 0
+  throttle: 0
+  currentLane: 0
+  trackingMode: 0
+  followTarget: {fileID: 0}
+  laneCenter: 0
+  targetVelocity: 0
+  wheelFrontLeft: {fileID: 0}
+  wheelFrontRight: {fileID: 0}
+  wheelBackLeft: {fileID: 0}
+  wheelBackRight: {fileID: 0}
+  centerOfMass: {fileID: 0}
+  frontOffset: {fileID: 0}
+  backOffset: {fileID: 0}
   m_K: 50
   m_Kt: 1
   m_Kv: 60
   m_Kd: 30
   m_maxMotorTorque: 1000
   m_maxBrakeTorque: 1000
+  tracker: {fileID: 0}
   m_GainParameter: 0.4
+  lc_Time: 2.5
 --- !u!1 &7689914650016505846
 GameObject:
   m_ObjectHideFlags: 0

@@ -179,11 +179,11 @@ GameObject:
   - component: {fileID: 7783895216602977785}
   m_Layer: 0
   m_Name: ToyotaGT86
-  m_TagString: Car
+  m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4539661262775328
 Transform:
   m_ObjectHideFlags: 0
@@ -205,6 +205,7 @@ Transform:
   - {fileID: 4069157593635050}
   - {fileID: 7535479139452653460}
   - {fileID: 1817830700021990952}
+  - {fileID: 609047349926628157}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -318,12 +319,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f5c0795f4b28d4fbb57c0e12094087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficList: []
-  laneCenters: []
-  laneWidth: 0
   targetLane: 0
   initialVelocity: 0
-  desiredVelocity: 0
+  targetVelocity: 0
 --- !u!114 &7783895216602977785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,18 +339,17 @@ MonoBehaviour:
   throttle: 0
   currentLane: 0
   trackingMode: 0
-  lc_Width: 0
-  laneCenter: 0
-  desiredVelocity: 0
   followTarget: {fileID: 0}
-  environmentSpace: {fileID: 0}
+  laneCenter: 0
+  targetVelocity: 0
   wheelFrontLeft: {fileID: 1890649546845854}
   wheelFrontRight: {fileID: 1288719004185982}
   wheelBackLeft: {fileID: 1785908448937766}
   wheelBackRight: {fileID: 1183162418364304}
   centerOfMass: {fileID: 7360681420998173418}
-  m_MeasureDistance: 100
-  m_K: 50
+  frontOffset: {fileID: 1817830700021990952}
+  backOffset: {fileID: 609047349926628157}
+  m_K: 120
   m_Kt: 1
   m_Kv: 60
   m_Kd: 30
@@ -4630,6 +4627,36 @@ Transform:
   m_Father: {fileID: 4783930979861612}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4472710130114832533
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 609047349926628157}
+  m_Layer: 0
+  m_Name: Back
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &609047349926628157
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4472710130114832533}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.525, z: -2.1306}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4539661262775328}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &7334459724290356067
 GameObject:
   m_ObjectHideFlags: 0
@@ -4679,7 +4706,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1817830700021990952}
   m_Layer: 0
-  m_Name: FrontRadar
+  m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
