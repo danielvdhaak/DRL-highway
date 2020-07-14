@@ -34,6 +34,8 @@ public class VehicleAgent : Agent
     private Vector3 initialLocalPos;
     private float initialVelocity;
 
+    private bool hasInitiated = false;
+
     private int currentLane;
     private float center;
     private float z;
@@ -43,46 +45,45 @@ public class VehicleAgent : Agent
 
     public override void Initialize()
     {
-        // Initialize environment
         environment = GetComponentInParent<EnvironmentManager>();
         if (environment == null)
             Debug.LogError("Missing environment reference!");
         laneCenters = environment.centerList;
 
-        // Initialize vehicle control module
         control = GetComponent<VehicleControl>();
 
-        // Find target
         Target = GameObject.FindGameObjectWithTag("Target").transform;
     }
 
     public override void OnEpisodeBegin()
     {
-        // set position
-        (initialLocalPos, initialVelocity) = environment.ResetArea(2, 2);
+        int startLane = randomNumber.Next(2, 4);
+        int startPos = randomNumber.Next(1, 1);
+
+        (initialLocalPos, initialVelocity) = environment.ResetArea(startLane, startPos);
         transform.localPosition = initialLocalPos;
         transform.localRotation = Quaternion.identity;
+        control.targetVelocity = targetVelocity;
         control.SetInitialVelocity(initialVelocity);
+
+        targetLane = startLane;
+        control.currentLane = startLane;
+        control.laneCenter = laneCenters[targetLane - 1];
+        control._TrackingMode = VehicleControl.TrackingMode.keepLane;
     }
 
     private void FixedUpdate()
     {
-
-
         // Only request a new decision if agent is not performing a lane change
         if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
-        {
-            control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1);
             RequestDecision();
-        }
-            
         else
             RequestAction();
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        //sensor.AddObservation(GetSpeed());
+        sensor.AddObservation(control.velocity);
         
     }
 
@@ -106,20 +107,32 @@ public class VehicleAgent : Agent
         switch (action)
         {
             case k_KeepLane:
-                control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1);
                 // Allocate reward for driving normalized velocity
                 break;
             case k_LeftLaneChange:
-                control._TrackingMode = VehicleControl.TrackingMode.leftLaneChange;
-                // set acc target
-                // negative reward for commiting a lane change
+                if (control._TrackingMode != VehicleControl.TrackingMode.leftLaneChange)
+                {
+                    control._TrackingMode = VehicleControl.TrackingMode.leftLaneChange;
+                    targetLane--;
+                    // LC penalty
+                }
                 break;
             case k_RightLaneChange:
-                control._TrackingMode = VehicleControl.TrackingMode.rightLaneChange;
+                if (control._TrackingMode != VehicleControl.TrackingMode.rightLaneChange)
+                {
+                    control._TrackingMode = VehicleControl.TrackingMode.rightLaneChange;
+                    targetLane++;
+                    // LC penalty
+                }
+                    
                 break;
             default:
                 throw new ArgumentException("Invalid action value");
         }
+
+        control.currentLane = GetCurrentLane();
+        control.laneCenter = laneCenters[targetLane - 1];
+        control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1);
     }
 
 

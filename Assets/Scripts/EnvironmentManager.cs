@@ -84,9 +84,8 @@ public class EnvironmentManager : MonoBehaviour
         //    trafficList.Add(vc);
         //}
 
-        trafficList = new List<VehicleControl>();
-        trafficList.Add(agent.GetComponent<VehicleControl>());
         vehiclePool = new Queue<GameObject>();
+        trafficList = new List<VehicleControl>();
     }
 
     private List<float> DetermineLaneCenters()
@@ -103,10 +102,6 @@ public class EnvironmentManager : MonoBehaviour
     public (Vector3, float) ResetArea(int startLane, int startPos)
     {
         // Despawn cars
-        //foreach (GameObject obj in vehicleList)
-        //{
-        //    Despawn(obj);
-        //}
         DespawnAll();
 
         // For each lane
@@ -195,8 +190,14 @@ public class EnvironmentManager : MonoBehaviour
         foreach(VehicleControl vehicle in trafficList)
         {
             if (!vehicle.gameObject.CompareTag("Agent"))
-                Despawn(vehicle.gameObject);
+            {
+                vehicle.gameObject.SetActive(false);
+                vehiclePool.Enqueue(vehicle.gameObject);
+            }
         }
+
+        trafficList.Clear();
+        trafficList.Add(agent.GetComponent<VehicleControl>());
     }
 
     private void CreateVehicleInstance()
@@ -204,8 +205,8 @@ public class EnvironmentManager : MonoBehaviour
         GameObject obj = vehiclePrefabs[randomNumber.Next(vehiclePrefabs.Count - 1)];
         obj.SetActive(false);
         GameObject instance = Instantiate(obj, transform);
+        obj.SetActive(true);
         vehiclePool.Enqueue(instance);
-        //trafficList.Add(instance.GetComponent<VehicleControl>());
     }
 
     private void OnDrawGizmosSelected()

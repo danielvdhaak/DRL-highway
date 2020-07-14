@@ -85,6 +85,7 @@ public class SimpleVehicle : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Collision with " + collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Vehicle"))
             environment.Despawn(gameObject);
     }

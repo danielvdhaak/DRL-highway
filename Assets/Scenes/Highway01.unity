@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19a84774b7733a499904f628b1ea18a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToFollow: {fileID: 1223542930}
+  objectToFollow: {fileID: 514418832}
   offset: {x: 0, y: 2, z: -5}
   followSpeed: 10
   lookSpeed: 10
@@ -7007,6 +7007,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1223542930}
     m_Modifications:
+    - target: {fileID: 5609413570709060370, guid: d11d818e4769d0340983a8482edcbbfb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6659627004403888616, guid: d11d818e4769d0340983a8482edcbbfb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7087,15 +7092,25 @@ PrefabInstance:
       propertyPath: startingPos.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7550677827306913715, guid: d11d818e4769d0340983a8482edcbbfb,
+        type: 3}
+      propertyPath: targetVelocity
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 7590320379955881910, guid: d11d818e4769d0340983a8482edcbbfb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7651869346091844603, guid: d11d818e4769d0340983a8482edcbbfb,
         type: 3}
       propertyPath: m_Name
-      value: AudiRS5
+      value: Agent
       objectReference: {fileID: 0}
     - target: {fileID: 7651869346091844603, guid: d11d818e4769d0340983a8482edcbbfb,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d11d818e4769d0340983a8482edcbbfb, type: 3}
@@ -7608,37 +7623,41 @@ MonoBehaviour:
   agent: {fileID: 998356458}
   cumulativeRewardText: {fileID: 0}
   laneWidth: 3.5
-  trafficFlow: 200
+  trafficFlow: 6000
   minHeadway: 1
   vehiclePrefabs:
-  - {fileID: 1094918606176732, guid: 5bb1f14131476c74a95504263bf0558f, type: 3}
+  - {fileID: 1094918606176732, guid: 8cdd373b0664aa54ba715718d590ff90, type: 3}
+  - {fileID: 1094918606176732, guid: e682f64ce3acbe14ebd919c332d8032f, type: 3}
+  - {fileID: 1094918606176732, guid: 0c8d96d1a839ad54c8976d9a1f418be6, type: 3}
+  - {fileID: 1094918606176732, guid: 0c8d96d1a839ad54c8976d9a1f418be6, type: 3}
+  - {fileID: 1094918606176732, guid: 4c2ffee1d289c3d489790e8f326f23f0, type: 3}
   trafficParameters:
-  - trafficFraction: 1
+  - trafficFraction: 0.1
     meanVehicleSpeed: 120
     stdVehicleSpeed: 1
     laneDensity: 0
     spawnParameters: []
-  - trafficFraction: 0.5
+  - trafficFraction: 0.1
     meanVehicleSpeed: 110
     stdVehicleSpeed: 3
     laneDensity: 0
     spawnParameters: []
-  - trafficFraction: 0
+  - trafficFraction: 0.2
     meanVehicleSpeed: 100
     stdVehicleSpeed: 3
     laneDensity: 0
     spawnParameters: []
-  - trafficFraction: 0
+  - trafficFraction: 0.2
     meanVehicleSpeed: 100
     stdVehicleSpeed: 2
     laneDensity: 0
     spawnParameters: []
-  - trafficFraction: 0
+  - trafficFraction: 0.2
     meanVehicleSpeed: 90
     stdVehicleSpeed: 1
     laneDensity: 0
     spawnParameters: []
-  - trafficFraction: 0
+  - trafficFraction: 0.2
     meanVehicleSpeed: 80
     stdVehicleSpeed: 1
     laneDensity: 0
