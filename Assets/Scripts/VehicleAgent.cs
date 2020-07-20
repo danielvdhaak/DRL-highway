@@ -94,10 +94,10 @@ public class VehicleAgent : Agent
         int rightMostLane = laneCenters.Count;
 
         if (targetLane == leftMostLane)
-            actionMasker.SetMask(0, new int[] { k_LeftLaneChange });
+            actionMasker.SetMask(0, new int[] { k_LeftLaneChange - 1 });
 
         if (targetLane == rightMostLane)
-            actionMasker.SetMask(0, new int[] { k_RightLaneChange });
+            actionMasker.SetMask(0, new int[] { k_RightLaneChange - 1 });
     }
 
     public override void OnActionReceived(float[] vectorAction)
