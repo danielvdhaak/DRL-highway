@@ -64,6 +64,21 @@
   <ItemGroup>
     <Compile Include="Assets\Editor\EnvironmentManagerEditor.cs" />
     <Compile Include="Assets\Editor\ExtendedEditor.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDEditorProgressWindow.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDHelpWindow.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDNotification.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDObjExporter.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDRoadEditor.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDRoadIntersectionEditor.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDRoadSystemEditor.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDRoadSystemEditorMenu.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDSaveWindow.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDSplineCEditor.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDSplineFEditor.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDSplineIEditor.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDSplineNEditor.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDTerrainEditor.cs" />
+    <Compile Include="Assets\RoadArchitect\Editor\GSDWizard.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>

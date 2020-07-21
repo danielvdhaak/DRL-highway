@@ -23526,7 +23526,7 @@ MonoBehaviour:
   centerOfMass: {fileID: 4280645223251348575}
   frontOffset: {fileID: 4054425070728609498}
   backOffset: {fileID: 1407614220520335956}
-  m_K: 120
+  m_K: 150
   m_Kt: 1
   m_Kv: 60
   m_Kd: 30
