@@ -8,40 +8,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[Serializable]
+public class LidarPoint
+{
+    public Vector3 position;
+    public float distance;
+    public float normDistance;
+
+    public LidarPoint(Vector3 p, float d, float nd)
+    {
+        position = p;
+        distance = d;
+        normDistance = nd;
+    }
+}
+
+[Serializable]
+public class LidarData
+{
+    // General sensor information
+    public Vector3 sensorPos;
+    public Vector3 sensorRotation;
+
+    // Data array
+    public LidarPoint[] lidarPoints;
+
+    // Initialize arrays
+    public void Init(int nRays)
+    {
+        lidarPoints = new LidarPoint[nRays];
+    }
+}
+
 public class LidarSensor : MonoBehaviour
 {
-    [Serializable]
-    public class LidarPoint
-    {
-        public Vector3 position;
-        public float distance;
-        public float normDistance;
-        public string tag;
-    }
-
-    [Serializable]
-    public class Data
-    {
-        // General sensor information
-        public Vector3 sensorPos;
-        public Vector3 sensorRotation;
-
-        // Data array
-        public LidarPoint[] lidarPoints;
-
-        // Initialize arrays
-        public void Init(int nRays)
-        {
-            lidarPoints = new LidarPoint[nRays];
-        }
-    }
-
     [Header("Sensor parameters")]
-    [Range(10,100)] public int range = 50;
-    public int deltaAzimuthal = 2;
-    public float polarOffset = 25f;
+    [Range(10,100)] public int maxRange = 50;
+    public int deltaAzimuthal = 3;
+    public float polarOffset = 20f;
     public int deltaPolar = -1;
-    public int polarSweep = 25;
+    public int polarSweep = 15;
     public float noise = 0.2f;
 
     [Header("Debugging")]
@@ -50,15 +56,16 @@ public class LidarSensor : MonoBehaviour
     public bool displayInGame = false;
 
     [Header("Sensor data")]
-    public Data data;
+    public LidarData data;
 
-    public void Update()
+    private void FixedUpdate()
     {
-        GetOutput();
+        data = GetOutput();
     }
 
-    public void GetOutput()
+    public LidarData GetOutput()
     {
+        LidarData data = new LidarData();
         data.Init(360 / deltaAzimuthal * polarSweep);
 
         data.sensorPos = transform.position;
@@ -86,40 +93,31 @@ public class LidarSensor : MonoBehaviour
                 if (p >= data.lidarPoints.Length)
                     break;
 
-                if (Physics.Raycast(lidarRay, out hit, range))
+                if (Physics.Raycast(lidarRay, out hit, maxRange))
                 {
-                    // Determine hit info and apply noise
-                    float distance = hit.distance + noise * Mathf.PerlinNoise(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
-                    distance = Mathf.Clamp(distance, 0f, range);
+                    float distance = Mathf.Clamp(hit.distance + noise * Mathf.PerlinNoise(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f)),
+                                                0f, maxRange);
+                    float normDistance = distance / maxRange;
+                    Vector3 position = lidarRay.GetPoint(distance);
 
-                    LidarPoint point = new LidarPoint();
-                    point.position = lidarRay.GetPoint(distance);
-                    point.distance = distance;
-                    point.normDistance = distance / range;
-                    point.tag = hit.transform.tag;
-
-                    data.lidarPoints[p] = point;
+                    data.lidarPoints[p] = new LidarPoint(position, distance, normDistance);
 
                     lidarRay.direction = rotAzimuth * lidarRay.direction;
                     p++;
                 }
                 else
                 {
-                    // Set hit info to sensor range as default
-                    LidarPoint point = new LidarPoint();
-                    point.position = lidarRay.GetPoint(range);
-                    point.distance = range;
-                    point.normDistance = 1f;
-                    point.tag = "Untagged";
-
-                    data.lidarPoints[p] = point;
+                    data.lidarPoints[p] = new LidarPoint(lidarRay.GetPoint(maxRange), maxRange, 1f);
 
                     lidarRay.direction = rotAzimuth * lidarRay.direction;
                     p++;
                 }
             }
+
             lidarRay.direction = rotPolar * lidarRay.direction;
         }
+
+        return data;
     }
 
     private void OnDrawGizmosSelected()
@@ -127,21 +125,16 @@ public class LidarSensor : MonoBehaviour
         if (displayInScene == false)
             return;
 
-        GetOutput();
+        LidarData GizmoData = GetOutput();
 
-        for (int i = 0; i < data.lidarPoints.Length; i++)
+        for (int i = 0; i < GizmoData.lidarPoints.Length; i++)
         {
-            if (data.lidarPoints[i] == null)
+            if (GizmoData.lidarPoints[i] == null)
                 continue;
 
-            Gizmos.color = Color.HSVToRGB(data.lidarPoints[i].normDistance, 1f, 1f);
-            Gizmos.DrawSphere(data.lidarPoints[i].position, gizmoSize);
+            Gizmos.color = Color.HSVToRGB(GizmoData.lidarPoints[i].normDistance, 1f, 1f);
+            Gizmos.DrawSphere(GizmoData.lidarPoints[i].position, gizmoSize);
         }
-    }
-
-    public void Read()
-    {
-        // Return sensor data vector
     }
 
     private void OnRenderObject()

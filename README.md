@@ -24,10 +24,15 @@ All assets used in this project are free and as follows:
 | --- | --- | ---
 | [RoadArchitect v1.7](https://github.com/MicroGSD/RoadArchitect) | MicroGSD | MIT
 | [Audi RS5 2019](https://sketchfab.com/3d-models/audi-rs5-2019-fae1a4186d464a6aae351ce9e9ff2401) | Indians | CC Attribution
-| [Low-poly Civilian vehicle #5](https://assetstore.unity.com/packages/3d/vehicles/land/low-poly-civilian-vehicle-5-124987) | Pro 3D models | Unity asset
-| [Low-poly Sports car #20](https://assetstore.unity.com/packages/3d/vehicles/land/low-poly-sports-car-20-144253) | Pro 3D models | Unity asset
+| [Low-poly Civilian vehicle #5](https://assetstore.unity.com/packages/3d/vehicles/land/low-poly-civilian-vehicle-5-124987) | Pro 3D models | Unity extension asset
+| [Low-poly Sports car #20](https://assetstore.unity.com/packages/3d/vehicles/land/low-poly-sports-car-20-144253) | Pro 3D models | Unity extension asset
 | [Turbine](https://sketchfab.com/3d-models/turbine-76a5c63001e14041be291a5b1a3d924b) | Peter Primini | CC Attribution
-| [Terrain Tools Sample Asset Pack](https://assetstore.unity.com/packages/2d/textures-materials/terrain-tools-sample-asset-pack-145808) | Unity Technologies | Unity asset
+| [Electro Station](https://sketchfab.com/3d-models/electro-station-5d35c32833594d6a958649cc7212bb93) | Nikitos & 3130 | CC Attribution
+| [Petronas Gas Station](https://sketchfab.com/3d-models/petronas-gas-station-d5e4789fb926492993b277c1b50e13fd) | imin96 | CC Attribution
+| [Various buildings](https://sketchfab.com/aitortilla01/models) | aitortilla01 | CC Attribution
+| [IT Tower low data size](https://sketchfab.com/3d-models/it-tower-low-data-size-dfeca8e7c7c5429b91d6207b3a3a9af4) | Sharma ji | CC Attribution
+| [Terrain Tools Sample Asset Pack](https://assetstore.unity.com/packages/2d/textures-materials/terrain-tools-sample-asset-pack-145808) | Unity Technologies | Unity extension asset
+| [Terrain Textures Pack Free](https://assetstore.unity.com/packages/2d/textures-materials/terrain-textures-pack-free-139542) | ALP8310 | Unity extension asset
 
 ## Acknowledgements
 Big thanks to Bazilinskyy et al. (2020) for providing me with their project [couped-sim](https://github.com/bazilinskyy/coupled-sim) as a reference.
