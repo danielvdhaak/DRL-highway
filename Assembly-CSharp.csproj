@@ -82,6 +82,7 @@
     <Compile Include="Assets\RoadArchitect\Spline\GSDSplineN.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\EnvironmentManager.cs" />
+    <Compile Include="Assets\Scripts\Events.cs" />
     <Compile Include="Assets\Scripts\LidarSensor.cs" />
     <Compile Include="Assets\Scripts\RandomNumber.cs" />
     <Compile Include="Assets\Scripts\SimpleVehicle.cs" />

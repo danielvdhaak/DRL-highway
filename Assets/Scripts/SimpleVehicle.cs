@@ -24,6 +24,8 @@ public class SimpleVehicle : MonoBehaviour
     public float targetVelocity;
     private List<float> laneCenters;
 
+    private bool isCutOff;
+
     private int currentLane;
     private float center;
     private float z;
@@ -39,6 +41,7 @@ public class SimpleVehicle : MonoBehaviour
 
     private void OnEnable()
     {
+        isCutOff = false;
         control.laneCenter = laneCenters[targetLane - 1];
         control.currentLane = targetLane;
         control.targetVelocity = targetVelocity;
@@ -50,6 +53,17 @@ public class SimpleVehicle : MonoBehaviour
         currentLane = GetCurrentLane();
         control.currentLane = currentLane;
         control.followTarget = GetClosestVehicle(environment.trafficList);
+
+        if (control.headway <= 0.4f && control.followTarget._TrackingMode != VehicleControl.TrackingMode.keepLane)
+        {
+            if (!isCutOff)
+            {
+                isCutOff = true;
+                Events.Instance.CutOff(control.followTarget.GetInstanceID());
+            }
+        }
+        else if (control.headway > 0.4f)
+            isCutOff = false;
     }
 
     private int GetCurrentLane()
@@ -85,7 +99,6 @@ public class SimpleVehicle : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision with " + collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Vehicle"))
             environment.Despawn(gameObject);
     }

@@ -12,20 +12,22 @@ using UnityEngine;
 public class VehicleControl : MonoBehaviour
 {
     public enum TrackingMode { leftLaneChange, keepLane, rightLaneChange };
-
+    
     private EnvironmentManager environment;     
 
     [Header("Properties (READ ONLY)")]
     public float steeringAngle;
+    [HideInInspector] public int currentLane;
     public float velocity;
     public float throttle;
-    [HideInInspector] public int currentLane;
+    public float headway = 1f;
 
     [Header("Parameters (INPUT)")]
     public TrackingMode trackingMode;
-    public VehicleControl followTarget;
     public float laneCenter;
     [HideInInspector] public float targetVelocity;
+    public VehicleControl followTarget;
+    public bool isFollowing;
 
     [Header("Car components")]
     [SerializeField] private GameObject wheelFrontLeft;
@@ -42,7 +44,7 @@ public class VehicleControl : MonoBehaviour
     [Header("ACC")]
     private float mTorque;
     private float bTorque;
-    [SerializeField] private float m_K = 120f;
+    [SerializeField] private float m_K = 250f;
     [SerializeField] private float m_Kt = 1.0f;
     [SerializeField] private float m_Kv = 60f;
     [SerializeField] private float m_Kd = 30f;
@@ -63,7 +65,6 @@ public class VehicleControl : MonoBehaviour
     private readonly int k_RightLC = 1;
     private readonly int k_LeftLC = -1;
 
-    // Setter that calls event upon value change
     public TrackingMode _TrackingMode
     {
         get { return trackingMode; }
@@ -100,20 +101,31 @@ public class VehicleControl : MonoBehaviour
     private void OnEnable()
     {
         _TrackingMode = TrackingMode.keepLane;
+        isFollowing = true;
     }
 
     private void FixedUpdate()
     {
         velocity = GetSpeed();
+        float spacing = CalcSpacing(velocity);
 
-        // Torques
         if (followTarget != null)
         {
             float gap = environment.transform.InverseTransformDirection(followTarget.backOffset.position - frontOffset.position).z;
-            (mTorque, bTorque) = CalcTorques(velocity, targetVelocity, gap, followTarget.velocity, followTarget.throttle);
+            headway = Mathf.Clamp(gap / spacing, 0f, 1f);
+            Debug.DrawLine(frontOffset.position, frontOffset.position + frontOffset.forward * spacing, Color.green);
+            Debug.DrawLine(frontOffset.position, frontOffset.position + frontOffset.forward * 0.4f * spacing, Color.red);
+            
+            if (isFollowing)
+                (mTorque, bTorque) = CalcTorques(velocity, targetVelocity, (gap - spacing), followTarget.velocity, followTarget.throttle);
+            else
+                (mTorque, bTorque) = CalcTorques(velocity, targetVelocity, Mathf.Infinity, 0f, 0f);
         }
         else
+        {
+            headway = 1f;
             (mTorque, bTorque) = CalcTorques(velocity, targetVelocity, Mathf.Infinity, 0f, 0f);
+        }
             
         wheelcolBL.motorTorque = mTorque;
         wheelcolBL.brakeTorque = bTorque;
@@ -180,6 +192,10 @@ public class VehicleControl : MonoBehaviour
         _TrackingMode = TrackingMode.keepLane;
     }
 
+    /// <summary>
+    /// Sets the (initial) forward velocity of the vehicles rigidbody.
+    /// </summary>
+    /// <param name="velocity"></param>
     public void SetInitialVelocity(float velocity)
     {
         if (rBody == null)
@@ -217,15 +233,21 @@ public class VehicleControl : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns the safe spacing in meters to a preceding car.
+    /// </summary>
+    /// <param name="velocity"></param>
+    private float CalcSpacing(float velocity)
+    {
+        return 3f + 0.0019f * (velocity / 3.6f) + 0.0448f * (float)Math.Pow(velocity / 3.6f, 2);
+    }
+
+    /// <summary>
     /// Returns motor and braking torques calculated using Adaptive Cruise Control (ACC).
     /// </summary>
-    private (float, float) CalcTorques(float velocity, float desVelocity, float gap, float fCarVelocity, float fCarThrottle)
+    private (float, float) CalcTorques(float velocity, float desVelocity, float spacingError, float fCarVelocity, float fCarThrottle)
     {
-        float spacing = 3f + 0.0019f * (velocity / 3.6f) + 0.0448f * (float)Math.Pow(velocity / 3.6f, 2);
-        Debug.DrawLine(frontOffset.position, frontOffset.position + frontOffset.forward * spacing, Color.red);
-
         float freeThrottle = m_K * ((desVelocity - velocity) / 3.6f);
-        float referenceThrottle = m_Kt * fCarThrottle + m_Kv * ((fCarVelocity - velocity) / 3.6f) + m_Kd * (gap - spacing);
+        float referenceThrottle = m_Kt * fCarThrottle + m_Kv * ((fCarVelocity - velocity) / 3.6f) + m_Kd * spacingError;
         throttle = Mathf.Min(freeThrottle, referenceThrottle);
 
         return (Mathf.Clamp(throttle, 0f, m_maxMotorTorque), -Mathf.Clamp(throttle, -m_maxBrakeTorque, 0f));

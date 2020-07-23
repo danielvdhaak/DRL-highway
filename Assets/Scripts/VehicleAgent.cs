@@ -23,6 +23,8 @@ public class VehicleAgent : Agent
     private const int k_LeftLaneChange = 1;
     private const int k_KeepLane = 2;
     private const int k_RightLaneChange = 3;
+    private const int k_Follow = 1;
+    private const int k_Cruise = 2;
 
     [Header("Parameters")]
     public int targetLane;
@@ -33,13 +35,6 @@ public class VehicleAgent : Agent
 
     private Vector3 initialLocalPos;
     private float initialVelocity;
-
-    private bool hasInitiated = false;
-
-    private int currentLane;
-    private float center;
-    private float z;
-    private float dz;
 
     private RandomNumber randomNumber = new RandomNumber();
 
@@ -52,11 +47,13 @@ public class VehicleAgent : Agent
 
         control = GetComponent<VehicleControl>();
 
-        Target = GameObject.FindGameObjectWithTag("Target").transform;
+        Events.Instance.onCutOff += OnCutOff;
     }
 
     public override void OnEpisodeBegin()
     {
+        Target = GameObject.FindGameObjectWithTag("Target").transform;
+
         int startLane = randomNumber.Next(2, 4);
         int startPos = randomNumber.Next(1, 1);
 
@@ -108,14 +105,14 @@ public class VehicleAgent : Agent
         switch (lateralAction)
         {
             case k_KeepLane:
-                // Allocate reward for driving normalized velocity
+                // Do nothing
                 break;
             case k_LeftLaneChange:
                 if (control._TrackingMode != VehicleControl.TrackingMode.leftLaneChange)
                 {
                     control._TrackingMode = VehicleControl.TrackingMode.leftLaneChange;
                     targetLane--;
-                    // LC penalty
+                    SetReward(-0.05f);
                 }
                 break;
             case k_RightLaneChange:
@@ -123,7 +120,7 @@ public class VehicleAgent : Agent
                 {
                     control._TrackingMode = VehicleControl.TrackingMode.rightLaneChange;
                     targetLane++;
-                    // LC penalty
+                    SetReward(-0.05f);
                 }
                     
                 break;
@@ -133,18 +130,22 @@ public class VehicleAgent : Agent
 
         control.currentLane = GetCurrentLane();
         control.laneCenter = laneCenters[targetLane - 1];
+        control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1);
 
         switch (longiAction)
         {
-            case 1:
-                control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1);
+            case k_Follow:
+                control.isFollowing = true;
                 break;
-            case 2:
-                control.followTarget = null;
+            case k_Cruise:
+                control.isFollowing = false;
                 break;
             default:
                 throw new ArgumentException("Invalid action value");
         }
+
+        float normSpeed = control.velocity / targetVelocity;
+        SetReward(0.001f * normSpeed);
 
     }
 
@@ -152,13 +153,6 @@ public class VehicleAgent : Agent
     public override float[] Heuristic()
     {
         int lat, longi;
-
-        //if (Input.GetKey(KeyCode.A))
-        //    return new float[] { k_LeftLaneChange };
-        //if (Input.GetKey(KeyCode.D))
-        //    return new float[] { k_RightLaneChange };
-        //else
-        //    return new float[] { k_KeepLane };
 
         if (Input.GetKey(KeyCode.A))
             lat = k_LeftLaneChange;
@@ -168,9 +162,9 @@ public class VehicleAgent : Agent
             lat = k_KeepLane;
 
         if (Input.GetKey(KeyCode.W))
-            longi = 2;
+            longi = k_Cruise;
         else
-            longi = 1;
+            longi = k_Follow;
 
         return new float[] { lat, longi };
     }
@@ -178,7 +172,6 @@ public class VehicleAgent : Agent
     private int GetCurrentLane()
     {
         List<float> errors = laneCenters.Select(c => Math.Abs(c - transform.localPosition.x)).ToList();
-
 
         return errors.IndexOf(errors.Min()) + 1;
     }
@@ -207,22 +200,37 @@ public class VehicleAgent : Agent
         return target;
     }
 
+    private void OnCutOff(int InstanceID)
+    {
+        if (InstanceID == control.GetInstanceID())
+        {
+            Debug.Log("Cut off vehicle!");
+            SetReward(-0.2f);
+        }
+            
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Target"))
         {
-            // Add reward
+            SetReward(1f);
             EndEpisode();
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Vehicle"))
+        if (collision.gameObject.CompareTag("Vehicle") || collision.gameObject.CompareTag("Railing"))
         {
-            // Add penalty
+            SetReward(-1f);
             EndEpisode();
         }
+    }
+
+    private void OnDestroy()
+    {
+        Events.Instance.onCutOff -= OnCutOff;
     }
 
 }

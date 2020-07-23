@@ -333,13 +333,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   steeringAngle: 0
+  currentLane: 0
   velocity: 0
   throttle: 0
-  currentLane: 0
+  headway: 1
   trackingMode: 1
-  followTarget: {fileID: 0}
   laneCenter: 0
   targetVelocity: 0
+  followTarget: {fileID: 0}
+  isFollowing: 0
   wheelFrontLeft: {fileID: 1890649546845854}
   wheelFrontRight: {fileID: 1288719004185982}
   wheelBackLeft: {fileID: 1785908448937766}
@@ -347,7 +349,7 @@ MonoBehaviour:
   centerOfMass: {fileID: 7360681420998173418}
   frontOffset: {fileID: 1817830700021990952}
   backOffset: {fileID: 609047349926628157}
-  m_K: 120
+  m_K: 250
   m_Kt: 1
   m_Kv: 60
   m_Kd: 30
