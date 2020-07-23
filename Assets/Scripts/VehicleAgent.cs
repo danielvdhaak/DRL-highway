@@ -102,9 +102,10 @@ public class VehicleAgent : Agent
 
     public override void OnActionReceived(float[] vectorAction)
     {
-        var action = Mathf.FloorToInt(vectorAction[0]);
+        var lateralAction = Mathf.FloorToInt(vectorAction[0]);
+        var longiAction = Mathf.FloorToInt(vectorAction[1]);
 
-        switch (action)
+        switch (lateralAction)
         {
             case k_KeepLane:
                 // Allocate reward for driving normalized velocity
@@ -132,18 +133,46 @@ public class VehicleAgent : Agent
 
         control.currentLane = GetCurrentLane();
         control.laneCenter = laneCenters[targetLane - 1];
-        control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1);
+
+        switch (longiAction)
+        {
+            case 1:
+                control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1);
+                break;
+            case 2:
+                control.followTarget = null;
+                break;
+            default:
+                throw new ArgumentException("Invalid action value");
+        }
+
     }
 
 
     public override float[] Heuristic()
     {
+        int lat, longi;
+
+        //if (Input.GetKey(KeyCode.A))
+        //    return new float[] { k_LeftLaneChange };
+        //if (Input.GetKey(KeyCode.D))
+        //    return new float[] { k_RightLaneChange };
+        //else
+        //    return new float[] { k_KeepLane };
+
         if (Input.GetKey(KeyCode.A))
-            return new float[] { k_LeftLaneChange };
-        if (Input.GetKey(KeyCode.D))
-            return new float[] { k_RightLaneChange };
+            lat = k_LeftLaneChange;
+        else if (Input.GetKey(KeyCode.D))
+            lat = k_RightLaneChange;
         else
-            return new float[] { k_KeepLane };
+            lat = k_KeepLane;
+
+        if (Input.GetKey(KeyCode.W))
+            longi = 2;
+        else
+            longi = 1;
+
+        return new float[] { lat, longi };
     }
 
     private int GetCurrentLane()
