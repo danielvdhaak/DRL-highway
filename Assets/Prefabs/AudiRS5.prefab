@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6552795614136884740}
   - component: {fileID: 5906363388915832877}
   - component: {fileID: 7813306621323749580}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SWheel_MetalDkGlossy_MetalDkGlossy_0.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4895261141833526485}
   - component: {fileID: 763030307708170411}
   - component: {fileID: 1924016781406637467}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLightsChromeGlass_intPlasticGrey_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 7474275045289329093}
   - component: {fileID: 2650017347572020975}
   - component: {fileID: 3175949975760593579}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FLWheel_WheelMet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 9183031691172597627}
   - component: {fileID: 5429635780159209422}
   - component: {fileID: 1821008012822716226}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SWheel_others_intPlasticDkmatte_0.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 3631305045123697870}
   - component: {fileID: 7949801861609215734}
   - component: {fileID: 8377056561984235234}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FRWheel_BrakeCaliper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1025576092361051591}
   - component: {fileID: 3065211363426962883}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BLWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,7 +474,7 @@ GameObject:
   - component: {fileID: 949770042260760716}
   - component: {fileID: 5437863103619227683}
   - component: {fileID: 1792142962280245924}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: others_intPlasticDkmatte_0.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -542,6 +542,94 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &523632100814741585
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2023374825168730710}
+  - component: {fileID: 1058251311399037826}
+  m_Layer: 8
+  m_Name: BackRadarL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2023374825168730710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523632100814741585}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.862, y: 0.535, z: -1.948}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 385968469158458076}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1058251311399037826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523632100814741585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRange: 45
+  noise: 0.2
+  displayInGame: 0
+  displayGizmos: 1
+  gizmoSize: 0.15
+  startAzimuthal: -140
+  endAzimuthal: -170
+  aRays: 10
+  startPolar: 0
+  endPolar: 0
+  pRays: 1
+  data:
+    sensorPos: {x: -0.862, y: 0.535, z: -1.948}
+    sensorRotation: {x: -0, y: 0, z: 0}
+    sensorPoints:
+    - position: {x: -10.868849, y: 0.535, z: -13.873695}
+      distance: 15.56789
+      normDistance: 0.3459531
+    - position: {x: -10.82703, y: 0.535, z: -15.333352}
+      distance: 16.687405
+      normDistance: 0.37083122
+    - position: {x: -10.835724, y: 0.535, z: -17.112314}
+      distance: 18.15025
+      normDistance: 0.40333888
+    - position: {x: -10.839685, y: 0.535, z: -19.229855}
+      distance: 19.955368
+      normDistance: 0.44345263
+    - position: {x: -10.830696, y: 0.535, z: -21.797297}
+      distance: 22.211924
+      normDistance: 0.4935983
+    - position: {x: -10.818853, y: 0.535, z: -25.030586}
+      distance: 25.138512
+      normDistance: 0.55863357
+    - position: {x: -10.836784, y: 0.535, z: -29.353485}
+      distance: 29.164309
+      normDistance: 0.6480957
+    - position: {x: -10.812603, y: 0.535, z: -35.185318}
+      distance: 34.69487
+      normDistance: 0.7709971
+    - position: {x: -10.822544, y: 0.535, z: -43.974854}
+      distance: 43.19108
+      normDistance: 0.95980173
+    - position: {x: -8.676172, y: 0.535, z: -46.26435}
+      distance: 45
+      normDistance: 1
 --- !u!1 &726254036883294255
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,7 +641,7 @@ GameObject:
   - component: {fileID: 2680740329019922097}
   - component: {fileID: 6320605947337231754}
   - component: {fileID: 3459727357395244439}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body_plastic_Body_plastic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +720,7 @@ GameObject:
   - component: {fileID: 5408260461429903111}
   - component: {fileID: 3023974600280959833}
   - component: {fileID: 3449707101813677301}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BLWheel_WheelBrakeDisk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -711,7 +799,7 @@ GameObject:
   - component: {fileID: 8491469475773802448}
   - component: {fileID: 6352387481100649593}
   - component: {fileID: 631557239503382191}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLightsChromeGlass_intPlasticLtBump_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -790,7 +878,7 @@ GameObject:
   - component: {fileID: 7474622489145225603}
   - component: {fileID: 3712664725559973436}
   - component: {fileID: 7747862282270499790}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLightsChromeGlass_intSeatPatterns_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -869,7 +957,7 @@ GameObject:
   - component: {fileID: 3076350367731623026}
   - component: {fileID: 1717365727826426500}
   - component: {fileID: 630752075519498550}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: others_GlassLights_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -948,7 +1036,7 @@ GameObject:
   - component: {fileID: 4983582122506457540}
   - component: {fileID: 3711754210671553429}
   - component: {fileID: 2920123826388204394}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: others_ChromeLightsBump_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1027,7 +1115,7 @@ GameObject:
   - component: {fileID: 69600240059977888}
   - component: {fileID: 2964221034758936083}
   - component: {fileID: 1261702598866562667}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Undercarriage_Body_plastic_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1106,7 +1194,7 @@ GameObject:
   - component: {fileID: 7259729490676363834}
   - component: {fileID: 5101274398449854948}
   - component: {fileID: 3759070649951048707}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BLWheel_WheelLogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1185,7 +1273,7 @@ GameObject:
   - component: {fileID: 8650969455762730499}
   - component: {fileID: 3701550271622000714}
   - component: {fileID: 6731692559933989437}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Glass_GlassRedLights_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1264,7 +1352,7 @@ GameObject:
   - component: {fileID: 8322920803558669311}
   - component: {fileID: 7437578184425532186}
   - component: {fileID: 275045986881663088}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FLWheel_BrakeCaliper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1343,7 +1431,7 @@ GameObject:
   - component: {fileID: 6979218026605331094}
   - component: {fileID: 2510349951509081328}
   - component: {fileID: 6097865073509617642}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLightsChromeGlass_Speakers_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1422,7 +1510,7 @@ GameObject:
   - component: {fileID: 8352474150750294116}
   - component: {fileID: 8139846012185599826}
   - component: {fileID: 3199206601108636529}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Glass_RLightsChromeGlass_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1501,7 +1589,7 @@ GameObject:
   - component: {fileID: 6483289985756151701}
   - component: {fileID: 5224269957501872932}
   - component: {fileID: 6166056270204491385}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLightsChromeGlass_intFabricLt_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1580,7 +1668,7 @@ GameObject:
   - component: {fileID: 8083082248671527867}
   - component: {fileID: 2208521033243259318}
   - component: {fileID: 1597912949082124719}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MetalDkGlossy_intMetallDk_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1658,7 +1746,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1091783816182097607}
   - component: {fileID: 3111098587671252747}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FRWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1727,7 +1815,7 @@ GameObject:
   - component: {fileID: 4691743276809669578}
   - component: {fileID: 8428170421831077907}
   - component: {fileID: 2410839928170808961}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLightsChromeGlass_intCarpet_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1805,7 +1893,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8028584526510684031}
   - component: {fileID: 3789124193223852639}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BRWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1874,7 +1962,7 @@ GameObject:
   - component: {fileID: 430113800385497655}
   - component: {fileID: 2325259208469141344}
   - component: {fileID: 8196385004458674422}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BLWheel_WheelTireBMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1953,7 +2041,7 @@ GameObject:
   - component: {fileID: 3757297561418690320}
   - component: {fileID: 7536321906720989434}
   - component: {fileID: 9201613038407861614}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FLWheel_WheelTireBMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2021,6 +2109,94 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &2970718868658558590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3237760166551197480}
+  - component: {fileID: 7645663911476851594}
+  m_Layer: 8
+  m_Name: SideRadarL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3237760166551197480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2970718868658558590}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.535, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 385968469158458076}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7645663911476851594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2970718868658558590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRange: 5
+  noise: 0.2
+  displayInGame: 0
+  displayGizmos: 1
+  gizmoSize: 0.15
+  startAzimuthal: -45
+  endAzimuthal: -135
+  aRays: 10
+  startPolar: 0
+  endPolar: 0
+  pRays: 1
+  data:
+    sensorPos: {x: 0, y: 0.535, z: 0}
+    sensorRotation: {x: -0, y: 0, z: 0}
+    sensorPoints:
+    - position: {x: -2.8284273, y: 0.535, z: 2.8284268}
+      distance: 4
+      normDistance: 1
+    - position: {x: -3.2766082, y: 0.535, z: 2.294306}
+      distance: 4
+      normDistance: 1
+    - position: {x: -3.6252313, y: 0.535, z: 1.6904728}
+      distance: 4
+      normDistance: 1
+    - position: {x: -3.8637033, y: 0.535, z: 1.0352762}
+      distance: 4
+      normDistance: 1
+    - position: {x: -3.9847786, y: 0.535, z: 0.34862354}
+      distance: 4
+      normDistance: 1
+    - position: {x: -3.984779, y: 0.535, z: -0.3486228}
+      distance: 4
+      normDistance: 1
+    - position: {x: -3.8637033, y: 0.535, z: -1.0352759}
+      distance: 4
+      normDistance: 1
+    - position: {x: -3.625231, y: 0.535, z: -1.6904736}
+      distance: 4
+      normDistance: 1
+    - position: {x: -3.2766078, y: 0.535, z: -2.294306}
+      distance: 4
+      normDistance: 1
+    - position: {x: -2.8284273, y: 0.535, z: -2.828427}
+      distance: 4
+      normDistance: 1
 --- !u!1 &3183736135327799725
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,7 +2208,7 @@ GameObject:
   - component: {fileID: 6625670250531356645}
   - component: {fileID: 1549279991415746781}
   - component: {fileID: 6187810908036439941}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Glass_GlassTextured_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2111,7 +2287,7 @@ GameObject:
   - component: {fileID: 3791474381933076200}
   - component: {fileID: 6885002782829147998}
   - component: {fileID: 2308178534152743976}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FRWheel_WheelMet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2190,7 +2366,7 @@ GameObject:
   - component: {fileID: 3051395853642680728}
   - component: {fileID: 4729345609379946373}
   - component: {fileID: 5217316378954338579}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: others_Aluminum_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2269,7 +2445,7 @@ GameObject:
   - component: {fileID: 6244512549490002815}
   - component: {fileID: 7034586056570675423}
   - component: {fileID: 930102478460802090}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SWheel_RLightsChromeGlass_SeatLeather_0.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2348,7 +2524,7 @@ GameObject:
   - component: {fileID: 6139629734804094097}
   - component: {fileID: 2131134671529947598}
   - component: {fileID: 3488519537896678549}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SWheel_RLightsChromeGlass_intFabricDk_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2427,7 +2603,7 @@ GameObject:
   - component: {fileID: 401404370879295082}
   - component: {fileID: 7411963464954577454}
   - component: {fileID: 3913168308485332971}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BRWheel_WheelBrakeDisk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2506,7 +2682,7 @@ GameObject:
   - component: {fileID: 3453431450448729575}
   - component: {fileID: 414320561494388352}
   - component: {fileID: 609974964439672716}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CarPaint_CarPaint_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2585,7 +2761,7 @@ GameObject:
   - component: {fileID: 6994230312392879262}
   - component: {fileID: 6488334499409495742}
   - component: {fileID: 5293841450242440380}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SWheel_RLightsChromeGlass_intTexButtons_0.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2664,7 +2840,7 @@ GameObject:
   - component: {fileID: 8477086431946133599}
   - component: {fileID: 1454071967360213820}
   - component: {fileID: 8404923841806659062}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MetalDkGlossy_MetalLt_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2743,7 +2919,7 @@ GameObject:
   - component: {fileID: 4425708095026209694}
   - component: {fileID: 7128302406681631428}
   - component: {fileID: 7140319184474456481}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: others_intPlasticDkmatte_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2822,7 +2998,7 @@ GameObject:
   - component: {fileID: 8123399561414347122}
   - component: {fileID: 4208551230389717603}
   - component: {fileID: 6289721454832113230}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: others_HdLightsLed_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2890,6 +3066,129 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &4250569851426214104
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2772596775276787526}
+  - component: {fileID: 5656388863190761725}
+  m_Layer: 8
+  m_Name: BackRadarR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2772596775276787526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4250569851426214104}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.862, y: 0.535, z: -1.948}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 385968469158458076}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5656388863190761725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4250569851426214104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRange: 45
+  noise: 0.2
+  displayInGame: 0
+  displayGizmos: 1
+  gizmoSize: 0.15
+  startAzimuthal: 140
+  endAzimuthal: 170
+  aRays: 10
+  startPolar: 0
+  endPolar: 0
+  pRays: 1
+  data:
+    sensorPos: {x: 0.862, y: 0.535, z: -1.948}
+    sensorRotation: {x: -0, y: 0, z: 0}
+    sensorPoints:
+    - position: {x: 10.841793, y: 0.535, z: -13.841454}
+      distance: 15.525801
+      normDistance: 0.3450178
+    - position: {x: 10.865978, y: 0.535, z: -15.385668}
+      distance: 16.752626
+      normDistance: 0.3722806
+    - position: {x: 10.839325, y: 0.535, z: -17.11779}
+      distance: 18.156803
+      normDistance: 0.40348452
+    - position: {x: 10.832832, y: 0.535, z: -19.217983}
+      distance: 19.94166
+      normDistance: 0.443148
+    - position: {x: 10.847275, y: 0.535, z: -21.830307}
+      distance: 22.248863
+      normDistance: 0.4944192
+    - position: {x: 10.821085, y: 0.535, z: -25.035759}
+      distance: 25.144144
+      normDistance: 0.55875874
+    - position: {x: 10.823311, y: 0.535, z: -29.316467}
+      distance: 29.124914
+      normDistance: 0.6472203
+    - position: {x: 10.81102, y: 0.535, z: -35.18004}
+      distance: 34.689354
+      normDistance: 0.77087456
+    - position: {x: 10.822195, y: 0.535, z: -43.97338}
+      distance: 43.189564
+      normDistance: 0.95976806
+    - position: {x: 8.676172, y: 0.535, z: -46.26435}
+      distance: 45
+      normDistance: 1
+--- !u!1 &4296442360196899414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 385968469158458076}
+  m_Layer: 8
+  m_Name: Sensors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &385968469158458076
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4296442360196899414}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4722830704004413254}
+  - {fileID: 3237760166551197480}
+  - {fileID: 1527918421725542603}
+  - {fileID: 2023374825168730710}
+  - {fileID: 2772596775276787526}
+  m_Father: {fileID: 6659627004403888616}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4336679443467397807
 GameObject:
   m_ObjectHideFlags: 0
@@ -2901,7 +3200,7 @@ GameObject:
   - component: {fileID: 8185861888076606238}
   - component: {fileID: 9102522649596132481}
   - component: {fileID: 4181622205695114068}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SWheel_others_Aluminum_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2980,7 +3279,7 @@ GameObject:
   - component: {fileID: 2681634039906871901}
   - component: {fileID: 8387394715801552365}
   - component: {fileID: 995442106076355618}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MetalDkGlossy_Chrome_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3059,7 +3358,7 @@ GameObject:
   - component: {fileID: 6433361696336719885}
   - component: {fileID: 5236350776232365733}
   - component: {fileID: 7073444645822240019}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MetalDkGlossy_LicPlate_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3138,7 +3437,7 @@ GameObject:
   - component: {fileID: 3233590661934126013}
   - component: {fileID: 4068536498608311460}
   - component: {fileID: 3377948584577669311}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BLWheel_WheelAluminumRim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3217,7 +3516,7 @@ GameObject:
   - component: {fileID: 2134198195517895871}
   - component: {fileID: 5868428371425760563}
   - component: {fileID: 3201840090637234716}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BRWheel_WheelLogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3294,7 +3593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4054425070728609498}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3326,7 +3625,7 @@ GameObject:
   - component: {fileID: 1183287480150315934}
   - component: {fileID: 1335438707174120566}
   - component: {fileID: 5454136955566437514}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FLWheel_WheelAluminumRim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3405,7 +3704,7 @@ GameObject:
   - component: {fileID: 7757638584702090302}
   - component: {fileID: 7005725015076193028}
   - component: {fileID: 1651320260276761390}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MetalDkGlossy_intCarbon_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3484,7 +3783,7 @@ GameObject:
   - component: {fileID: 1011097991737824654}
   - component: {fileID: 9168408104652021617}
   - component: {fileID: 5168419416055782670}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MetalDkGlossy_intPlasticLtBump_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3561,7 +3860,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1517117352719089215}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SteeringWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3592,7 +3891,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5787559676601440903}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SteeringWheelModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3630,7 +3929,7 @@ GameObject:
   - component: {fileID: 8445765776824127174}
   - component: {fileID: 4868413199015970721}
   - component: {fileID: 5675085259478333278}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLightsChromeGlass_intFabricDk_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3707,8 +4006,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4722830704004413254}
-  - component: {fileID: 7590320379955881910}
-  m_Layer: 0
+  - component: {fileID: 7929967620460325}
+  m_Layer: 8
   m_Name: Lidar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3722,14 +4021,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5609413570709060370}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.955, z: -0.05}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.376, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6659627004403888616}
-  m_RootOrder: 10
+  m_Father: {fileID: 385968469158458076}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7590320379955881910
+--- !u!114 &7929967620460325
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3738,22 +4037,624 @@ MonoBehaviour:
   m_GameObject: {fileID: 5609413570709060370}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24035b1346a60f541a8eff04304e5d6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRange: 50
-  deltaAzimuthal: 4
-  polarOffset: 20
-  deltaPolar: -2
-  polarSweep: 10
+  maxRange: 80
   noise: 0.2
-  gizmoSize: 0.05
-  displayInScene: 1
   displayInGame: 0
+  displayGizmos: 1
+  gizmoSize: 0.1
+  startAzimuthal: -20
+  endAzimuthal: 20
+  aRays: 20
+  startPolar: 10
+  endPolar: 0
+  pRays: 10
   data:
-    sensorPos: {x: 0, y: 0, z: 0}
+    sensorPos: {x: 0, y: 1.376, z: 0}
     sensorRotation: {x: -0, y: 0, z: 0}
-    lidarPoints: []
+    sensorPoints:
+    - position: {x: -3.8515651, y: 0.017730474, z: 6.6711063}
+      distance: 7.8219633
+      normDistance: 0.09777454
+    - position: {x: -3.480928, y: 0.016673326, z: 6.8785}
+      distance: 7.8280516
+      normDistance: 0.09785064
+    - position: {x: -3.093765, y: 0.017970562, z: 7.0530734}
+      distance: 7.82058
+      normDistance: 0.09775725
+    - position: {x: -2.7010324, y: 0.01771748, z: 7.214137}
+      distance: 7.822038
+      normDistance: 0.097775474
+    - position: {x: -2.3107302, y: 0.011096001, z: 7.3878164}
+      distance: 7.86017
+      normDistance: 0.098252125
+    - position: {x: -1.8828318, y: 0.023602247, z: 7.435134}
+      distance: 7.7881484
+      normDistance: 0.09735186
+    - position: {x: -1.4785302, y: 0.016113281, z: 7.569249}
+      distance: 7.8312755
+      normDistance: 0.09789094
+    - position: {x: -1.0586507, y: 0.016962051, z: 7.6344357}
+      distance: 7.826387
+      normDistance: 0.09782983
+    - position: {x: -0.6349037, y: 0.020326257, z: 7.662149}
+      distance: 7.807015
+      normDistance: 0.09758769
+    - position: {x: -0.21201079, y: 0.019290566, z: 7.6913614}
+      distance: 7.8129797
+      normDistance: 0.09766225
+    - position: {x: 0.21238475, y: 0.016899467, z: 7.7049174}
+      distance: 7.82675
+      normDistance: 0.09783437
+    - position: {x: 0.63633054, y: 0.017279983, z: 7.6793656}
+      distance: 7.8245573
+      normDistance: 0.09780697
+    - position: {x: 1.0543665, y: 0.022462249, z: 7.603538}
+      distance: 7.7947125
+      normDistance: 0.09743391
+    - position: {x: 1.4747171, y: 0.019620538, z: 7.5497274}
+      distance: 7.811078
+      normDistance: 0.09763847
+    - position: {x: 1.8985234, y: 0.012331486, z: 7.497098}
+      distance: 7.8530545
+      normDistance: 0.09816318
+    - position: {x: 2.3054926, y: 0.014190078, z: 7.3710694}
+      distance: 7.842352
+      normDistance: 0.0980294
+    - position: {x: 2.7116811, y: 0.012362599, z: 7.242578}
+      distance: 7.8528757
+      normDistance: 0.098160945
+    - position: {x: 3.0818093, y: 0.023218751, z: 7.0258164}
+      distance: 7.790357
+      normDistance: 0.09737946
+    - position: {x: 3.4742193, y: 0.01929307, z: 6.865243}
+      distance: 7.8129644
+      normDistance: 0.097662054
+    - position: {x: 3.8420942, y: 0.02107048, z: 6.654702}
+      distance: 7.802729
+      normDistance: 0.09753411
+    - position: {x: -4.333298, y: 0.020569205, z: 7.5054927}
+      distance: 8.771949
+      normDistance: 0.10964936
+    - position: {x: -3.9215577, y: 0.017694235, z: 7.7492094}
+      distance: 8.790555
+      normDistance: 0.10988194
+    - position: {x: -3.479672, y: 0.021215439, z: 7.9328523}
+      distance: 8.767765
+      normDistance: 0.109597065
+    - position: {x: -3.0455809, y: 0.017559767, z: 8.134384}
+      distance: 8.791424
+      normDistance: 0.1098928
+    - position: {x: -2.5920398, y: 0.017984986, z: 8.287213}
+      distance: 8.788673
+      normDistance: 0.109858416
+    - position: {x: -2.1261575, y: 0.021439314, z: 8.396007}
+      distance: 8.766316
+      normDistance: 0.10957895
+    - position: {x: -1.6631596, y: 0.019197702, z: 8.514449}
+      distance: 8.780824
+      normDistance: 0.1097603
+    - position: {x: -1.189222, y: 0.0218966, z: 8.576047}
+      distance: 8.763357
+      normDistance: 0.10954197
+    - position: {x: -0.71905476, y: 0.01418066, z: 8.677704}
+      distance: 8.8132925
+      normDistance: 0.110166155
+    - position: {x: -0.23928495, y: 0.01782906, z: 8.680819}
+      distance: 8.789681
+      normDistance: 0.109871015
+    - position: {x: 0.23928276, y: 0.017843366, z: 8.680727}
+      distance: 8.789589
+      normDistance: 0.10986986
+    - position: {x: 0.7161729, y: 0.019639254, z: 8.6429205}
+      distance: 8.7779665
+      normDistance: 0.10972458
+    - position: {x: 1.190692, y: 0.020223022, z: 8.586647}
+      distance: 8.774188
+      normDistance: 0.10967735
+    - position: {x: 1.6704937, y: 0.013214827, z: 8.551994}
+      distance: 8.819543
+      normDistance: 0.11024429
+    - position: {x: 2.1255991, y: 0.021795273, z: 8.393801}
+      distance: 8.764013
+      normDistance: 0.10955016
+    - position: {x: 2.598194, y: 0.014760852, z: 8.306888}
+      distance: 8.809538
+      normDistance: 0.11011922
+    - position: {x: 3.0430334, y: 0.01869607, z: 8.12758}
+      distance: 8.78407
+      normDistance: 0.109800875
+    - position: {x: 3.5018277, y: 0.012589335, z: 7.9833612}
+      distance: 8.82359
+      normDistance: 0.11029488
+    - position: {x: 3.9120288, y: 0.020994782, z: 7.730379}
+      distance: 8.769195
+      normDistance: 0.10961493
+    - position: {x: 4.3301044, y: 0.02156818, z: 7.4999614}
+      distance: 8.765484
+      normDistance: 0.10956855
+    - position: {x: -4.973999, y: 0.017224312, z: 8.615218}
+      distance: 10.040365
+      normDistance: 0.12550457
+    - position: {x: -4.495919, y: 0.01599443, z: 8.884178}
+      distance: 10.049454
+      normDistance: 0.12561817
+    - position: {x: -3.9912145, y: 0.01887381, z: 9.099052}
+      distance: 10.028177
+      normDistance: 0.12535222
+    - position: {x: -3.4832203, y: 0.019141316, z: 9.303268}
+      distance: 10.0262
+      normDistance: 0.1253275
+    - position: {x: -2.9606233, y: 0.021342993, z: 9.46564}
+      distance: 10.009932
+      normDistance: 0.12512414
+    - position: {x: -2.4355652, y: 0.020854235, z: 9.617829}
+      distance: 10.013543
+      normDistance: 0.12516929
+    - position: {x: -1.9042934, y: 0.019250154, z: 9.7489195}
+      distance: 10.025394
+      normDistance: 0.12531742
+    - position: {x: -1.3627052, y: 0.020891309, z: 9.827117}
+      distance: 10.013267
+      normDistance: 0.12516584
+    - position: {x: -0.8220341, y: 0.016339183, z: 9.920478}
+      distance: 10.046905
+      normDistance: 0.1255863
+    - position: {x: -0.27292824, y: 0.023084283, z: 9.901335}
+      distance: 9.997065
+      normDistance: 0.124963306
+    - position: {x: 0.27270392, y: 0.024198055, z: 9.893184}
+      distance: 9.988834
+      normDistance: 0.12486043
+    - position: {x: 0.8222312, y: 0.016013741, z: 9.9228525}
+      distance: 10.04931
+      normDistance: 0.12561637
+    - position: {x: 1.3675306, y: 0.016093254, z: 9.861913}
+      distance: 10.048721
+      normDistance: 0.12560901
+    - position: {x: 1.9010729, y: 0.021545053, z: 9.7324295}
+      distance: 10.008437
+      normDistance: 0.12510547
+    - position: {x: 2.4373653, y: 0.019852757, z: 9.624937}
+      distance: 10.020943
+      normDistance: 0.12526178
+    - position: {x: 2.9748368, y: 0.014839768, z: 9.511081}
+      distance: 10.057985
+      normDistance: 0.12572482
+    - position: {x: 3.469803, y: 0.024368048, z: 9.267431}
+      distance: 9.987578
+      normDistance: 0.12484473
+    - position: {x: 4.0032396, y: 0.014784932, z: 9.126467}
+      distance: 10.058391
+      normDistance: 0.12572989
+    - position: {x: 4.4698815, y: 0.023870826, z: 8.832726}
+      distance: 9.991253
+      normDistance: 0.12489066
+    - position: {x: 4.97401, y: 0.017221332, z: 8.615237}
+      distance: 10.040387
+      normDistance: 0.12550484
+    - position: {x: -5.8139153, y: 0.016901612, z: 10.069997}
+      distance: 11.706989
+      normDistance: 0.14633736
+    - position: {x: -5.250036, y: 0.016983986, z: 10.374352}
+      distance: 11.70628
+      normDistance: 0.1463285
+    - position: {x: -4.664427, y: 0.018769503, z: 10.6338215}
+      distance: 11.690899
+      normDistance: 0.14613624
+    - position: {x: -4.066307, y: 0.02051735, z: 10.860623}
+      distance: 11.675844
+      normDistance: 0.14594805
+    - position: {x: -3.4685686, y: 0.01788485, z: 11.089632}
+      distance: 11.698521
+      normDistance: 0.1462315
+    - position: {x: -2.8460438, y: 0.020910501, z: 11.238772}
+      distance: 11.672457
+      normDistance: 0.1459057
+    - position: {x: -2.221703, y: 0.021459222, z: 11.37388}
+      distance: 11.667729
+      normDistance: 0.14584662
+    - position: {x: -1.5893844, y: 0.023487687, z: 11.46181}
+      distance: 11.650258
+      normDistance: 0.14562823
+    - position: {x: -0.95415854, y: 0.02547884, z: 11.514983}
+      distance: 11.633106
+      normDistance: 0.14541383
+    - position: {x: -0.31988624, y: 0.01906848, z: 11.604884}
+      distance: 11.688325
+      normDistance: 0.14610407
+    - position: {x: 0.31964776, y: 0.020081878, z: 11.596218}
+      distance: 11.679596
+      normDistance: 0.14599495
+    - position: {x: 0.95932096, y: 0.018172503, z: 11.57728}
+      distance: 11.696042
+      normDistance: 0.14620052
+    - position: {x: 1.5918595, y: 0.021381736, z: 11.479656}
+      distance: 11.668398
+      normDistance: 0.14585498
+    - position: {x: 2.2218468, y: 0.02137208, z: 11.374613}
+      distance: 11.668481
+      normDistance: 0.14585601
+    - position: {x: 2.8426886, y: 0.022508264, z: 11.225521}
+      distance: 11.658694
+      normDistance: 0.14573368
+    - position: {x: 3.4661353, y: 0.01883781, z: 11.081849}
+      distance: 11.6903105
+      normDistance: 0.14612888
+    - position: {x: 4.0573263, y: 0.023511171, z: 10.836636}
+      distance: 11.650056
+      normDistance: 0.1456257
+    - position: {x: 4.656359, y: 0.021117091, z: 10.615428}
+      distance: 11.670677
+      normDistance: 0.14588347
+    - position: {x: 5.2285714, y: 0.022540212, z: 10.331937}
+      distance: 11.658419
+      normDistance: 0.14573023
+    - position: {x: 5.7964807, y: 0.02097714, z: 10.039799}
+      distance: 11.671883
+      normDistance: 0.14589854
+    - position: {x: -6.973962, y: 0.01931703, z: 12.079255}
+      distance: 14.013748
+      normDistance: 0.17517185
+    - position: {x: -6.286221, y: 0.02184403, z: 12.421912}
+      distance: 13.987645
+      normDistance: 0.17484556
+    - position: {x: -5.576785, y: 0.025620341, z: 12.71379}
+      distance: 13.948638
+      normDistance: 0.17435798
+    - position: {x: -4.8720407, y: 0.024483562, z: 13.012642}
+      distance: 13.960381
+      normDistance: 0.17450476
+    - position: {x: -4.155679, y: 0.0219177, z: 13.2864485}
+      distance: 13.986884
+      normDistance: 0.17483605
+    - position: {x: -3.4104798, y: 0.024679065, z: 13.46768}
+      distance: 13.958362
+      normDistance: 0.17447951
+    - position: {x: -2.668327, y: 0.022177458, z: 13.660346}
+      distance: 13.9842005
+      normDistance: 0.17480251
+    - position: {x: -1.910481, y: 0.023081183, z: 13.7773905}
+      distance: 13.974864
+      normDistance: 0.1746858
+    - position: {x: -1.1458617, y: 0.026323438, z: 13.828497}
+      distance: 13.941376
+      normDistance: 0.1742672
+    - position: {x: -0.38339296, y: 0.022609234, z: 13.9087925}
+      distance: 13.979741
+      normDistance: 0.17474677
+    - position: {x: 0.38316804, y: 0.023405075, z: 13.900614}
+      distance: 13.97152
+      normDistance: 0.17464401
+    - position: {x: 1.1494489, y: 0.02209866, z: 13.871782}
+      distance: 13.985015
+      normDistance: 0.17481269
+    - position: {x: 1.9113452, y: 0.022469401, z: 13.783621}
+      distance: 13.981183
+      normDistance: 0.17476478
+    - position: {x: 2.6622095, y: 0.025281668, z: 13.629024}
+      distance: 13.952136
+      normDistance: 0.1744017
+    - position: {x: 3.4160728, y: 0.022463083, z: 13.489765}
+      distance: 13.981251
+      normDistance: 0.17476563
+    - position: {x: 4.144839, y: 0.025450349, z: 13.251786}
+      distance: 13.950395
+      normDistance: 0.17437993
+    - position: {x: 4.873123, y: 0.024183273, z: 13.0155325}
+      distance: 13.963482
+      normDistance: 0.17454353
+    - position: {x: 5.5807877, y: 0.024651289, z: 12.722913}
+      distance: 13.958648
+      normDistance: 0.17448309
+    - position: {x: 6.2786427, y: 0.0234766, z: 12.406936}
+      distance: 13.970781
+      normDistance: 0.17463477
+    - position: {x: 6.952687, y: 0.023455739, z: 12.042406}
+      distance: 13.970998
+      normDistance: 0.17463747
+    - position: {x: -8.6953, y: 0.024295807, z: 15.060701}
+      distance: 17.443052
+      normDistance: 0.21803816
+    - position: {x: -7.8529987, y: 0.02419889, z: 15.517948}
+      distance: 17.444302
+      normDistance: 0.21805377
+    - position: {x: -6.9835906, y: 0.02470851, z: 15.920983}
+      distance: 17.437725
+      normDistance: 0.21797156
+    - position: {x: -6.0921288, y: 0.025552273, z: 16.271353}
+      distance: 17.426838
+      normDistance: 0.21783547
+    - position: {x: -5.190887, y: 0.024416804, z: 16.59619}
+      distance: 17.44149
+      normDistance: 0.21801862
+    - position: {x: -4.2787023, y: 0.02126789, z: 16.896214}
+      distance: 17.482122
+      normDistance: 0.21852653
+    - position: {x: -3.3333619, y: 0.02453947, z: 17.064953}
+      distance: 17.439907
+      normDistance: 0.21799883
+    - position: {x: -2.3899724, y: 0.02355349, z: 17.235231}
+      distance: 17.45263
+      normDistance: 0.21815786
+    - position: {x: -1.4352636, y: 0.02508688, z: 17.32106}
+      distance: 17.432844
+      normDistance: 0.21791056
+    - position: {x: -0.48015073, y: 0.021575093, z: 17.418987}
+      distance: 17.47816
+      normDistance: 0.21847701
+    - position: {x: 0.4786109, y: 0.02592063, z: 17.3631}
+      distance: 17.422085
+      normDistance: 0.21777606
+    - position: {x: 1.4334724, y: 0.026773334, z: 17.299437}
+      distance: 17.411081
+      normDistance: 0.21763852
+    - position: {x: 2.3910475, y: 0.022945404, z: 17.24298}
+      distance: 17.460476
+      normDistance: 0.21825595
+    - position: {x: 3.3342617, y: 0.024175048, z: 17.069555}
+      distance: 17.44461
+      normDistance: 0.21805763
+    - position: {x: 4.2684393, y: 0.024517536, z: 16.855682}
+      distance: 17.440187
+      normDistance: 0.21800235
+    - position: {x: 5.193471, y: 0.023744226, z: 16.604446}
+      distance: 17.450169
+      normDistance: 0.2181271
+    - position: {x: 6.0956326, y: 0.024775743, z: 16.28071}
+      distance: 17.43686
+      normDistance: 0.21796075
+    - position: {x: 6.9784403, y: 0.0257051, z: 15.909241}
+      distance: 17.424864
+      normDistance: 0.2178108
+    - position: {x: 7.851289, y: 0.024493217, z: 15.514567}
+      distance: 17.440502
+      normDistance: 0.21800628
+    - position: {x: 8.710988, y: 0.021857023, z: 15.087874}
+      distance: 17.474524
+      normDistance: 0.21843155
+    - position: {x: -10.828648, y: 0.1146065, z: 18.755768}
+      distance: 21.693998
+      normDistance: 0.27117497
+    - position: {x: -10.466608, y: 0.025910616, z: 20.68258}
+      distance: 23.219427
+      normDistance: 0.29024285
+    - position: {x: -9.325059, y: 0.023923874, z: 21.258995}
+      distance: 23.253595
+      normDistance: 0.29066995
+    - position: {x: -8.128023, y: 0.025878191, z: 21.708988}
+      distance: 23.219986
+      normDistance: 0.29024982
+    - position: {x: -6.9167776, y: 0.026464343, z: 22.114174}
+      distance: 23.209906
+      normDistance: 0.29012382
+    - position: {x: -5.6845036, y: 0.027306795, z: 22.447598}
+      distance: 23.195414
+      normDistance: 0.28994268
+    - position: {x: -4.4493833, y: 0.024238467, z: 22.77836}
+      distance: 23.248182
+      normDistance: 0.29060227
+    - position: {x: -3.1848195, y: 0.025510073, z: 22.967253}
+      distance: 23.226313
+      normDistance: 0.29032892
+    - position: {x: -1.9152076, y: 0.025200367, z: 23.113127}
+      distance: 23.231644
+      normDistance: 0.29039556
+    - position: {x: -0.6389398, y: 0.025431514, z: 23.179565}
+      distance: 23.227667
+      normDistance: 0.29034585
+    - position: {x: 0.6390146, y: 0.02527535, z: 23.182247}
+      distance: 23.230354
+      normDistance: 0.29037943
+    - position: {x: 1.9138678, y: 0.026145816, z: 23.096949}
+      distance: 23.215384
+      normDistance: 0.2901923
+    - position: {x: 3.184324, y: 0.025720477, z: 22.963675}
+      distance: 23.222694
+      normDistance: 0.29028368
+    - position: {x: 4.449067, y: 0.024334908, z: 22.776737}
+      distance: 23.246525
+      normDistance: 0.29058155
+    - position: {x: 5.6910973, y: 0.02574253, z: 22.473635}
+      distance: 23.222317
+      normDistance: 0.29027897
+    - position: {x: 6.91206, y: 0.027384996, z: 22.099087}
+      distance: 23.19407
+      normDistance: 0.28992587
+    - position: {x: 8.122618, y: 0.026776195, z: 21.694548}
+      distance: 23.204542
+      normDistance: 0.29005677
+    - position: {x: 9.317959, y: 0.024953365, z: 21.242807}
+      distance: 23.23589
+      normDistance: 0.2904486
+    - position: {x: 10.466006, y: 0.025988221, z: 20.681393}
+      distance: 23.218092
+      normDistance: 0.29022616
+    - position: {x: 10.837928, y: 0.11352539, z: 18.771843}
+      distance: 21.712591
+      normDistance: 0.2714074
+    - position: {x: -10.833929, y: 0.5351885, z: 18.764917}
+      distance: 21.684166
+      normDistance: 0.27105206
+    - position: {x: -10.833908, y: 0.44493955, z: 21.408386}
+      distance: 24.011652
+      normDistance: 0.30014566
+    - position: {x: -10.824368, y: 0.3303454, z: 24.677074}
+      distance: 26.966986
+      normDistance: 0.33708733
+    - position: {x: -10.822583, y: 0.17828059, z: 28.905834}
+      distance: 30.888674
+      normDistance: 0.38610843
+    - position: {x: -10.375762, y: 0.02723372, z: 33.17316}
+      distance: 34.784107
+      normDistance: 0.43480134
+    - position: {x: -8.531359, y: 0.02742517, z: 33.68958}
+      distance: 34.779167
+      normDistance: 0.4347396
+    - position: {x: -6.6675954, y: 0.026397943, z: 34.134373}
+      distance: 34.805656
+      normDistance: 0.4350707
+    - position: {x: -4.775442, y: 0.026862264, z: 34.437996}
+      distance: 34.793686
+      normDistance: 0.4349211
+    - position: {x: -2.868551, y: 0.028049946, z: 34.61827}
+      distance: 34.763058
+      normDistance: 0.43453822
+    - position: {x: -0.95766765, y: 0.027323961, z: 34.742424}
+      distance: 34.78178
+      normDistance: 0.43477225
+    - position: {x: 0.9580345, y: 0.026808977, z: 34.755688}
+      distance: 34.79506
+      normDistance: 0.43493825
+    - position: {x: 2.8692029, y: 0.027744055, z: 34.626125}
+      distance: 34.770947
+      normDistance: 0.43463683
+    - position: {x: 4.7726603, y: 0.027648449, z: 34.417927}
+      distance: 34.77341
+      normDistance: 0.43466765
+    - position: {x: 6.663536, y: 0.02722001, z: 34.113583}
+      distance: 34.78446
+      normDistance: 0.43480572
+    - position: {x: 8.531181, y: 0.027453423, z: 33.688873}
+      distance: 34.77844
+      normDistance: 0.43473047
+    - position: {x: 10.385892, y: 0.025917292, z: 33.20554}
+      distance: 34.818058
+      normDistance: 0.43522573
+    - position: {x: 10.822214, y: 0.17832148, z: 28.904846}
+      distance: 30.887617
+      normDistance: 0.38609523
+    - position: {x: 10.831297, y: 0.32967603, z: 24.69287}
+      distance: 26.984247
+      normDistance: 0.3373031
+    - position: {x: 10.825272, y: 0.4456818, z: 21.39132}
+      distance: 23.99251
+      normDistance: 0.29990637
+    - position: {x: 10.848455, y: 0.53406113, z: 18.790077}
+      distance: 21.71324
+      normDistance: 0.2714155
+    - position: {x: -10.83062, y: 0.955881, z: 18.759182}
+      distance: 21.665312
+      normDistance: 0.2708164
+    - position: {x: -10.832966, y: 0.91068554, z: 21.406523}
+      distance: 23.99602
+      normDistance: 0.29995024
+    - position: {x: -10.832966, y: 0.8529543, z: 24.696674}
+      distance: 26.97318
+      normDistance: 0.33716476
+    - position: {x: -10.816557, y: 0.77769905, z: 28.88974}
+      distance: 30.85406
+      normDistance: 0.38567573
+    - position: {x: -10.831898, y: 0.6722348, z: 34.63151}
+      distance: 36.292793
+      normDistance: 0.45365992
+    - position: {x: -10.818648, y: 0.52125543, z: 42.72188}
+      distance: 44.078712
+      normDistance: 0.5509839
+    - position: {x: -10.816539, y: 0.2817129, z: 55.374653}
+      distance: 56.43179
+      normDistance: 0.70539737
+    - position: {x: -9.542934, y: 0.02849257, z: 68.818665}
+      distance: 69.49023
+      normDistance: 0.86862785
+    - position: {x: -5.7356358, y: 0.028901577, z: 69.21885}
+      distance: 69.46914
+      normDistance: 0.8683642
+    - position: {x: -1.9149575, y: 0.02809763, z: 69.471146}
+      distance: 69.510605
+      normDistance: 0.86888254
+    - position: {x: 1.91534, y: 0.027830243, z: 69.484924}
+      distance: 69.52439
+      normDistance: 0.8690549
+    - position: {x: 5.7390594, y: 0.028097987, z: 69.26014}
+      distance: 69.51058
+      normDistance: 0.8688823
+    - position: {x: 9.546044, y: 0.028053522, z: 68.84108}
+      distance: 69.51286
+      normDistance: 0.8689108
+    - position: {x: 10.816682, y: 0.28169858, z: 55.375374}
+      distance: 56.432526
+      normDistance: 0.70540655
+    - position: {x: 10.817469, y: 0.5213488, z: 42.717216}
+      distance: 44.0739
+      normDistance: 0.5509237
+    - position: {x: 10.819098, y: 0.67306644, z: 34.59058}
+      distance: 36.2499
+      normDistance: 0.45312375
+    - position: {x: 10.817051, y: 0.77767175, z: 28.891056}
+      distance: 30.855465
+      normDistance: 0.3856933
+    - position: {x: 10.835546, y: 0.85282975, z: 24.702557}
+      distance: 26.979605
+      normDistance: 0.33724505
+    - position: {x: 10.826205, y: 0.91097593, z: 21.393164}
+      distance: 23.981043
+      normDistance: 0.29976302
+    - position: {x: 10.82479, y: 0.95610714, z: 18.749084}
+      distance: 21.65365
+      normDistance: 0.27067062
+    - position: {x: -40, y: 1.3760008, z: 69.28203}
+      distance: 80
+      normDistance: 1
+    - position: {x: -36.12267, y: 1.3760008, z: 71.38034}
+      distance: 80
+      normDistance: 1
+    - position: {x: -32.13563, y: 1.3760008, z: 73.26186}
+      distance: 80
+      normDistance: 1
+    - position: {x: -28.051003, y: 1.3760008, z: 74.9209}
+      distance: 80
+      normDistance: 1
+    - position: {x: -23.881184, y: 1.3760008, z: 76.3524}
+      distance: 80
+      normDistance: 1
+    - position: {x: -19.63884, y: 1.3760008, z: 77.552025}
+      distance: 80
+      normDistance: 1
+    - position: {x: -15.336849, y: 1.3760008, z: 78.51612}
+      distance: 80
+      normDistance: 1
+    - position: {x: -10.988284, y: 1.3760008, z: 79.24177}
+      distance: 80
+      normDistance: 1
+    - position: {x: -6.606346, y: 1.3760008, z: 79.72676}
+      distance: 80
+      normDistance: 1
+    - position: {x: -2.204346, y: 1.3760008, z: 79.96963}
+      distance: 80
+      normDistance: 1
+    - position: {x: 2.2043488, y: 1.3760008, z: 79.96963}
+      distance: 80
+      normDistance: 1
+    - position: {x: 6.606349, y: 1.3760008, z: 79.72676}
+      distance: 80
+      normDistance: 1
+    - position: {x: 10.988287, y: 1.3760008, z: 79.24177}
+      distance: 80
+      normDistance: 1
+    - position: {x: 15.336853, y: 1.3760008, z: 78.51612}
+      distance: 80
+      normDistance: 1
+    - position: {x: 19.638842, y: 1.3760008, z: 77.552025}
+      distance: 80
+      normDistance: 1
+    - position: {x: 23.881187, y: 1.3760008, z: 76.3524}
+      distance: 80
+      normDistance: 1
+    - position: {x: 28.051004, y: 1.3760008, z: 74.9209}
+      distance: 80
+      normDistance: 1
+    - position: {x: 32.135635, y: 1.3760008, z: 73.26186}
+      distance: 80
+      normDistance: 1
+    - position: {x: 36.122673, y: 1.3760008, z: 71.38034}
+      distance: 80
+      normDistance: 1
+    - position: {x: 40, y: 1.3760008, z: 69.28203}
+      distance: 80
+      normDistance: 1
 --- !u!1 &5655064433379460438
 GameObject:
   m_ObjectHideFlags: 0
@@ -3765,7 +4666,7 @@ GameObject:
   - component: {fileID: 6910845387983892571}
   - component: {fileID: 1616902185697826371}
   - component: {fileID: 4794015275466067586}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MetalDkGlossy_HdLightsPlasticBump_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3844,7 +4745,7 @@ GameObject:
   - component: {fileID: 2061808589396900698}
   - component: {fileID: 68102944492964776}
   - component: {fileID: 8575282681713156470}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Glass_HdLightsLed_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3923,7 +4824,7 @@ GameObject:
   - component: {fileID: 6849990436845251895}
   - component: {fileID: 6940370410696739494}
   - component: {fileID: 6354467243806055025}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FLWheel_WheelGlossyMet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4002,7 +4903,7 @@ GameObject:
   - component: {fileID: 8966332588192192811}
   - component: {fileID: 4502448432198097698}
   - component: {fileID: 9139571078960601802}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FRWheel_WheelGlossyMet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4081,7 +4982,7 @@ GameObject:
   - component: {fileID: 1192969967836344933}
   - component: {fileID: 8017556069077769483}
   - component: {fileID: 6241816326383576849}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FLWheel_WheelLogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4160,7 +5061,7 @@ GameObject:
   - component: {fileID: 8901194168641261855}
   - component: {fileID: 761891659082010456}
   - component: {fileID: 8611880693584693803}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FRWheel_WheelAluminumRim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4239,7 +5140,7 @@ GameObject:
   - component: {fileID: 6061743252384999822}
   - component: {fileID: 1845563156120881631}
   - component: {fileID: 5465942239420986874}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BRWheel_WheelGlossyMet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4318,7 +5219,7 @@ GameObject:
   - component: {fileID: 4062320574605938305}
   - component: {fileID: 738072269767366059}
   - component: {fileID: 7516308679870455634}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLightsChromeGlass_intTexGlossyButtons_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4397,7 +5298,7 @@ GameObject:
   - component: {fileID: 8802260464770201470}
   - component: {fileID: 6287503306261307790}
   - component: {fileID: 1021317586075436366}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MetalDkGlossy_MetalDkGlossy_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4476,7 +5377,7 @@ GameObject:
   - component: {fileID: 7677499054554282990}
   - component: {fileID: 3572912543868255765}
   - component: {fileID: 6195467108156994723}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Glass_GlassLights_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4553,7 +5454,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6962968084676269537}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4621,7 +5522,7 @@ GameObject:
   - component: {fileID: 8109735756233961069}
   - component: {fileID: 2440433696975270232}
   - component: {fileID: 9037343905297503614}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLightsChromeGlass_intTexButtons_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4700,7 +5601,7 @@ GameObject:
   - component: {fileID: 5022426896504780442}
   - component: {fileID: 802583349239210150}
   - component: {fileID: 2688024010940431481}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BRWheel_WheelTireBMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4779,7 +5680,7 @@ GameObject:
   - component: {fileID: 939209852603016708}
   - component: {fileID: 6084419491133220997}
   - component: {fileID: 6310233029662110523}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CarPaint_CarPaint_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4847,6 +5748,94 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &6675225958819296350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1527918421725542603}
+  - component: {fileID: 3579364212488512705}
+  m_Layer: 8
+  m_Name: SideRadarR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1527918421725542603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6675225958819296350}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.535, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 385968469158458076}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3579364212488512705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6675225958819296350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRange: 5
+  noise: 0.2
+  displayInGame: 0
+  displayGizmos: 1
+  gizmoSize: 0.15
+  startAzimuthal: 45
+  endAzimuthal: 135
+  aRays: 10
+  startPolar: 0
+  endPolar: 0
+  pRays: 1
+  data:
+    sensorPos: {x: 0, y: 0.535, z: 0}
+    sensorRotation: {x: -0, y: 0, z: 0}
+    sensorPoints:
+    - position: {x: 2.8284273, y: 0.535, z: 2.8284268}
+      distance: 4
+      normDistance: 1
+    - position: {x: 3.2766082, y: 0.535, z: 2.294306}
+      distance: 4
+      normDistance: 1
+    - position: {x: 3.6252313, y: 0.535, z: 1.6904728}
+      distance: 4
+      normDistance: 1
+    - position: {x: 3.8637033, y: 0.535, z: 1.0352762}
+      distance: 4
+      normDistance: 1
+    - position: {x: 3.9847786, y: 0.535, z: 0.34862354}
+      distance: 4
+      normDistance: 1
+    - position: {x: 3.984779, y: 0.535, z: -0.3486228}
+      distance: 4
+      normDistance: 1
+    - position: {x: 3.8637033, y: 0.535, z: -1.0352759}
+      distance: 4
+      normDistance: 1
+    - position: {x: 3.625231, y: 0.535, z: -1.6904736}
+      distance: 4
+      normDistance: 1
+    - position: {x: 3.2766078, y: 0.535, z: -2.294306}
+      distance: 4
+      normDistance: 1
+    - position: {x: 2.8284273, y: 0.535, z: -2.828427}
+      distance: 4
+      normDistance: 1
 --- !u!1 &6762041454739164797
 GameObject:
   m_ObjectHideFlags: 0
@@ -4856,7 +5845,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6300847735248186717}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WaypointTracker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4888,7 +5877,7 @@ GameObject:
   - component: {fileID: 4031205005210535202}
   - component: {fileID: 9205563816541769009}
   - component: {fileID: 492705943897662183}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FRWheel_WheelTireBMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4967,7 +5956,7 @@ GameObject:
   - component: {fileID: 3413191953038111427}
   - component: {fileID: 4706734851498346357}
   - component: {fileID: 6313972457842829954}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BLWheel_WheelGlossyMet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5046,7 +6035,7 @@ GameObject:
   - component: {fileID: 7869829368179016741}
   - component: {fileID: 2893139776200243821}
   - component: {fileID: 3056539995041458019}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MetalDkGlossy_Rubber_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5125,7 +6114,7 @@ GameObject:
   - component: {fileID: 3560707801018822168}
   - component: {fileID: 7500855082580720930}
   - component: {fileID: 7138736117312874784}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FLWheel_WheelBrakeDisk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5204,7 +6193,7 @@ GameObject:
   - component: {fileID: 6367884497229813293}
   - component: {fileID: 7869463359630890661}
   - component: {fileID: 7723293994164314151}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FRWheel_WheelBrakeDisk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5281,7 +6270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1407614220520335956}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5313,7 +6302,7 @@ GameObject:
   - component: {fileID: 4615303832090513781}
   - component: {fileID: 795927250436307217}
   - component: {fileID: 8372331515733490051}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: others_intMetallDk_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5395,7 +6384,7 @@ GameObject:
   - component: {fileID: 7550677827306913715}
   - component: {fileID: 7371215330335361717}
   - component: {fileID: 6918137807124011795}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AudiRS5
   m_TagString: Agent
   m_Icon: {fileID: 0}
@@ -5423,7 +6412,7 @@ Transform:
   - {fileID: 6300847735248186717}
   - {fileID: 4054425070728609498}
   - {fileID: 1407614220520335956}
-  - {fileID: 4722830704004413254}
+  - {fileID: 385968469158458076}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5454,8 +6443,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.84, y: 0.8, z: 4.64}
-  m_Center: {x: 0, y: 0.58, z: 0}
+  m_Size: {x: 1.84, y: 1.22, z: 4.64}
+  m_Center: {x: 0, y: 0.79, z: 0}
 --- !u!114 &7550677827306913715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5473,8 +6462,13 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   maxStep: 0
   reward: 0
+  lidar: {fileID: 7929967620460325}
+  sideRadarL: {fileID: 7645663911476851594}
+  sideRadarR: {fileID: 3579364212488512705}
+  backRadarL: {fileID: 1058251311399037826}
+  backRadarR: {fileID: 5656388863190761725}
   targetLane: 4
-  targetVelocity: 0
+  targetVelocity: 120
 --- !u!114 &7371215330335361717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5488,15 +6482,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 1
+    vectorObservationSize: 249
     numStackedVectorObservations: 1
-    vectorActionSize: 0300000002000000
+    vectorActionSize: 0400000003000000
     vectorActionDescriptions: []
     vectorActionSpaceType: 0
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 1
-  m_BehaviorName: My Behavior
+  m_BehaviorName: HighwayAI
   TeamId: 0
   m_UseChildSensors: 1
 --- !u!114 &6918137807124011795
@@ -5512,13 +6506,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   steeringAngle: 0
+  currentLane: 0
   velocity: 0
   throttle: 0
-  currentLane: 0
+  headway: 1
   trackingMode: 0
-  followTarget: {fileID: 0}
   laneCenter: 0
   targetVelocity: 0
+  followTarget: {fileID: 0}
+  isFollowing: 0
   wheelFrontLeft: {fileID: 7791624992940219192}
   wheelFrontRight: {fileID: 2525555415392278765}
   wheelBackLeft: {fileID: 365039517544278387}
@@ -5546,7 +6542,7 @@ GameObject:
   - component: {fileID: 7188160070093297003}
   - component: {fileID: 1848914176147334996}
   - component: {fileID: 9086242171312457139}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BRWheel_WheelMet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5624,7 +6620,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7067156723507111001}
   - component: {fileID: 6805575942674354466}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FLWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5693,7 +6689,7 @@ GameObject:
   - component: {fileID: 6115287029309266875}
   - component: {fileID: 6800899470140442210}
   - component: {fileID: 5129612295084329181}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BRWheel_WheelAluminumRim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5772,7 +6768,7 @@ GameObject:
   - component: {fileID: 3367318616681426020}
   - component: {fileID: 852334157226999759}
   - component: {fileID: 5605007874215464688}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FRWheel_WheelLogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5851,7 +6847,7 @@ GameObject:
   - component: {fileID: 7739041277430446639}
   - component: {fileID: 2546065519723525306}
   - component: {fileID: 5578317957374304498}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RLightsChromeGlass_SeatLeather_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5930,7 +6926,7 @@ GameObject:
   - component: {fileID: 7582285338289650582}
   - component: {fileID: 8321679139025907243}
   - component: {fileID: 124307725249174893}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Glass_HdLightsLens_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6009,7 +7005,7 @@ GameObject:
   - component: {fileID: 5389354374224409614}
   - component: {fileID: 5525421811940891644}
   - component: {fileID: 1627424540130305308}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BLWheel_WheelMet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6088,7 +7084,7 @@ GameObject:
   - component: {fileID: 2023237676130790947}
   - component: {fileID: 6434397674556951614}
   - component: {fileID: 8154823871060088278}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BRWheel_BrakeCaliper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6165,7 +7161,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4280645223251348575}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CenterOfMass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6197,7 +7193,7 @@ GameObject:
   - component: {fileID: 4422851211522710}
   - component: {fileID: 9123173212914026006}
   - component: {fileID: 6298064329031593287}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BLWheel_BrakeCaliper
   m_TagString: Untagged
   m_Icon: {fileID: 0}

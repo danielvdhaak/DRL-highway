@@ -15,11 +15,17 @@ using MLAgents.Sensors;
 public class VehicleAgent : Agent
 {
     [Header("ML-Agents")]
+    [SerializeField] private float reward;
     private EnvironmentManager environment;
     private VehicleControl control;
     private Transform Target;
-    public float reward;
+    [SerializeField] private RaySensor lidar;
+    [SerializeField] private RaySensor sideRadarL;
+    [SerializeField] private RaySensor sideRadarR;
+    [SerializeField] private RaySensor backRadarL;
+    [SerializeField] private RaySensor backRadarR;
 
+    private const int k_DoNothing = 0;
     private const int k_LeftLaneChange = 1;
     private const int k_KeepLane = 2;
     private const int k_RightLaneChange = 3;
@@ -53,11 +59,14 @@ public class VehicleAgent : Agent
     public override void OnEpisodeBegin()
     {
         Target = GameObject.FindGameObjectWithTag("Target").transform;
+        float episodeLength = Academy.Instance.FloatProperties.GetPropertyWithDefault("episode_length", 6000f);
+        Target.localPosition = new Vector3(0f, 0.5f, episodeLength);
 
         int startLane = randomNumber.Next(2, 4);
         int startPos = randomNumber.Next(1, 1);
 
-        (initialLocalPos, initialVelocity) = environment.ResetArea(startLane, startPos);
+        float trafficFlow = Academy.Instance.FloatProperties.GetPropertyWithDefault("traffic_flow", 6000f);
+        (initialLocalPos, initialVelocity) = environment.ResetArea(startLane, startPos, trafficFlow);
         transform.localPosition = initialLocalPos;
         transform.localRotation = Quaternion.identity;
         control.targetVelocity = targetVelocity;
@@ -67,21 +76,46 @@ public class VehicleAgent : Agent
         control.currentLane = startLane;
         control.laneCenter = laneCenters[targetLane - 1];
         control._TrackingMode = VehicleControl.TrackingMode.keepLane;
+
     }
 
     private void FixedUpdate()
     {
+        reward = GetCumulativeReward();
+
         // Only request a new decision if agent is not performing a lane change
-        if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
-            RequestDecision();
-        else
-            RequestAction();
+        //if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
+        //    RequestDecision();
+        //else
+        //    RequestAction();
+        RequestDecision();
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(control.velocity);
-        
+        sensor.AddObservation(transform.localPosition.z / Target.localPosition.z);
+        //sensor.AddObservation(control.velocity);
+        sensor.AddObservation(control.velocity / targetVelocity);
+
+        foreach (float lane in laneCenters)
+        {
+            if (control.currentLane == lane)
+                sensor.AddObservation(true);
+            else
+                sensor.AddObservation(false);
+        }
+
+        sensor.AddObservation(control.isFollowing);
+        sensor.AddObservation(control.headway);
+
+        foreach (RaySensor raySensor in new RaySensor[] { lidar, sideRadarL, sideRadarR, backRadarL, backRadarR })
+        {
+            SensorData data = raySensor.GetData();
+            foreach (RayPoint point in data.sensorPoints)
+            {
+                sensor.AddObservation(point.normDistance);
+            }
+        }
     }
 
     public override void CollectDiscreteActionMasks(DiscreteActionMasker actionMasker)
@@ -89,12 +123,23 @@ public class VehicleAgent : Agent
         // Ensures the car does not crash into the barriers
         int leftMostLane = 1;
         int rightMostLane = laneCenters.Count;
+        if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
+        {
+            if (targetLane == leftMostLane)
+                actionMasker.SetMask(0, new int[] { k_LeftLaneChange });
+            if (targetLane == rightMostLane)
+                actionMasker.SetMask(0, new int[] { k_RightLaneChange });
+        }
 
-        if (targetLane == leftMostLane)
-            actionMasker.SetMask(0, new int[] { k_LeftLaneChange - 1 });
+        // Ensures the car does not crash into the preceding car
+        if (control.headway < 0.1f)
+            actionMasker.SetMask(1, new int[] { k_Cruise });
 
-        if (targetLane == rightMostLane)
-            actionMasker.SetMask(0, new int[] { k_RightLaneChange - 1 });
+        // Ensures that a lane change can not be cancelled once initiated
+        if (control._TrackingMode == VehicleControl.TrackingMode.leftLaneChange)
+            actionMasker.SetMask(0, new int[] { k_KeepLane, k_RightLaneChange });
+        if (control._TrackingMode == VehicleControl.TrackingMode.rightLaneChange)
+            actionMasker.SetMask(0, new int[] { k_LeftLaneChange, k_KeepLane });
     }
 
     public override void OnActionReceived(float[] vectorAction)
@@ -102,30 +147,40 @@ public class VehicleAgent : Agent
         var lateralAction = Mathf.FloorToInt(vectorAction[0]);
         var longiAction = Mathf.FloorToInt(vectorAction[1]);
 
+        float normSpeed;
         switch (lateralAction)
         {
-            case k_KeepLane:
-                // Do nothing
-                break;
+            //case k_DoNothing:
+            //    normSpeed = control.velocity / targetVelocity;
+            //    SetReward(0.01f * normSpeed);
+            //    break;
+            //case k_KeepLane:
+            //    normSpeed = control.velocity / targetVelocity;
+            //    SetReward(0.01f * normSpeed);
+            //    break;
             case k_LeftLaneChange:
                 if (control._TrackingMode != VehicleControl.TrackingMode.leftLaneChange)
                 {
                     control._TrackingMode = VehicleControl.TrackingMode.leftLaneChange;
-                    targetLane--;
-                    SetReward(-0.05f);
+                    if (targetLane != 1)
+                        targetLane--;
                 }
+                SetReward(-0.05f);
                 break;
             case k_RightLaneChange:
                 if (control._TrackingMode != VehicleControl.TrackingMode.rightLaneChange)
                 {
                     control._TrackingMode = VehicleControl.TrackingMode.rightLaneChange;
-                    targetLane++;
-                    SetReward(-0.05f);
+                    if (targetLane != laneCenters.Count)
+                        targetLane++;
                 }
-                    
+                SetReward(-0.05f);
                 break;
             default:
-                throw new ArgumentException("Invalid action value");
+                normSpeed = control.velocity / targetVelocity;
+                SetReward(0.1f * normSpeed);
+                //throw new ArgumentException("Invalid action value");
+                break;
         }
 
         control.currentLane = GetCurrentLane();
@@ -134,6 +189,9 @@ public class VehicleAgent : Agent
 
         switch (longiAction)
         {
+            //case k_DoNothing:
+            //    control.isFollowing = true;
+            //    break;
             case k_Follow:
                 control.isFollowing = true;
                 break;
@@ -141,12 +199,13 @@ public class VehicleAgent : Agent
                 control.isFollowing = false;
                 break;
             default:
-                throw new ArgumentException("Invalid action value");
+                control.isFollowing = true;
+                //throw new ArgumentException("Invalid action value");
+                break;
         }
 
-        float normSpeed = control.velocity / targetVelocity;
-        SetReward(0.001f * normSpeed);
-
+        if (control.headway < 0.9f)
+            SetReward(-0.005f * control.headway);
     }
 
 
@@ -204,17 +263,16 @@ public class VehicleAgent : Agent
     {
         if (InstanceID == control.GetInstanceID())
         {
-            Debug.Log("Cut off vehicle!");
+            //Debug.Log("Cut off vehicle!");
             SetReward(-0.2f);
-        }
-            
+        }   
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Target"))
         {
-            SetReward(1f);
+            SetReward(5f);
             EndEpisode();
         }
     }
@@ -223,14 +281,14 @@ public class VehicleAgent : Agent
     {
         if (collision.gameObject.CompareTag("Vehicle") || collision.gameObject.CompareTag("Railing"))
         {
-            SetReward(-1f);
+            SetReward(-5f);
             EndEpisode();
         }
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        Events.Instance.onCutOff -= OnCutOff;
+        //Events.Instance.onCutOff -= OnCutOff;
     }
 
 }

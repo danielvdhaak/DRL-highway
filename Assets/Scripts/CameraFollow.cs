@@ -13,6 +13,20 @@ namespace CameraBehaviour
 
     public class CameraFollow : MonoBehaviour
     {
+        [SerializeField] Transform objectToFollow;
+        [SerializeField] Vector3 offset;
+        [SerializeField] float followSpeed = 10;
+        [SerializeField] float lookSpeed = 10;
+
+        private void FixedUpdate()
+        {
+            if (objectToFollow == null)
+                return;
+
+            LookAtTarget();
+            MoveToTarget();
+        }
+
         public void LookAtTarget()
         {
             Vector3 lookDirection = objectToFollow.position - transform.position;
@@ -29,16 +43,6 @@ namespace CameraBehaviour
             transform.position = Vector3.Lerp(transform.position, _targetPos, followSpeed * Time.deltaTime);
         }
 
-        private void FixedUpdate()
-        {
-            LookAtTarget();
-            MoveToTarget();
-        }
-
-        [SerializeField] Transform objectToFollow;
-        [SerializeField] Vector3 offset;
-        [SerializeField] float followSpeed = 10;
-        [SerializeField] float lookSpeed = 10;
     }
 }
 

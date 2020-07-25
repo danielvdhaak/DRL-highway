@@ -3,10 +3,10 @@
  * 
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 [Serializable]
 public class LidarPoint
@@ -40,6 +40,9 @@ public class LidarData
     }
 }
 
+/// <summary>
+/// [deprecated] Use RaySensor class instead.
+/// </summary>
 public class LidarSensor : MonoBehaviour
 {
     [Header("Sensor parameters")]
@@ -83,6 +86,7 @@ public class LidarSensor : MonoBehaviour
         Quaternion rotAzimuth = Quaternion.AngleAxis(deltaAzimuthal, transform.up);
         Quaternion rotPolar = Quaternion.AngleAxis(deltaPolar, transform.right);
 
+
         RaycastHit hit;
         int p = 0;
         
@@ -113,6 +117,7 @@ public class LidarSensor : MonoBehaviour
                     p++;
                 }
             }
+
 
             lidarRay.direction = rotPolar * lidarRay.direction;
         }

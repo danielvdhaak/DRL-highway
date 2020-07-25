@@ -11,12 +11,20 @@ using UnityEngine;
 public class Events : MonoBehaviour
 {
     #region Singleton
-    public static Events Instance;
-
-    private void Awake()
+    public static Events Instance
     {
-        Instance = this;
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType(typeof(Events)) as Events;
+            return instance;
+        }
+        set
+        {
+            instance = value;
+        }
     }
+    private static Events instance;
     #endregion
 
     public event Action<int> onCutOff;

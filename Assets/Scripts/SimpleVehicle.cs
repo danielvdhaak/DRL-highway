@@ -12,7 +12,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(VehicleControl))]
 public class SimpleVehicle : MonoBehaviour
-{ 
+{
     private VehicleControl control;
     private EnvironmentManager environment;
 
@@ -54,16 +54,19 @@ public class SimpleVehicle : MonoBehaviour
         control.currentLane = currentLane;
         control.followTarget = GetClosestVehicle(environment.trafficList);
 
-        if (control.headway <= 0.4f && control.followTarget._TrackingMode != VehicleControl.TrackingMode.keepLane)
+        if (control.followTarget != null)
         {
-            if (!isCutOff)
+            if (control.headway <= 0.4f && control.followTarget._TrackingMode != VehicleControl.TrackingMode.keepLane)
             {
-                isCutOff = true;
-                Events.Instance.CutOff(control.followTarget.GetInstanceID());
+                if (!isCutOff)
+                {
+                    isCutOff = true;
+                    Events.Instance.CutOff(control.followTarget.GetInstanceID());
+                }
             }
+            else if (control.headway > 0.4f)
+                isCutOff = false;
         }
-        else if (control.headway > 0.4f)
-            isCutOff = false;
     }
 
     private int GetCurrentLane()
@@ -105,7 +108,7 @@ public class SimpleVehicle : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Target"))
+        if (other.gameObject.CompareTag("Target") || other.gameObject.CompareTag("Finish"))
         {
             environment.Despawn(gameObject);
             environment.Spawn(new Vector3(laneCenters[targetLane - 1], 0f, 0f), targetLane, targetVelocity);

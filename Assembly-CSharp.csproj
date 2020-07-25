@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\Events.cs" />
     <Compile Include="Assets\Scripts\LidarSensor.cs" />
     <Compile Include="Assets\Scripts\RandomNumber.cs" />
+    <Compile Include="Assets\Scripts\RaySensor.cs" />
     <Compile Include="Assets\Scripts\SimpleVehicle.cs" />
     <Compile Include="Assets\Scripts\VehicleAgent.cs" />
     <Compile Include="Assets\Scripts\VehicleControl.cs" />
