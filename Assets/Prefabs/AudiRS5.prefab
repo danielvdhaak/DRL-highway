@@ -600,33 +600,33 @@ MonoBehaviour:
     sensorPos: {x: -0.862, y: 0.535, z: -1.948}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: -10.868849, y: 0.535, z: -13.873695}
-      distance: 15.56789
-      normDistance: 0.3459531
-    - position: {x: -10.82703, y: 0.535, z: -15.333352}
-      distance: 16.687405
-      normDistance: 0.37083122
-    - position: {x: -10.835724, y: 0.535, z: -17.112314}
-      distance: 18.15025
-      normDistance: 0.40333888
-    - position: {x: -10.839685, y: 0.535, z: -19.229855}
-      distance: 19.955368
-      normDistance: 0.44345263
-    - position: {x: -10.830696, y: 0.535, z: -21.797297}
-      distance: 22.211924
-      normDistance: 0.4935983
-    - position: {x: -10.818853, y: 0.535, z: -25.030586}
-      distance: 25.138512
-      normDistance: 0.55863357
-    - position: {x: -10.836784, y: 0.535, z: -29.353485}
-      distance: 29.164309
-      normDistance: 0.6480957
-    - position: {x: -10.812603, y: 0.535, z: -35.185318}
-      distance: 34.69487
-      normDistance: 0.7709971
-    - position: {x: -10.822544, y: 0.535, z: -43.974854}
-      distance: 43.19108
-      normDistance: 0.95980173
+    - position: {x: -10.848551, y: 0.535, z: -13.849506}
+      distance: 15.536313
+      normDistance: 0.3452514
+    - position: {x: -10.841316, y: 0.535, z: -15.352542}
+      distance: 16.711329
+      normDistance: 0.37136286
+    - position: {x: -10.844786, y: 0.535, z: -17.126091}
+      distance: 18.166739
+      normDistance: 0.4037053
+    - position: {x: -10.832279, y: 0.535, z: -19.217028}
+      distance: 19.940556
+      normDistance: 0.44312346
+    - position: {x: -10.818199, y: 0.535, z: -21.772413}
+      distance: 22.184078
+      normDistance: 0.49297953
+    - position: {x: -10.81683, y: 0.535, z: -25.025892}
+      distance: 25.1334
+      normDistance: 0.55852
+    - position: {x: -10.821478, y: 0.535, z: -29.311432}
+      distance: 29.119556
+      normDistance: 0.6471013
+    - position: {x: -10.824911, y: 0.535, z: -35.22644}
+      distance: 34.73779
+      normDistance: 0.77195084
+    - position: {x: -10.8094635, y: 0.535, z: -43.919662}
+      distance: 43.134354
+      normDistance: 0.9585412
     - position: {x: -8.676172, y: 0.535, z: -46.26435}
       distance: 45
       normDistance: 1
@@ -2157,8 +2157,8 @@ MonoBehaviour:
   displayInGame: 0
   displayGizmos: 1
   gizmoSize: 0.15
-  startAzimuthal: -45
-  endAzimuthal: -135
+  startAzimuthal: -30
+  endAzimuthal: -150
   aRays: 10
   startPolar: 0
   endPolar: 0
@@ -2167,35 +2167,35 @@ MonoBehaviour:
     sensorPos: {x: 0, y: 0.535, z: 0}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: -2.8284273, y: 0.535, z: 2.8284268}
-      distance: 4
+    - position: {x: -2.5, y: 0.535, z: 4.330127}
+      distance: 5
       normDistance: 1
-    - position: {x: -3.2766082, y: 0.535, z: 2.294306}
-      distance: 4
+    - position: {x: -3.4312081, y: 0.535, z: 3.6368682}
+      distance: 5
       normDistance: 1
-    - position: {x: -3.6252313, y: 0.535, z: 1.6904728}
-      distance: 4
+    - position: {x: -4.1774387, y: 0.535, z: 2.7475452}
+      distance: 5
       normDistance: 1
-    - position: {x: -3.8637033, y: 0.535, z: 1.0352762}
-      distance: 4
+    - position: {x: -4.6984634, y: 0.535, z: 1.7101004}
+      distance: 5
       normDistance: 1
-    - position: {x: -3.9847786, y: 0.535, z: 0.34862354}
-      distance: 4
+    - position: {x: -4.966192, y: 0.535, z: 0.58046526}
+      distance: 5
       normDistance: 1
-    - position: {x: -3.984779, y: 0.535, z: -0.3486228}
-      distance: 4
+    - position: {x: -4.966192, y: 0.535, z: -0.5804646}
+      distance: 5
       normDistance: 1
-    - position: {x: -3.8637033, y: 0.535, z: -1.0352759}
-      distance: 4
+    - position: {x: -4.6984634, y: 0.535, z: -1.7101008}
+      distance: 5
       normDistance: 1
-    - position: {x: -3.625231, y: 0.535, z: -1.6904736}
-      distance: 4
+    - position: {x: -4.1774397, y: 0.535, z: -2.7475443}
+      distance: 5
       normDistance: 1
-    - position: {x: -3.2766078, y: 0.535, z: -2.294306}
-      distance: 4
+    - position: {x: -3.4312084, y: 0.535, z: -3.636868}
+      distance: 5
       normDistance: 1
-    - position: {x: -2.8284273, y: 0.535, z: -2.828427}
-      distance: 4
+    - position: {x: -2.5000005, y: 0.535, z: -4.330127}
+      distance: 5
       normDistance: 1
 --- !u!1 &3183736135327799725
 GameObject:
@@ -3124,33 +3124,33 @@ MonoBehaviour:
     sensorPos: {x: 0.862, y: 0.535, z: -1.948}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: 10.841793, y: 0.535, z: -13.841454}
-      distance: 15.525801
-      normDistance: 0.3450178
-    - position: {x: 10.865978, y: 0.535, z: -15.385668}
-      distance: 16.752626
-      normDistance: 0.3722806
-    - position: {x: 10.839325, y: 0.535, z: -17.11779}
-      distance: 18.156803
-      normDistance: 0.40348452
-    - position: {x: 10.832832, y: 0.535, z: -19.217983}
-      distance: 19.94166
-      normDistance: 0.443148
-    - position: {x: 10.847275, y: 0.535, z: -21.830307}
-      distance: 22.248863
-      normDistance: 0.4944192
-    - position: {x: 10.821085, y: 0.535, z: -25.035759}
-      distance: 25.144144
-      normDistance: 0.55875874
-    - position: {x: 10.823311, y: 0.535, z: -29.316467}
-      distance: 29.124914
-      normDistance: 0.6472203
-    - position: {x: 10.81102, y: 0.535, z: -35.18004}
-      distance: 34.689354
-      normDistance: 0.77087456
-    - position: {x: 10.822195, y: 0.535, z: -43.97338}
-      distance: 43.189564
-      normDistance: 0.95976806
+    - position: {x: 10.838524, y: 0.535, z: -13.837557}
+      distance: 15.520715
+      normDistance: 0.34490478
+    - position: {x: 10.824617, y: 0.535, z: -15.330111}
+      distance: 16.683363
+      normDistance: 0.3707414
+    - position: {x: 10.836185, y: 0.535, z: -17.113014}
+      distance: 18.151089
+      normDistance: 0.40335754
+    - position: {x: 10.831303, y: 0.535, z: -19.215336}
+      distance: 19.938602
+      normDistance: 0.44308007
+    - position: {x: 10.837105, y: 0.535, z: -21.810057}
+      distance: 22.226202
+      normDistance: 0.4939156
+    - position: {x: 10.817432, y: 0.535, z: -25.02729}
+      distance: 25.134922
+      normDistance: 0.5585538
+    - position: {x: 10.82979, y: 0.535, z: -29.334269}
+      distance: 29.143858
+      normDistance: 0.6476413
+    - position: {x: 10.828196, y: 0.535, z: -35.23741}
+      distance: 34.74924
+      normDistance: 0.77220535
+    - position: {x: 10.810127, y: 0.535, z: -43.922462}
+      distance: 43.13723
+      normDistance: 0.9586051
     - position: {x: 8.676172, y: 0.535, z: -46.26435}
       distance: 45
       normDistance: 1
@@ -4055,604 +4055,604 @@ MonoBehaviour:
     sensorPos: {x: 0, y: 1.376, z: 0}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: -3.8515651, y: 0.017730474, z: 6.6711063}
-      distance: 7.8219633
-      normDistance: 0.09777454
-    - position: {x: -3.480928, y: 0.016673326, z: 6.8785}
-      distance: 7.8280516
-      normDistance: 0.09785064
-    - position: {x: -3.093765, y: 0.017970562, z: 7.0530734}
-      distance: 7.82058
-      normDistance: 0.09775725
-    - position: {x: -2.7010324, y: 0.01771748, z: 7.214137}
-      distance: 7.822038
-      normDistance: 0.097775474
-    - position: {x: -2.3107302, y: 0.011096001, z: 7.3878164}
-      distance: 7.86017
-      normDistance: 0.098252125
-    - position: {x: -1.8828318, y: 0.023602247, z: 7.435134}
-      distance: 7.7881484
-      normDistance: 0.09735186
-    - position: {x: -1.4785302, y: 0.016113281, z: 7.569249}
-      distance: 7.8312755
-      normDistance: 0.09789094
-    - position: {x: -1.0586507, y: 0.016962051, z: 7.6344357}
-      distance: 7.826387
-      normDistance: 0.09782983
-    - position: {x: -0.6349037, y: 0.020326257, z: 7.662149}
-      distance: 7.807015
-      normDistance: 0.09758769
-    - position: {x: -0.21201079, y: 0.019290566, z: 7.6913614}
-      distance: 7.8129797
-      normDistance: 0.09766225
-    - position: {x: 0.21238475, y: 0.016899467, z: 7.7049174}
-      distance: 7.82675
-      normDistance: 0.09783437
-    - position: {x: 0.63633054, y: 0.017279983, z: 7.6793656}
-      distance: 7.8245573
-      normDistance: 0.09780697
-    - position: {x: 1.0543665, y: 0.022462249, z: 7.603538}
-      distance: 7.7947125
-      normDistance: 0.09743391
-    - position: {x: 1.4747171, y: 0.019620538, z: 7.5497274}
-      distance: 7.811078
-      normDistance: 0.09763847
-    - position: {x: 1.8985234, y: 0.012331486, z: 7.497098}
-      distance: 7.8530545
-      normDistance: 0.09816318
-    - position: {x: 2.3054926, y: 0.014190078, z: 7.3710694}
-      distance: 7.842352
-      normDistance: 0.0980294
-    - position: {x: 2.7116811, y: 0.012362599, z: 7.242578}
-      distance: 7.8528757
-      normDistance: 0.098160945
-    - position: {x: 3.0818093, y: 0.023218751, z: 7.0258164}
-      distance: 7.790357
-      normDistance: 0.09737946
-    - position: {x: 3.4742193, y: 0.01929307, z: 6.865243}
-      distance: 7.8129644
-      normDistance: 0.097662054
-    - position: {x: 3.8420942, y: 0.02107048, z: 6.654702}
-      distance: 7.802729
-      normDistance: 0.09753411
-    - position: {x: -4.333298, y: 0.020569205, z: 7.5054927}
-      distance: 8.771949
-      normDistance: 0.10964936
-    - position: {x: -3.9215577, y: 0.017694235, z: 7.7492094}
-      distance: 8.790555
-      normDistance: 0.10988194
-    - position: {x: -3.479672, y: 0.021215439, z: 7.9328523}
-      distance: 8.767765
-      normDistance: 0.109597065
-    - position: {x: -3.0455809, y: 0.017559767, z: 8.134384}
-      distance: 8.791424
-      normDistance: 0.1098928
-    - position: {x: -2.5920398, y: 0.017984986, z: 8.287213}
-      distance: 8.788673
-      normDistance: 0.109858416
-    - position: {x: -2.1261575, y: 0.021439314, z: 8.396007}
-      distance: 8.766316
-      normDistance: 0.10957895
-    - position: {x: -1.6631596, y: 0.019197702, z: 8.514449}
-      distance: 8.780824
-      normDistance: 0.1097603
-    - position: {x: -1.189222, y: 0.0218966, z: 8.576047}
-      distance: 8.763357
-      normDistance: 0.10954197
-    - position: {x: -0.71905476, y: 0.01418066, z: 8.677704}
-      distance: 8.8132925
-      normDistance: 0.110166155
-    - position: {x: -0.23928495, y: 0.01782906, z: 8.680819}
-      distance: 8.789681
-      normDistance: 0.109871015
-    - position: {x: 0.23928276, y: 0.017843366, z: 8.680727}
-      distance: 8.789589
-      normDistance: 0.10986986
-    - position: {x: 0.7161729, y: 0.019639254, z: 8.6429205}
-      distance: 8.7779665
-      normDistance: 0.10972458
-    - position: {x: 1.190692, y: 0.020223022, z: 8.586647}
-      distance: 8.774188
-      normDistance: 0.10967735
-    - position: {x: 1.6704937, y: 0.013214827, z: 8.551994}
-      distance: 8.819543
-      normDistance: 0.11024429
-    - position: {x: 2.1255991, y: 0.021795273, z: 8.393801}
-      distance: 8.764013
-      normDistance: 0.10955016
-    - position: {x: 2.598194, y: 0.014760852, z: 8.306888}
-      distance: 8.809538
-      normDistance: 0.11011922
-    - position: {x: 3.0430334, y: 0.01869607, z: 8.12758}
-      distance: 8.78407
-      normDistance: 0.109800875
-    - position: {x: 3.5018277, y: 0.012589335, z: 7.9833612}
-      distance: 8.82359
-      normDistance: 0.11029488
-    - position: {x: 3.9120288, y: 0.020994782, z: 7.730379}
-      distance: 8.769195
-      normDistance: 0.10961493
-    - position: {x: 4.3301044, y: 0.02156818, z: 7.4999614}
-      distance: 8.765484
-      normDistance: 0.10956855
-    - position: {x: -4.973999, y: 0.017224312, z: 8.615218}
-      distance: 10.040365
-      normDistance: 0.12550457
-    - position: {x: -4.495919, y: 0.01599443, z: 8.884178}
-      distance: 10.049454
-      normDistance: 0.12561817
-    - position: {x: -3.9912145, y: 0.01887381, z: 9.099052}
-      distance: 10.028177
-      normDistance: 0.12535222
-    - position: {x: -3.4832203, y: 0.019141316, z: 9.303268}
-      distance: 10.0262
-      normDistance: 0.1253275
-    - position: {x: -2.9606233, y: 0.021342993, z: 9.46564}
-      distance: 10.009932
-      normDistance: 0.12512414
-    - position: {x: -2.4355652, y: 0.020854235, z: 9.617829}
-      distance: 10.013543
-      normDistance: 0.12516929
-    - position: {x: -1.9042934, y: 0.019250154, z: 9.7489195}
-      distance: 10.025394
-      normDistance: 0.12531742
-    - position: {x: -1.3627052, y: 0.020891309, z: 9.827117}
-      distance: 10.013267
-      normDistance: 0.12516584
-    - position: {x: -0.8220341, y: 0.016339183, z: 9.920478}
-      distance: 10.046905
-      normDistance: 0.1255863
-    - position: {x: -0.27292824, y: 0.023084283, z: 9.901335}
-      distance: 9.997065
-      normDistance: 0.124963306
-    - position: {x: 0.27270392, y: 0.024198055, z: 9.893184}
-      distance: 9.988834
-      normDistance: 0.12486043
-    - position: {x: 0.8222312, y: 0.016013741, z: 9.9228525}
-      distance: 10.04931
-      normDistance: 0.12561637
-    - position: {x: 1.3675306, y: 0.016093254, z: 9.861913}
-      distance: 10.048721
-      normDistance: 0.12560901
-    - position: {x: 1.9010729, y: 0.021545053, z: 9.7324295}
-      distance: 10.008437
-      normDistance: 0.12510547
-    - position: {x: 2.4373653, y: 0.019852757, z: 9.624937}
-      distance: 10.020943
-      normDistance: 0.12526178
-    - position: {x: 2.9748368, y: 0.014839768, z: 9.511081}
-      distance: 10.057985
-      normDistance: 0.12572482
-    - position: {x: 3.469803, y: 0.024368048, z: 9.267431}
-      distance: 9.987578
-      normDistance: 0.12484473
-    - position: {x: 4.0032396, y: 0.014784932, z: 9.126467}
-      distance: 10.058391
-      normDistance: 0.12572989
-    - position: {x: 4.4698815, y: 0.023870826, z: 8.832726}
-      distance: 9.991253
-      normDistance: 0.12489066
-    - position: {x: 4.97401, y: 0.017221332, z: 8.615237}
-      distance: 10.040387
-      normDistance: 0.12550484
-    - position: {x: -5.8139153, y: 0.016901612, z: 10.069997}
-      distance: 11.706989
-      normDistance: 0.14633736
-    - position: {x: -5.250036, y: 0.016983986, z: 10.374352}
-      distance: 11.70628
-      normDistance: 0.1463285
-    - position: {x: -4.664427, y: 0.018769503, z: 10.6338215}
-      distance: 11.690899
-      normDistance: 0.14613624
-    - position: {x: -4.066307, y: 0.02051735, z: 10.860623}
-      distance: 11.675844
-      normDistance: 0.14594805
-    - position: {x: -3.4685686, y: 0.01788485, z: 11.089632}
-      distance: 11.698521
-      normDistance: 0.1462315
-    - position: {x: -2.8460438, y: 0.020910501, z: 11.238772}
-      distance: 11.672457
-      normDistance: 0.1459057
-    - position: {x: -2.221703, y: 0.021459222, z: 11.37388}
-      distance: 11.667729
-      normDistance: 0.14584662
-    - position: {x: -1.5893844, y: 0.023487687, z: 11.46181}
-      distance: 11.650258
-      normDistance: 0.14562823
-    - position: {x: -0.95415854, y: 0.02547884, z: 11.514983}
-      distance: 11.633106
-      normDistance: 0.14541383
-    - position: {x: -0.31988624, y: 0.01906848, z: 11.604884}
-      distance: 11.688325
-      normDistance: 0.14610407
-    - position: {x: 0.31964776, y: 0.020081878, z: 11.596218}
-      distance: 11.679596
-      normDistance: 0.14599495
-    - position: {x: 0.95932096, y: 0.018172503, z: 11.57728}
-      distance: 11.696042
-      normDistance: 0.14620052
-    - position: {x: 1.5918595, y: 0.021381736, z: 11.479656}
-      distance: 11.668398
-      normDistance: 0.14585498
-    - position: {x: 2.2218468, y: 0.02137208, z: 11.374613}
-      distance: 11.668481
-      normDistance: 0.14585601
-    - position: {x: 2.8426886, y: 0.022508264, z: 11.225521}
-      distance: 11.658694
-      normDistance: 0.14573368
-    - position: {x: 3.4661353, y: 0.01883781, z: 11.081849}
-      distance: 11.6903105
-      normDistance: 0.14612888
-    - position: {x: 4.0573263, y: 0.023511171, z: 10.836636}
-      distance: 11.650056
-      normDistance: 0.1456257
-    - position: {x: 4.656359, y: 0.021117091, z: 10.615428}
-      distance: 11.670677
-      normDistance: 0.14588347
-    - position: {x: 5.2285714, y: 0.022540212, z: 10.331937}
-      distance: 11.658419
-      normDistance: 0.14573023
-    - position: {x: 5.7964807, y: 0.02097714, z: 10.039799}
-      distance: 11.671883
-      normDistance: 0.14589854
-    - position: {x: -6.973962, y: 0.01931703, z: 12.079255}
-      distance: 14.013748
-      normDistance: 0.17517185
-    - position: {x: -6.286221, y: 0.02184403, z: 12.421912}
-      distance: 13.987645
-      normDistance: 0.17484556
-    - position: {x: -5.576785, y: 0.025620341, z: 12.71379}
-      distance: 13.948638
-      normDistance: 0.17435798
-    - position: {x: -4.8720407, y: 0.024483562, z: 13.012642}
-      distance: 13.960381
-      normDistance: 0.17450476
-    - position: {x: -4.155679, y: 0.0219177, z: 13.2864485}
-      distance: 13.986884
-      normDistance: 0.17483605
-    - position: {x: -3.4104798, y: 0.024679065, z: 13.46768}
-      distance: 13.958362
-      normDistance: 0.17447951
-    - position: {x: -2.668327, y: 0.022177458, z: 13.660346}
-      distance: 13.9842005
-      normDistance: 0.17480251
-    - position: {x: -1.910481, y: 0.023081183, z: 13.7773905}
-      distance: 13.974864
-      normDistance: 0.1746858
-    - position: {x: -1.1458617, y: 0.026323438, z: 13.828497}
-      distance: 13.941376
-      normDistance: 0.1742672
-    - position: {x: -0.38339296, y: 0.022609234, z: 13.9087925}
-      distance: 13.979741
-      normDistance: 0.17474677
-    - position: {x: 0.38316804, y: 0.023405075, z: 13.900614}
-      distance: 13.97152
-      normDistance: 0.17464401
-    - position: {x: 1.1494489, y: 0.02209866, z: 13.871782}
-      distance: 13.985015
-      normDistance: 0.17481269
-    - position: {x: 1.9113452, y: 0.022469401, z: 13.783621}
-      distance: 13.981183
-      normDistance: 0.17476478
-    - position: {x: 2.6622095, y: 0.025281668, z: 13.629024}
-      distance: 13.952136
-      normDistance: 0.1744017
-    - position: {x: 3.4160728, y: 0.022463083, z: 13.489765}
-      distance: 13.981251
-      normDistance: 0.17476563
-    - position: {x: 4.144839, y: 0.025450349, z: 13.251786}
-      distance: 13.950395
-      normDistance: 0.17437993
-    - position: {x: 4.873123, y: 0.024183273, z: 13.0155325}
-      distance: 13.963482
-      normDistance: 0.17454353
-    - position: {x: 5.5807877, y: 0.024651289, z: 12.722913}
-      distance: 13.958648
-      normDistance: 0.17448309
-    - position: {x: 6.2786427, y: 0.0234766, z: 12.406936}
-      distance: 13.970781
-      normDistance: 0.17463477
-    - position: {x: 6.952687, y: 0.023455739, z: 12.042406}
-      distance: 13.970998
-      normDistance: 0.17463747
-    - position: {x: -8.6953, y: 0.024295807, z: 15.060701}
-      distance: 17.443052
-      normDistance: 0.21803816
-    - position: {x: -7.8529987, y: 0.02419889, z: 15.517948}
-      distance: 17.444302
-      normDistance: 0.21805377
-    - position: {x: -6.9835906, y: 0.02470851, z: 15.920983}
-      distance: 17.437725
-      normDistance: 0.21797156
-    - position: {x: -6.0921288, y: 0.025552273, z: 16.271353}
-      distance: 17.426838
-      normDistance: 0.21783547
-    - position: {x: -5.190887, y: 0.024416804, z: 16.59619}
-      distance: 17.44149
-      normDistance: 0.21801862
-    - position: {x: -4.2787023, y: 0.02126789, z: 16.896214}
-      distance: 17.482122
-      normDistance: 0.21852653
-    - position: {x: -3.3333619, y: 0.02453947, z: 17.064953}
-      distance: 17.439907
-      normDistance: 0.21799883
-    - position: {x: -2.3899724, y: 0.02355349, z: 17.235231}
-      distance: 17.45263
-      normDistance: 0.21815786
-    - position: {x: -1.4352636, y: 0.02508688, z: 17.32106}
-      distance: 17.432844
-      normDistance: 0.21791056
-    - position: {x: -0.48015073, y: 0.021575093, z: 17.418987}
-      distance: 17.47816
-      normDistance: 0.21847701
-    - position: {x: 0.4786109, y: 0.02592063, z: 17.3631}
-      distance: 17.422085
-      normDistance: 0.21777606
-    - position: {x: 1.4334724, y: 0.026773334, z: 17.299437}
-      distance: 17.411081
-      normDistance: 0.21763852
-    - position: {x: 2.3910475, y: 0.022945404, z: 17.24298}
-      distance: 17.460476
-      normDistance: 0.21825595
-    - position: {x: 3.3342617, y: 0.024175048, z: 17.069555}
-      distance: 17.44461
-      normDistance: 0.21805763
-    - position: {x: 4.2684393, y: 0.024517536, z: 16.855682}
-      distance: 17.440187
-      normDistance: 0.21800235
-    - position: {x: 5.193471, y: 0.023744226, z: 16.604446}
-      distance: 17.450169
-      normDistance: 0.2181271
-    - position: {x: 6.0956326, y: 0.024775743, z: 16.28071}
-      distance: 17.43686
-      normDistance: 0.21796075
-    - position: {x: 6.9784403, y: 0.0257051, z: 15.909241}
-      distance: 17.424864
-      normDistance: 0.2178108
-    - position: {x: 7.851289, y: 0.024493217, z: 15.514567}
-      distance: 17.440502
-      normDistance: 0.21800628
-    - position: {x: 8.710988, y: 0.021857023, z: 15.087874}
-      distance: 17.474524
-      normDistance: 0.21843155
-    - position: {x: -10.828648, y: 0.1146065, z: 18.755768}
-      distance: 21.693998
-      normDistance: 0.27117497
-    - position: {x: -10.466608, y: 0.025910616, z: 20.68258}
-      distance: 23.219427
-      normDistance: 0.29024285
-    - position: {x: -9.325059, y: 0.023923874, z: 21.258995}
-      distance: 23.253595
-      normDistance: 0.29066995
-    - position: {x: -8.128023, y: 0.025878191, z: 21.708988}
-      distance: 23.219986
-      normDistance: 0.29024982
-    - position: {x: -6.9167776, y: 0.026464343, z: 22.114174}
-      distance: 23.209906
-      normDistance: 0.29012382
-    - position: {x: -5.6845036, y: 0.027306795, z: 22.447598}
-      distance: 23.195414
-      normDistance: 0.28994268
-    - position: {x: -4.4493833, y: 0.024238467, z: 22.77836}
-      distance: 23.248182
-      normDistance: 0.29060227
-    - position: {x: -3.1848195, y: 0.025510073, z: 22.967253}
-      distance: 23.226313
-      normDistance: 0.29032892
-    - position: {x: -1.9152076, y: 0.025200367, z: 23.113127}
-      distance: 23.231644
-      normDistance: 0.29039556
-    - position: {x: -0.6389398, y: 0.025431514, z: 23.179565}
-      distance: 23.227667
-      normDistance: 0.29034585
-    - position: {x: 0.6390146, y: 0.02527535, z: 23.182247}
-      distance: 23.230354
-      normDistance: 0.29037943
-    - position: {x: 1.9138678, y: 0.026145816, z: 23.096949}
-      distance: 23.215384
-      normDistance: 0.2901923
-    - position: {x: 3.184324, y: 0.025720477, z: 22.963675}
-      distance: 23.222694
-      normDistance: 0.29028368
-    - position: {x: 4.449067, y: 0.024334908, z: 22.776737}
-      distance: 23.246525
-      normDistance: 0.29058155
-    - position: {x: 5.6910973, y: 0.02574253, z: 22.473635}
-      distance: 23.222317
-      normDistance: 0.29027897
-    - position: {x: 6.91206, y: 0.027384996, z: 22.099087}
-      distance: 23.19407
-      normDistance: 0.28992587
-    - position: {x: 8.122618, y: 0.026776195, z: 21.694548}
-      distance: 23.204542
-      normDistance: 0.29005677
-    - position: {x: 9.317959, y: 0.024953365, z: 21.242807}
-      distance: 23.23589
-      normDistance: 0.2904486
-    - position: {x: 10.466006, y: 0.025988221, z: 20.681393}
-      distance: 23.218092
-      normDistance: 0.29022616
-    - position: {x: 10.837928, y: 0.11352539, z: 18.771843}
-      distance: 21.712591
-      normDistance: 0.2714074
-    - position: {x: -10.833929, y: 0.5351885, z: 18.764917}
-      distance: 21.684166
-      normDistance: 0.27105206
-    - position: {x: -10.833908, y: 0.44493955, z: 21.408386}
-      distance: 24.011652
-      normDistance: 0.30014566
-    - position: {x: -10.824368, y: 0.3303454, z: 24.677074}
-      distance: 26.966986
-      normDistance: 0.33708733
-    - position: {x: -10.822583, y: 0.17828059, z: 28.905834}
-      distance: 30.888674
-      normDistance: 0.38610843
-    - position: {x: -10.375762, y: 0.02723372, z: 33.17316}
-      distance: 34.784107
-      normDistance: 0.43480134
-    - position: {x: -8.531359, y: 0.02742517, z: 33.68958}
-      distance: 34.779167
-      normDistance: 0.4347396
-    - position: {x: -6.6675954, y: 0.026397943, z: 34.134373}
-      distance: 34.805656
-      normDistance: 0.4350707
-    - position: {x: -4.775442, y: 0.026862264, z: 34.437996}
-      distance: 34.793686
-      normDistance: 0.4349211
-    - position: {x: -2.868551, y: 0.028049946, z: 34.61827}
-      distance: 34.763058
-      normDistance: 0.43453822
-    - position: {x: -0.95766765, y: 0.027323961, z: 34.742424}
-      distance: 34.78178
-      normDistance: 0.43477225
-    - position: {x: 0.9580345, y: 0.026808977, z: 34.755688}
-      distance: 34.79506
-      normDistance: 0.43493825
-    - position: {x: 2.8692029, y: 0.027744055, z: 34.626125}
-      distance: 34.770947
-      normDistance: 0.43463683
-    - position: {x: 4.7726603, y: 0.027648449, z: 34.417927}
-      distance: 34.77341
-      normDistance: 0.43466765
-    - position: {x: 6.663536, y: 0.02722001, z: 34.113583}
-      distance: 34.78446
-      normDistance: 0.43480572
-    - position: {x: 8.531181, y: 0.027453423, z: 33.688873}
-      distance: 34.77844
-      normDistance: 0.43473047
-    - position: {x: 10.385892, y: 0.025917292, z: 33.20554}
-      distance: 34.818058
-      normDistance: 0.43522573
-    - position: {x: 10.822214, y: 0.17832148, z: 28.904846}
-      distance: 30.887617
-      normDistance: 0.38609523
-    - position: {x: 10.831297, y: 0.32967603, z: 24.69287}
-      distance: 26.984247
-      normDistance: 0.3373031
-    - position: {x: 10.825272, y: 0.4456818, z: 21.39132}
-      distance: 23.99251
-      normDistance: 0.29990637
-    - position: {x: 10.848455, y: 0.53406113, z: 18.790077}
-      distance: 21.71324
-      normDistance: 0.2714155
-    - position: {x: -10.83062, y: 0.955881, z: 18.759182}
-      distance: 21.665312
-      normDistance: 0.2708164
-    - position: {x: -10.832966, y: 0.91068554, z: 21.406523}
-      distance: 23.99602
-      normDistance: 0.29995024
-    - position: {x: -10.832966, y: 0.8529543, z: 24.696674}
-      distance: 26.97318
-      normDistance: 0.33716476
-    - position: {x: -10.816557, y: 0.77769905, z: 28.88974}
-      distance: 30.85406
-      normDistance: 0.38567573
-    - position: {x: -10.831898, y: 0.6722348, z: 34.63151}
-      distance: 36.292793
-      normDistance: 0.45365992
-    - position: {x: -10.818648, y: 0.52125543, z: 42.72188}
-      distance: 44.078712
-      normDistance: 0.5509839
-    - position: {x: -10.816539, y: 0.2817129, z: 55.374653}
-      distance: 56.43179
-      normDistance: 0.70539737
-    - position: {x: -9.542934, y: 0.02849257, z: 68.818665}
-      distance: 69.49023
-      normDistance: 0.86862785
-    - position: {x: -5.7356358, y: 0.028901577, z: 69.21885}
-      distance: 69.46914
-      normDistance: 0.8683642
-    - position: {x: -1.9149575, y: 0.02809763, z: 69.471146}
-      distance: 69.510605
-      normDistance: 0.86888254
-    - position: {x: 1.91534, y: 0.027830243, z: 69.484924}
-      distance: 69.52439
-      normDistance: 0.8690549
-    - position: {x: 5.7390594, y: 0.028097987, z: 69.26014}
-      distance: 69.51058
-      normDistance: 0.8688823
-    - position: {x: 9.546044, y: 0.028053522, z: 68.84108}
-      distance: 69.51286
-      normDistance: 0.8689108
-    - position: {x: 10.816682, y: 0.28169858, z: 55.375374}
-      distance: 56.432526
-      normDistance: 0.70540655
-    - position: {x: 10.817469, y: 0.5213488, z: 42.717216}
-      distance: 44.0739
-      normDistance: 0.5509237
-    - position: {x: 10.819098, y: 0.67306644, z: 34.59058}
-      distance: 36.2499
-      normDistance: 0.45312375
-    - position: {x: 10.817051, y: 0.77767175, z: 28.891056}
-      distance: 30.855465
-      normDistance: 0.3856933
-    - position: {x: 10.835546, y: 0.85282975, z: 24.702557}
-      distance: 26.979605
-      normDistance: 0.33724505
-    - position: {x: 10.826205, y: 0.91097593, z: 21.393164}
-      distance: 23.981043
-      normDistance: 0.29976302
-    - position: {x: 10.82479, y: 0.95610714, z: 18.749084}
-      distance: 21.65365
-      normDistance: 0.27067062
-    - position: {x: -40, y: 1.3760008, z: 69.28203}
+    - position: {x: -2.6306138, y: 0.019798875, z: 7.2275515}
+      distance: 7.810052
+      normDistance: 0.09762565
+    - position: {x: -2.3613153, y: 0.020954967, z: 7.31307}
+      distance: 7.803393
+      normDistance: 0.09754241
+    - position: {x: -2.0927281, y: 0.019881845, z: 7.4007344}
+      distance: 7.809573
+      normDistance: 0.09761967
+    - position: {x: -1.8261235, y: 0.0149047375, z: 7.500041}
+      distance: 7.838235
+      normDistance: 0.097977936
+    - position: {x: -1.5520042, y: 0.012593627, z: 7.574904}
+      distance: 7.8515453
+      normDistance: 0.098144315
+    - position: {x: -1.2687665, y: 0.016795278, z: 7.6033006}
+      distance: 7.8273487
+      normDistance: 0.09784186
+    - position: {x: -0.9896233, y: 0.015386939, z: 7.6526985}
+      distance: 7.8354588
+      normDistance: 0.09794323
+    - position: {x: -0.7100354, y: 0.011146903, z: 7.7078323}
+      distance: 7.859876
+      normDistance: 0.09824845
+    - position: {x: -0.4255498, y: 0.013883829, z: 7.7132144}
+      distance: 7.8441143
+      normDistance: 0.09805143
+    - position: {x: -0.14215758, y: 0.011543512, z: 7.7369123}
+      distance: 7.8575926
+      normDistance: 0.09821991
+    - position: {x: 0.14102468, y: 0.022419333, z: 7.675243}
+      distance: 7.7949615
+      normDistance: 0.09743702
+    - position: {x: 0.42306128, y: 0.02184987, z: 7.668106}
+      distance: 7.79824
+      normDistance: 0.097478
+    - position: {x: 0.7077321, y: 0.015574813, z: 7.682826}
+      distance: 7.834377
+      normDistance: 0.09792971
+    - position: {x: 0.9913377, y: 0.013029933, z: 7.665955}
+      distance: 7.849032
+      normDistance: 0.098112896
+    - position: {x: 1.2648158, y: 0.021027684, z: 7.5796247}
+      distance: 7.802975
+      normDistance: 0.09753719
+    - position: {x: 1.5452176, y: 0.018555641, z: 7.541779}
+      distance: 7.817211
+      normDistance: 0.09771514
+    - position: {x: 1.8235507, y: 0.016822696, z: 7.4894743}
+      distance: 7.8271914
+      normDistance: 0.09783989
+    - position: {x: 2.094207, y: 0.018923521, z: 7.4059644}
+      distance: 7.815092
+      normDistance: 0.09768865
+    - position: {x: 2.3638654, y: 0.019491553, z: 7.320967}
+      distance: 7.81182
+      normDistance: 0.09764775
+    - position: {x: 2.630214, y: 0.020005107, z: 7.2264524}
+      distance: 7.808864
+      normDistance: 0.0976108
+    - position: {x: -2.9685946, y: 0.018536925, z: 8.156147}
+      distance: 8.785101
+      normDistance: 0.109813765
+    - position: {x: -2.676201, y: 0.013838649, z: 8.2882805}
+      distance: 8.815505
+      normDistance: 0.11019381
+    - position: {x: -2.3606591, y: 0.01916182, z: 8.348247}
+      distance: 8.781055
+      normDistance: 0.10976319
+    - position: {x: -2.0544758, y: 0.017782092, z: 8.437903}
+      distance: 8.789985
+      normDistance: 0.10987481
+    - position: {x: -1.74951, y: 0.012801647, z: 8.538877}
+      distance: 8.822217
+      normDistance: 0.11027771
+    - position: {x: -1.4284002, y: 0.018739581, z: 8.559934}
+      distance: 8.783789
+      normDistance: 0.10979736
+    - position: {x: -1.116206, y: 0.014808536, z: 8.631556}
+      distance: 8.809229
+      normDistance: 0.110115364
+    - position: {x: -0.79888725, y: 0.013923407, z: 8.67237}
+      distance: 8.814958
+      normDistance: 0.11018697
+    - position: {x: -0.47853613, y: 0.017409682, z: 8.673607}
+      distance: 8.792396
+      normDistance: 0.109904945
+    - position: {x: -0.15902953, y: 0.022127986, z: 8.655168}
+      distance: 8.76186
+      normDistance: 0.10952325
+    - position: {x: 0.15890126, y: 0.02322197, z: 8.648174}
+      distance: 8.75478
+      normDistance: 0.109434746
+    - position: {x: 0.47869605, y: 0.01695621, z: 8.676501}
+      distance: 8.79533
+      normDistance: 0.109941624
+    - position: {x: 0.79901123, y: 0.013712406, z: 8.673714}
+      distance: 8.816323
+      normDistance: 0.11020404
+    - position: {x: 1.1124924, y: 0.019337416, z: 8.602838}
+      distance: 8.77992
+      normDistance: 0.109749
+    - position: {x: 1.4272002, y: 0.019879818, z: 8.552742}
+      distance: 8.776409
+      normDistance: 0.10970511
+    - position: {x: 1.7385972, y: 0.021305084, z: 8.485613}
+      distance: 8.767185
+      normDistance: 0.109589815
+    - position: {x: 2.0541697, y: 0.017984629, z: 8.4366455}
+      distance: 8.788674
+      normDistance: 0.10985843
+    - position: {x: 2.3705223, y: 0.013492823, z: 8.383125}
+      distance: 8.817743
+      normDistance: 0.11022179
+    - position: {x: 2.675529, y: 0.014180899, z: 8.286199}
+      distance: 8.813291
+      normDistance: 0.11016613
+    - position: {x: 2.9693747, y: 0.01818037, z: 8.15829}
+      distance: 8.787409
+      normDistance: 0.10984261
+    - position: {x: -3.3985083, y: 0.01878488, z: 9.337324}
+      distance: 10.028834
+      normDistance: 0.12536043
+    - position: {x: -3.0414197, y: 0.024022698, z: 9.419374}
+      distance: 9.990129
+      normDistance: 0.12487662
+    - position: {x: -2.7024994, y: 0.01942563, z: 9.557131}
+      distance: 10.024098
+      normDistance: 0.12530123
+    - position: {x: -2.3485806, y: 0.020007968, z: 9.645815}
+      distance: 10.019795
+      normDistance: 0.12524745
+    - position: {x: -1.9938214, y: 0.01921177, z: 9.731291}
+      distance: 10.025679
+      normDistance: 0.12532099
+    - position: {x: -1.6293694, y: 0.023877501, z: 9.764275}
+      distance: 9.991203
+      normDistance: 0.124890044
+    - position: {x: -1.2754158, y: 0.017655611, z: 9.862715}
+      distance: 10.037177
+      normDistance: 0.12546471
+    - position: {x: -0.9108714, y: 0.019698143, z: 9.8880205}
+      distance: 10.022085
+      normDistance: 0.12527606
+    - position: {x: -0.5462763, y: 0.021529794, z: 9.901417}
+      distance: 10.00855
+      normDistance: 0.12510687
+    - position: {x: -0.18252312, y: 0.01893425, z: 9.933803}
+      distance: 10.02773
+      normDistance: 0.12534663
+    - position: {x: 0.18260966, y: 0.018292665, z: 9.9384985}
+      distance: 10.032471
+      normDistance: 0.12540588
+    - position: {x: 0.54874074, y: 0.01541996, z: 9.946082}
+      distance: 10.053698
+      normDistance: 0.12567122
+    - position: {x: 0.9085742, y: 0.023119092, z: 9.86308}
+      distance: 9.996807
+      normDistance: 0.12496009
+    - position: {x: 1.2742199, y: 0.018929482, z: 9.853466}
+      distance: 10.027764
+      normDistance: 0.12534705
+    - position: {x: 1.6327765, y: 0.021050215, z: 9.784692}
+      distance: 10.0120945
+      normDistance: 0.12515119
+    - position: {x: 1.9949943, y: 0.018413782, z: 9.737015}
+      distance: 10.031575
+      normDistance: 0.12539469
+    - position: {x: 2.3568928, y: 0.015209079, z: 9.679954}
+      distance: 10.055258
+      normDistance: 0.12569073
+    - position: {x: 2.706457, y: 0.017439246, z: 9.571125}
+      distance: 10.038776
+      normDistance: 0.1254847
+    - position: {x: 3.0504622, y: 0.02000308, z: 9.44738}
+      distance: 10.019832
+      normDistance: 0.1252479
+    - position: {x: 3.3874586, y: 0.02319777, z: 9.306965}
+      distance: 9.996226
+      normDistance: 0.12495283
+    - position: {x: -3.9666748, y: 0.020414114, z: 10.898349}
+      distance: 11.676734
+      normDistance: 0.14595917
+    - position: {x: -3.5593605, y: 0.022042155, z: 11.023454}
+      distance: 11.662709
+      normDistance: 0.14578387
+    - position: {x: -3.1530433, y: 0.021596432, z: 11.150438}
+      distance: 11.666549
+      normDistance: 0.14583185
+    - position: {x: -2.741845, y: 0.021326184, z: 11.260985}
+      distance: 11.668876
+      normDistance: 0.14586094
+    - position: {x: -2.3298936, y: 0.019243121, z: 11.371569}
+      distance: 11.68682
+      normDistance: 0.14608525
+    - position: {x: -1.9119033, y: 0.01830411, z: 11.457407}
+      distance: 11.694909
+      normDistance: 0.14618637
+    - position: {x: -1.4852998, y: 0.022331476, z: 11.485735}
+      distance: 11.660216
+      normDistance: 0.1457527
+    - position: {x: -1.0629361, y: 0.02160132, z: 11.538767}
+      distance: 11.666507
+      normDistance: 0.14583133
+    - position: {x: -0.64020944, y: 0.017626524, z: 11.603981}
+      distance: 11.700745
+      normDistance: 0.14625931
+    - position: {x: -0.21309425, y: 0.020202398, z: 11.597633}
+      distance: 11.678557
+      normDistance: 0.14598197
+    - position: {x: 0.21335733, y: 0.018530488, z: 11.611935}
+      distance: 11.692959
+      normDistance: 0.14616199
+    - position: {x: 0.638551, y: 0.02114582, z: 11.573917}
+      distance: 11.67043
+      normDistance: 0.14588037
+    - position: {x: 1.0644163, y: 0.019715548, z: 11.554832}
+      distance: 11.68275
+      normDistance: 0.14603437
+    - position: {x: 1.4850329, y: 0.022574902, z: 11.483669}
+      distance: 11.658119
+      normDistance: 0.14572649
+    - position: {x: 1.9035016, y: 0.024270415, z: 11.407059}
+      distance: 11.643517
+      normDistance: 0.14554396
+    - position: {x: 2.327136, y: 0.020849109, z: 11.358108}
+      distance: 11.672986
+      normDistance: 0.14591232
+    - position: {x: 2.7392893, y: 0.022589207, z: 11.250488}
+      distance: 11.657998
+      normDistance: 0.14572498
+    - position: {x: 3.1615334, y: 0.017949581, z: 11.180462}
+      distance: 11.697962
+      normDistance: 0.14622453
+    - position: {x: 3.55605, y: 0.023301482, z: 11.013202}
+      distance: 11.651862
+      normDistance: 0.14564827
+    - position: {x: 3.9710944, y: 0.018903852, z: 10.91049}
+      distance: 11.689743
+      normDistance: 0.14612179
+    - position: {x: -4.750928, y: 0.024874687, z: 13.053069}
+      distance: 13.956342
+      normDistance: 0.17445427
+    - position: {x: -4.2695475, y: 0.024451375, z: 13.222926}
+      distance: 13.960712
+      normDistance: 0.1745089
+    - position: {x: -3.783886, y: 0.023389101, z: 13.381353}
+      distance: 13.971684
+      normDistance: 0.17464605
+    - position: {x: -3.2864623, y: 0.024745584, z: 13.497775}
+      distance: 13.957673
+      normDistance: 0.17447092
+    - position: {x: -2.7923343, y: 0.022837281, z: 13.628613}
+      distance: 13.977385
+      normDistance: 0.1747173
+    - position: {x: -2.2864552, y: 0.024811387, z: 13.701974}
+      distance: 13.956994
+      normDistance: 0.17446242
+    - position: {x: -1.7816082, y: 0.024776816, z: 13.777071}
+      distance: 13.95735
+      normDistance: 0.17446688
+    - position: {x: -1.2792444, y: 0.019531608, z: 13.886918}
+      distance: 14.01153
+      normDistance: 0.17514412
+    - position: {x: -0.7676565, y: 0.020558596, z: 13.913998}
+      distance: 14.000923
+      normDistance: 0.17501155
+    - position: {x: -0.25488994, y: 0.02643907, z: 13.87236}
+      distance: 13.940182
+      normDistance: 0.17425227
+    - position: {x: 0.2561114, y: 0.019973636, z: 13.938819}
+      distance: 14.006966
+      normDistance: 0.17508706
+    - position: {x: 0.76607716, y: 0.023347735, z: 13.885366}
+      distance: 13.972113
+      normDistance: 0.17465141
+    - position: {x: 1.2787997, y: 0.020003796, z: 13.882085}
+      distance: 14.006653
+      normDistance: 0.17508316
+    - position: {x: 1.7821517, y: 0.024364829, z: 13.781272}
+      distance: 13.961606
+      normDistance: 0.17452008
+    - position: {x: 2.2914789, y: 0.021842718, z: 13.732078}
+      distance: 13.9876585
+      normDistance: 0.17484573
+    - position: {x: 2.7911983, y: 0.023388028, z: 13.623067}
+      distance: 13.971696
+      normDistance: 0.1746462
+    - position: {x: 3.2945292, y: 0.021429062, z: 13.530906}
+      distance: 13.991933
+      normDistance: 0.17489916
+    - position: {x: 3.7916474, y: 0.020614862, z: 13.4088}
+      distance: 14.000341
+      normDistance: 0.17500427
+    - position: {x: 4.2816377, y: 0.020624042, z: 13.26037}
+      distance: 14.000246
+      normDistance: 0.17500308
+    - position: {x: 4.7586975, y: 0.022665262, z: 13.074414}
+      distance: 13.979164
+      normDistance: 0.17473955
+    - position: {x: -5.942751, y: 0.02547419, z: 16.327574}
+      distance: 17.427847
+      normDistance: 0.21784809
+    - position: {x: -5.334057, y: 0.026708603, z: 16.519745}
+      distance: 17.411913
+      normDistance: 0.21764891
+    - position: {x: -4.7393956, y: 0.02219522, z: 16.760422}
+      distance: 17.470158
+      normDistance: 0.21837696
+    - position: {x: -4.1195006, y: 0.022521734, z: 16.919132}
+      distance: 17.465944
+      normDistance: 0.2183243
+    - position: {x: -3.489453, y: 0.024742126, z: 17.031057}
+      distance: 17.43729
+      normDistance: 0.21796612
+    - position: {x: -2.8592496, y: 0.025782824, z: 17.134544}
+      distance: 17.423862
+      normDistance: 0.21779828
+    - position: {x: -2.2315497, y: 0.02355504, z: 17.256441}
+      distance: 17.452612
+      normDistance: 0.21815765
+    - position: {x: -1.5955429, y: 0.024043202, z: 17.320515}
+      distance: 17.446312
+      normDistance: 0.2180789
+    - position: {x: -0.95867366, y: 0.023357987, z: 17.376238}
+      distance: 17.455153
+      normDistance: 0.2181894
+    - position: {x: -0.32006916, y: 0.021802783, z: 17.419733}
+      distance: 17.475222
+      normDistance: 0.21844026
+    - position: {x: 0.31901485, y: 0.026265502, z: 17.362326}
+      distance: 17.417633
+      normDistance: 0.21772042
+    - position: {x: 0.95819217, y: 0.024037838, z: 17.367504}
+      distance: 17.446379
+      normDistance: 0.21807973
+    - position: {x: 1.5966356, y: 0.02311778, z: 17.33237}
+      distance: 17.458254
+      normDistance: 0.21822818
+    - position: {x: 2.2322173, y: 0.023150444, z: 17.261602}
+      distance: 17.457832
+      normDistance: 0.2182229
+    - position: {x: 2.864097, y: 0.023493886, z: 17.163591}
+      distance: 17.4534
+      normDistance: 0.2181675
+    - position: {x: 3.4867995, y: 0.025770068, z: 17.018103}
+      distance: 17.424026
+      normDistance: 0.21780033
+    - position: {x: 4.1150746, y: 0.023976088, z: 16.900953}
+      distance: 17.447178
+      normDistance: 0.21808973
+    - position: {x: 4.7358947, y: 0.023195386, z: 16.74804}
+      distance: 17.45725
+      normDistance: 0.21821563
+    - position: {x: 5.343404, y: 0.024344206, z: 16.548693}
+      distance: 17.442425
+      normDistance: 0.2180303
+    - position: {x: 5.9472823, y: 0.02444446, z: 16.340023}
+      distance: 17.441135
+      normDistance: 0.2180142
+    - position: {x: -7.9270415, y: 0.026086688, z: 21.779367}
+      distance: 23.216396
+      normDistance: 0.29020494
+    - position: {x: -7.133978, y: 0.023743153, z: 22.094162}
+      distance: 23.256704
+      normDistance: 0.2907088
+    - position: {x: -6.3057346, y: 0.026266456, z: 22.299631}
+      distance: 23.213306
+      normDistance: 0.29016632
+    - position: {x: -5.4820027, y: 0.026337028, z: 22.515045}
+      distance: 23.212091
+      normDistance: 0.29015115
+    - position: {x: -4.6569686, y: 0.024663448, z: 22.729382}
+      distance: 23.240875
+      normDistance: 0.29051095
+    - position: {x: -3.820487, y: 0.024084449, z: 22.894926}
+      distance: 23.250837
+      normDistance: 0.29063547
+    - position: {x: -2.9691489, y: 0.027582526, z: 22.960253}
+      distance: 23.190672
+      normDistance: 0.2898834
+    - position: {x: -2.1261625, y: 0.026011348, z: 23.08069}
+      distance: 23.217693
+      normDistance: 0.29022115
+    - position: {x: -1.278924, y: 0.023814797, z: 23.180872}
+      distance: 23.25547
+      normDistance: 0.29069337
+    - position: {x: -0.42640743, y: 0.024107456, z: 23.207186}
+      distance: 23.250439
+      normDistance: 0.2906305
+    - position: {x: 0.42561504, y: 0.0266217, z: 23.164026}
+      distance: 23.2072
+      normDistance: 0.29009
+    - position: {x: 1.2782199, y: 0.024559736, z: 23.168102}
+      distance: 23.242659
+      normDistance: 0.29053324
+    - position: {x: 2.1238046, y: 0.027508855, z: 23.055088}
+      distance: 23.191938
+      normDistance: 0.28989923
+    - position: {x: 2.971765, y: 0.026394606, z: 22.980482}
+      distance: 23.211103
+      normDistance: 0.29013878
+    - position: {x: 3.814018, y: 0.026373625, z: 22.856157}
+      distance: 23.211466
+      normDistance: 0.2901433
+    - position: {x: 4.656484, y: 0.024804354, z: 22.727013}
+      distance: 23.238453
+      normDistance: 0.29048067
+    - position: {x: 5.4847317, y: 0.025665402, z: 22.52625}
+      distance: 23.223644
+      normDistance: 0.29029554
+    - position: {x: 6.306817, y: 0.026034951, z: 22.303457}
+      distance: 23.217289
+      normDistance: 0.29021612
+    - position: {x: 7.1198287, y: 0.026425123, z: 22.05034}
+      distance: 23.210577
+      normDistance: 0.29013222
+    - position: {x: 7.9361734, y: 0.024531722, z: 21.804455}
+      distance: 23.243141
+      normDistance: 0.29053926
+    - position: {x: -10.835101, y: 0.1466831, z: 29.769196}
+      distance: 31.703558
+      normDistance: 0.39629447
+    - position: {x: -10.677229, y: 0.027589321, z: 33.067726}
+      distance: 34.774933
+      normDistance: 0.43468666
+    - position: {x: -9.451179, y: 0.028172135, z: 33.42319}
+      distance: 34.759907
+      normDistance: 0.43449885
+    - position: {x: -8.22391, y: 0.027035117, z: 33.77629}
+      distance: 34.789227
+      normDistance: 0.43486533
+    - position: {x: -6.97634, y: 0.027273297, z: 34.04959}
+      distance: 34.783085
+      normDistance: 0.43478855
+    - position: {x: -5.718953, y: 0.027709365, z: 34.271805}
+      distance: 34.771843
+      normDistance: 0.43464804
+    - position: {x: -4.4545054, y: 0.028191924, z: 34.44643}
+      distance: 34.759396
+      normDistance: 0.43449244
+    - position: {x: -3.1887064, y: 0.027085662, z: 34.615204}
+      distance: 34.787926
+      normDistance: 0.43484908
+    - position: {x: -1.9160331, y: 0.026320815, z: 34.72866}
+      distance: 34.80765
+      normDistance: 0.43509564
+    - position: {x: -0.6389802, y: 0.026288271, z: 34.776443}
+      distance: 34.80849
+      normDistance: 0.43510613
+    - position: {x: 0.63845265, y: 0.027404547, z: 34.74768}
+      distance: 34.7797
+      normDistance: 0.43474627
+    - position: {x: 1.9129022, y: 0.028526783, z: 34.671898}
+      distance: 34.75076
+      normDistance: 0.4343845
+    - position: {x: 3.1867146, y: 0.02792859, z: 34.59357}
+      distance: 34.766186
+      normDistance: 0.43457732
+    - position: {x: 4.4565163, y: 0.027583718, z: 34.46197}
+      distance: 34.77508
+      normDistance: 0.4346885
+    - position: {x: 5.7213635, y: 0.027141213, z: 34.286247}
+      distance: 34.786495
+      normDistance: 0.4348312
+    - position: {x: 6.9805236, y: 0.0264647, z: 34.070004}
+      distance: 34.80394
+      normDistance: 0.43504924
+    - position: {x: 8.225014, y: 0.026854396, z: 33.780823}
+      distance: 34.79389
+      normDistance: 0.43492365
+    - position: {x: 9.462227, y: 0.026596665, z: 33.46226}
+      distance: 34.800537
+      normDistance: 0.4350067
+    - position: {x: 10.67907, y: 0.027356744, z: 33.07343}
+      distance: 34.78093
+      normDistance: 0.4347616
+    - position: {x: 10.8293915, y: 0.147331, z: 29.753506}
+      distance: 31.68685
+      normDistance: 0.39608562
+    - position: {x: -10.830538, y: 0.7618317, z: 29.75666}
+      distance: 31.67233
+      normDistance: 0.39590412
+    - position: {x: -10.823349, y: 0.69282526, z: 33.520264}
+      distance: 35.230946
+      normDistance: 0.44038683
+    - position: {x: -10.822881, y: 0.6045675, z: 38.27409}
+      distance: 39.782356
+      normDistance: 0.49727947
+    - position: {x: -10.821288, y: 0.4888283, z: 44.44393}
+      distance: 45.75096
+      normDistance: 0.571887
+    - position: {x: -10.80984, y: 0.33146715, z: 52.75985}
+      distance: 53.865993
+      normDistance: 0.67332494
+    - position: {x: -10.809323, y: 0.102285504, z: 64.776726}
+      distance: 65.68476
+      normDistance: 0.8210595
+    - position: {x: -8.912725, y: 0.028137326, z: 68.92158}
+      distance: 69.508545
+      normDistance: 0.8688568
+    - position: {x: -6.375685, y: 0.027958632, z: 69.21165}
+      distance: 69.51776
+      normDistance: 0.868972
+    - position: {x: -3.8281176, y: 0.028218985, z: 69.38575}
+      distance: 69.50434
+      normDistance: 0.8688043
+    - position: {x: -1.2759216, y: 0.028948903, z: 69.44192}
+      distance: 69.4667
+      normDistance: 0.8683337
+    - position: {x: 1.2767544, y: 0.028071642, z: 69.487144}
+      distance: 69.51194
+      normDistance: 0.8688992
+    - position: {x: 3.827943, y: 0.028280973, z: 69.38256}
+      distance: 69.501144
+      normDistance: 0.8687643
+    - position: {x: 6.3742805, y: 0.028256059, z: 69.19637}
+      distance: 69.50242
+      normDistance: 0.86878026
+    - position: {x: 8.910937, y: 0.028407931, z: 68.907745}
+      distance: 69.49459
+      normDistance: 0.8686824
+    - position: {x: 10.816489, y: 0.101441264, z: 64.819664}
+      distance: 65.7283
+      normDistance: 0.8216038
+    - position: {x: 10.815, y: 0.33096862, z: 52.785027}
+      distance: 53.891697
+      normDistance: 0.6736462
+    - position: {x: 10.817066, y: 0.48917454, z: 44.426594}
+      distance: 45.733112
+      normDistance: 0.5716639
+    - position: {x: 10.829218, y: 0.60411596, z: 38.296494}
+      distance: 39.805645
+      normDistance: 0.49757057
+    - position: {x: 10.831018, y: 0.6923412, z: 33.544014}
+      distance: 35.25591
+      normDistance: 0.44069886
+    - position: {x: 10.817378, y: 0.762578, z: 29.720503}
+      distance: 31.633846
+      normDistance: 0.39542308
+    - position: {x: -27.36161, y: 1.3760008, z: 75.17541}
       distance: 80
       normDistance: 1
-    - position: {x: -36.12267, y: 1.3760008, z: 71.38034}
+    - position: {x: -24.581537, y: 1.3760008, z: 76.12981}
       distance: 80
       normDistance: 1
-    - position: {x: -32.13563, y: 1.3760008, z: 73.26186}
+    - position: {x: -21.768276, y: 1.3760008, z: 76.98144}
       distance: 80
       normDistance: 1
-    - position: {x: -28.051003, y: 1.3760008, z: 74.9209}
+    - position: {x: -18.92563, y: 1.3760008, z: 77.72915}
       distance: 80
       normDistance: 1
-    - position: {x: -23.881184, y: 1.3760008, z: 76.3524}
+    - position: {x: -16.057438, y: 1.3760008, z: 78.371925}
       distance: 80
       normDistance: 1
-    - position: {x: -19.63884, y: 1.3760008, z: 77.552025}
+    - position: {x: -13.167567, y: 1.3760008, z: 78.908905}
       distance: 80
       normDistance: 1
-    - position: {x: -15.336849, y: 1.3760008, z: 78.51612}
+    - position: {x: -10.259922, y: 1.3760008, z: 79.33936}
       distance: 80
       normDistance: 1
-    - position: {x: -10.988284, y: 1.3760008, z: 79.24177}
+    - position: {x: -7.3384233, y: 1.3760008, z: 79.66271}
       distance: 80
       normDistance: 1
-    - position: {x: -6.606346, y: 1.3760008, z: 79.72676}
+    - position: {x: -4.40702, y: 1.3760008, z: 79.878525}
       distance: 80
       normDistance: 1
-    - position: {x: -2.204346, y: 1.3760008, z: 79.96963}
+    - position: {x: -1.4696672, y: 1.3760008, z: 79.9865}
       distance: 80
       normDistance: 1
-    - position: {x: 2.2043488, y: 1.3760008, z: 79.96963}
+    - position: {x: 1.4696693, y: 1.3760008, z: 79.9865}
       distance: 80
       normDistance: 1
-    - position: {x: 6.606349, y: 1.3760008, z: 79.72676}
+    - position: {x: 4.4070215, y: 1.3760008, z: 79.878525}
       distance: 80
       normDistance: 1
-    - position: {x: 10.988287, y: 1.3760008, z: 79.24177}
+    - position: {x: 7.3384256, y: 1.3760008, z: 79.66271}
       distance: 80
       normDistance: 1
-    - position: {x: 15.336853, y: 1.3760008, z: 78.51612}
+    - position: {x: 10.259923, y: 1.3760008, z: 79.33936}
       distance: 80
       normDistance: 1
-    - position: {x: 19.638842, y: 1.3760008, z: 77.552025}
+    - position: {x: 13.167568, y: 1.3760008, z: 78.908905}
       distance: 80
       normDistance: 1
-    - position: {x: 23.881187, y: 1.3760008, z: 76.3524}
+    - position: {x: 16.05744, y: 1.3760008, z: 78.371925}
       distance: 80
       normDistance: 1
-    - position: {x: 28.051004, y: 1.3760008, z: 74.9209}
+    - position: {x: 18.925632, y: 1.3760008, z: 77.72915}
       distance: 80
       normDistance: 1
-    - position: {x: 32.135635, y: 1.3760008, z: 73.26186}
+    - position: {x: 21.76828, y: 1.3760008, z: 76.98144}
       distance: 80
       normDistance: 1
-    - position: {x: 36.122673, y: 1.3760008, z: 71.38034}
+    - position: {x: 24.581537, y: 1.3760008, z: 76.12981}
       distance: 80
       normDistance: 1
-    - position: {x: 40, y: 1.3760008, z: 69.28203}
+    - position: {x: 27.361612, y: 1.3760008, z: 75.17541}
       distance: 80
       normDistance: 1
 --- !u!1 &5655064433379460438
@@ -5796,8 +5796,8 @@ MonoBehaviour:
   displayInGame: 0
   displayGizmos: 1
   gizmoSize: 0.15
-  startAzimuthal: 45
-  endAzimuthal: 135
+  startAzimuthal: 30
+  endAzimuthal: 150
   aRays: 10
   startPolar: 0
   endPolar: 0
@@ -5806,35 +5806,35 @@ MonoBehaviour:
     sensorPos: {x: 0, y: 0.535, z: 0}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: 2.8284273, y: 0.535, z: 2.8284268}
-      distance: 4
+    - position: {x: 2.5, y: 0.535, z: 4.330127}
+      distance: 5
       normDistance: 1
-    - position: {x: 3.2766082, y: 0.535, z: 2.294306}
-      distance: 4
+    - position: {x: 3.4312081, y: 0.535, z: 3.6368682}
+      distance: 5
       normDistance: 1
-    - position: {x: 3.6252313, y: 0.535, z: 1.6904728}
-      distance: 4
+    - position: {x: 4.1774387, y: 0.535, z: 2.7475452}
+      distance: 5
       normDistance: 1
-    - position: {x: 3.8637033, y: 0.535, z: 1.0352762}
-      distance: 4
+    - position: {x: 4.6984634, y: 0.535, z: 1.7101004}
+      distance: 5
       normDistance: 1
-    - position: {x: 3.9847786, y: 0.535, z: 0.34862354}
-      distance: 4
+    - position: {x: 4.966192, y: 0.535, z: 0.58046526}
+      distance: 5
       normDistance: 1
-    - position: {x: 3.984779, y: 0.535, z: -0.3486228}
-      distance: 4
+    - position: {x: 4.966192, y: 0.535, z: -0.5804646}
+      distance: 5
       normDistance: 1
-    - position: {x: 3.8637033, y: 0.535, z: -1.0352759}
-      distance: 4
+    - position: {x: 4.6984634, y: 0.535, z: -1.7101008}
+      distance: 5
       normDistance: 1
-    - position: {x: 3.625231, y: 0.535, z: -1.6904736}
-      distance: 4
+    - position: {x: 4.1774397, y: 0.535, z: -2.7475443}
+      distance: 5
       normDistance: 1
-    - position: {x: 3.2766078, y: 0.535, z: -2.294306}
-      distance: 4
+    - position: {x: 3.4312084, y: 0.535, z: -3.636868}
+      distance: 5
       normDistance: 1
-    - position: {x: 2.8284273, y: 0.535, z: -2.828427}
-      distance: 4
+    - position: {x: 2.5000005, y: 0.535, z: -4.330127}
+      distance: 5
       normDistance: 1
 --- !u!1 &6762041454739164797
 GameObject:
@@ -6461,7 +6461,6 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   maxStep: 0
-  reward: 0
   lidar: {fileID: 7929967620460325}
   sideRadarL: {fileID: 7645663911476851594}
   sideRadarR: {fileID: 3579364212488512705}

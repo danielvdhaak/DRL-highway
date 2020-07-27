@@ -15,7 +15,6 @@ using MLAgents.Sensors;
 public class VehicleAgent : Agent
 {
     [Header("ML-Agents")]
-    [SerializeField] private float reward;
     private EnvironmentManager environment;
     private VehicleControl control;
     private Transform Target;
@@ -59,8 +58,8 @@ public class VehicleAgent : Agent
     public override void OnEpisodeBegin()
     {
         Target = GameObject.FindGameObjectWithTag("Target").transform;
-        float episodeLength = Academy.Instance.FloatProperties.GetPropertyWithDefault("episode_length", 6000f);
-        Target.localPosition = new Vector3(0f, 0.5f, episodeLength);
+        //float episodeLength = Academy.Instance.FloatProperties.GetPropertyWithDefault("episode_length", 6000f);
+        //Target.localPosition = new Vector3(0f, 0.5f, episodeLength);
 
         int startLane = randomNumber.Next(2, 4);
         int startPos = randomNumber.Next(1, 1);
@@ -81,8 +80,6 @@ public class VehicleAgent : Agent
 
     private void FixedUpdate()
     {
-        reward = GetCumulativeReward();
-
         // Only request a new decision if agent is not performing a lane change
         //if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
         //    RequestDecision();
@@ -147,7 +144,8 @@ public class VehicleAgent : Agent
         var lateralAction = Mathf.FloorToInt(vectorAction[0]);
         var longiAction = Mathf.FloorToInt(vectorAction[1]);
 
-        float normSpeed;
+        float normSpeed = (control.velocity - 80f) / (targetVelocity - 80f);
+        AddReward(0.1f * normSpeed);
         switch (lateralAction)
         {
             //case k_DoNothing:
@@ -164,8 +162,9 @@ public class VehicleAgent : Agent
                     control._TrackingMode = VehicleControl.TrackingMode.leftLaneChange;
                     if (targetLane != 1)
                         targetLane--;
+                    //AddReward(-0.05f);
                 }
-                SetReward(-0.05f);
+                AddReward(-0.02f);
                 break;
             case k_RightLaneChange:
                 if (control._TrackingMode != VehicleControl.TrackingMode.rightLaneChange)
@@ -173,12 +172,13 @@ public class VehicleAgent : Agent
                     control._TrackingMode = VehicleControl.TrackingMode.rightLaneChange;
                     if (targetLane != laneCenters.Count)
                         targetLane++;
+                    //AddReward(-0.05f);
                 }
-                SetReward(-0.05f);
+                AddReward(-0.02f);
                 break;
             default:
-                normSpeed = control.velocity / targetVelocity;
-                SetReward(0.1f * normSpeed);
+                //normSpeed = control.velocity / targetVelocity;
+                //AddReward(0.1f * normSpeed);
                 //throw new ArgumentException("Invalid action value");
                 break;
         }
@@ -204,8 +204,14 @@ public class VehicleAgent : Agent
                 break;
         }
 
+        // Penalty for tailgating
         if (control.headway < 0.9f)
-            SetReward(-0.005f * control.headway);
+            AddReward(-0.03f * (1 - control.headway));
+
+        // Penalty for driving on the left
+        if (control.currentLane <= Mathf.CeilToInt(laneCenters.Count / 3))
+            AddReward(-0.02f);
+
     }
 
 

@@ -108,7 +108,7 @@ public class SimpleVehicle : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Target") || other.gameObject.CompareTag("Finish"))
+        if (other.gameObject.CompareTag("Finish"))
         {
             environment.Despawn(gameObject);
             environment.Spawn(new Vector3(laneCenters[targetLane - 1], 0f, 0f), targetLane, targetVelocity);
