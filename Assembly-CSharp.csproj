@@ -105,8 +105,8 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="MacBLAS">
-      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/MacBLAS.dll</HintPath>
+    <Reference Include="Unity.Barracuda.MacBLAS">
+      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Barracuda.MacBLAS.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
@@ -114,8 +114,8 @@
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Barracuda-editor">
-      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Barracuda-editor.dll</HintPath>
+    <Reference Include="Unity.Barracuda.Editor">
+      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Barracuda.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Editor">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
@@ -129,20 +129,20 @@
     <Reference Include="Unity.Timeline">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
-    <Reference Include="Barracuda">
-      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Barracuda.dll</HintPath>
+    <Reference Include="Unity.Barracuda">
+      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Barracuda.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="iOSBLAS">
-      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/iOSBLAS.dll</HintPath>
+    <Reference Include="Unity.Barracuda.iOSBLAS">
+      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Barracuda.iOSBLAS.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="BurstBLAS">
-      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/BurstBLAS.dll</HintPath>
+    <Reference Include="Unity.Barracuda.BurstBLAS">
+      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Barracuda.BurstBLAS.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
@@ -334,10 +334,10 @@
       <HintPath>D:/Program Files/Unity/2019.3.5f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="Google.Protobuf">
-      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.barracuda@0.6.1-preview/Barracuda/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
+      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.barracuda@1.0.1/Barracuda/Runtime/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.burst@1.1.1/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.burst@1.2.3/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Abstractions">
       <HintPath>D:/GitHub/ml-agents/com.unity.ml-agents/Plugins/System.IO.Abstractions.dll</HintPath>

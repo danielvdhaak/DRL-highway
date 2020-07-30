@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using MLAgents;
+using Unity.MLAgents;
 
 public class EnvironmentManager : MonoBehaviour
 {
@@ -46,7 +46,7 @@ public class EnvironmentManager : MonoBehaviour
     [Header("Environment parameters")]
     private int numberOfLanes;
     public float laneWidth = 3.5f;
-    [SerializeField] private int trafficFlow = 6000;
+    [SerializeField] private int trafficFlow = 4000;
     private int density;
     [SerializeField] private float minHeadway = 1f;
 
@@ -106,7 +106,7 @@ public class EnvironmentManager : MonoBehaviour
         DespawnAll();
 
         // Set traffic flow from curriculum
-        trafficFlow = (int)Academy.Instance.FloatProperties.GetPropertyWithDefault("traffic_flow", 6000f);
+        trafficFlow = (int)Academy.Instance.EnvironmentParameters.GetWithDefault("traffic_flow", 6000f);
 
         // For each lane
         density = 0;

@@ -585,13 +585,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRange: 7
+  maxRange: 10
   noise: 0.2
   displayInGame: 0
   displayGizmos: 1
   gizmoSize: 0.15
-  startAzimuthal: -150
-  endAzimuthal: -170
+  startAzimuthal: -155
+  endAzimuthal: -175
   aRays: 4
   startPolar: 0
   endPolar: 0
@@ -600,20 +600,20 @@ MonoBehaviour:
     sensorPos: {x: -0.862, y: 0.535, z: -1.948}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: -4.362001, y: 0.535, z: -8.010178}
-      distance: 7
+    - position: {x: -5.0881834, y: 0.535, z: -11.011078}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: -3.6345577, y: 0.535, z: -8.375513}
-      distance: 7
+    - position: {x: -4.0074472, y: 0.535, z: -11.440427}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: -2.869623, y: 0.535, z: -8.653927}
-      distance: 7
+    - position: {x: -2.884176, y: 0.535, z: -11.741406}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: -2.077538, y: 0.535, z: -8.841654}
-      distance: 7
+    - position: {x: -1.7335588, y: 0.535, z: -11.909947}
+      distance: 10
       normDistance: 1
       isHit: 0
 --- !u!1 &726254036883294255
@@ -3105,13 +3105,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRange: 7
+  maxRange: 10
   noise: 0.2
   displayInGame: 0
   displayGizmos: 1
   gizmoSize: 0.15
-  startAzimuthal: 150
-  endAzimuthal: 170
+  startAzimuthal: 155
+  endAzimuthal: 175
   aRays: 4
   startPolar: 0
   endPolar: 0
@@ -3120,20 +3120,20 @@ MonoBehaviour:
     sensorPos: {x: 0.862, y: 0.535, z: -1.948}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: 4.362001, y: 0.535, z: -8.010178}
-      distance: 7
+    - position: {x: 5.0881834, y: 0.535, z: -11.011078}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: 3.6345577, y: 0.535, z: -8.375513}
-      distance: 7
+    - position: {x: 4.0074472, y: 0.535, z: -11.440427}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: 2.869623, y: 0.535, z: -8.653927}
-      distance: 7
+    - position: {x: 2.884176, y: 0.535, z: -11.741406}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: 2.077538, y: 0.535, z: -8.841654}
-      distance: 7
+    - position: {x: 1.7335588, y: 0.535, z: -11.909947}
+      distance: 10
       normDistance: 1
       isHit: 0
 --- !u!1 &4296442360196899414
@@ -6654,7 +6654,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  maxStep: 0
+  MaxStep: 5000
   lidar: {fileID: 7929967620460325}
   sideRadarL: {fileID: 7645663911476851594}
   sideRadarR: {fileID: 3579364212488512705}
@@ -6662,6 +6662,7 @@ MonoBehaviour:
   frontRadarR: {fileID: 407669904420991928}
   backRadarL: {fileID: 1058251311399037826}
   backRadarR: {fileID: 5656388863190761725}
+  maskHeuristic: 1
   targetLane: 3
   targetVelocity: 120
   minVelocity: 80
@@ -6680,17 +6681,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 27
-    numStackedVectorObservations: 1
-    vectorActionSize: 04000000
-    vectorActionDescriptions: []
-    vectorActionSpaceType: 0
+    VectorObservationSize: 27
+    NumStackedVectorObservations: 1
+    VectorActionSize: 04000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 0
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: HighwayAI
   TeamId: 0
   m_UseChildSensors: 1
+  m_ObservableAttributeHandling: 0
 --- !u!114 &6918137807124011795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7077,13 +7079,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRange: 7
+  maxRange: 10
   noise: 0.2
   displayInGame: 0
   displayGizmos: 1
   gizmoSize: 0.15
-  startAzimuthal: 10
-  endAzimuthal: 30
+  startAzimuthal: 5
+  endAzimuthal: 25
   aRays: 4
   startPolar: 0
   endPolar: 0
@@ -7092,20 +7094,20 @@ MonoBehaviour:
     sensorPos: {x: 0.862, y: 0.535, z: 1.948}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: 2.077537, y: 0.535, z: 8.841654}
-      distance: 7
+    - position: {x: 1.7335575, y: 0.535, z: 11.909947}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: 2.8696225, y: 0.535, z: 8.653927}
-      distance: 7
+    - position: {x: 2.8841755, y: 0.535, z: 11.741406}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: 3.6345582, y: 0.535, z: 8.375513}
-      distance: 7
+    - position: {x: 4.0074472, y: 0.535, z: 11.440427}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: 4.362, y: 0.535, z: 8.010178}
-      distance: 7
+    - position: {x: 5.088183, y: 0.535, z: 11.011078}
+      distance: 10
       normDistance: 1
       isHit: 0
 --- !u!1 &7912874899316415452
@@ -7309,13 +7311,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRange: 7
+  maxRange: 10
   noise: 0.2
   displayInGame: 0
   displayGizmos: 1
   gizmoSize: 0.15
-  startAzimuthal: -10
-  endAzimuthal: -30
+  startAzimuthal: -5
+  endAzimuthal: -25
   aRays: 4
   startPolar: 0
   endPolar: 0
@@ -7324,20 +7326,20 @@ MonoBehaviour:
     sensorPos: {x: -0.862, y: 0.535, z: 1.948}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: -2.077537, y: 0.535, z: 8.841654}
-      distance: 7
+    - position: {x: -1.7335575, y: 0.535, z: 11.909947}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: -2.8696225, y: 0.535, z: 8.653927}
-      distance: 7
+    - position: {x: -2.8841755, y: 0.535, z: 11.741406}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: -3.6345582, y: 0.535, z: 8.375513}
-      distance: 7
+    - position: {x: -4.0074472, y: 0.535, z: 11.440427}
+      distance: 10
       normDistance: 1
       isHit: 0
-    - position: {x: -4.362, y: 0.535, z: 8.010178}
-      distance: 7
+    - position: {x: -5.088183, y: 0.535, z: 11.011078}
+      distance: 10
       normDistance: 1
       isHit: 0
 --- !u!1 &8484976837222141208

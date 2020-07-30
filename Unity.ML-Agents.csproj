@@ -68,12 +68,15 @@
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Communicator\GrpcExtensions.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Communicator\ICommunicator.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Communicator\RpcCommunicator.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Communicator\UnityRLCapabilities.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Constants.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\DecisionRequester.cs" />
-    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Demonstrations\Demonstration.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Demonstrations\DemonstrationMetaData.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Demonstrations\DemonstrationRecorder.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Demonstrations\DemonstrationSummary.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Demonstrations\DemonstrationWriter.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\DiscreteActionMasker.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\EnvironmentParameters.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\EpisodeIdCounter.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Inference\ApplierImpl.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Inference\BarracudaModelParamLoader.cs" />
@@ -91,33 +94,48 @@
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Policies\HeuristicPolicy.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Policies\IPolicy.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Policies\RemotePolicy.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sampler.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\CameraSensor.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\CameraSensorComponent.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\ISensor.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\Observation.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\ObservationWriter.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\RayPerceptionSensor.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\RayPerceptionSensorComponent2D.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\RayPerceptionSensorComponent3D.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\RayPerceptionSensorComponentBase.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\Reflection\BoolReflectionSensor.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\Reflection\EnumReflectionSensor.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\Reflection\FloatReflectionSensor.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\Reflection\IntReflectionSensor.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\Reflection\ObservableAttribute.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\Reflection\QuaternionReflectionSensor.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\Reflection\ReflectionSensorBase.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\Reflection\Vector2ReflectionSensor.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\Reflection\Vector3ReflectionSensor.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\Reflection\Vector4ReflectionSensor.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\RenderTextureSensor.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\RenderTextureSensorComponent.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\SensorComponent.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\SensorShapeValidator.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\StackingSensor.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\VectorSensor.cs" />
-    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Sensors\WriteAdapter.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\SideChannels\EngineConfigurationChannel.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\SideChannels\EnvironmentParametersChannel.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\SideChannels\FloatPropertiesChannel.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\SideChannels\IncomingMessage.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\SideChannels\OutgoingMessage.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\SideChannels\RawBytesChannel.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\SideChannels\SideChannel.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\SideChannels\SideChannelManager.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\SideChannels\StatsSideChannel.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\StatsRecorder.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Timer.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\UnityAgentsException.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Utilities.cs" />
     <None Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Unity.ML-Agents.asmdef" />
-    <Reference Include="Barracuda">
-      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Barracuda.dll</HintPath>
+    <Reference Include="Unity.Barracuda">
+      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Barracuda.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
@@ -315,10 +333,10 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Google.Protobuf">
-      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.barracuda@0.6.1-preview/Barracuda/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
+      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.barracuda@1.0.1/Barracuda/Runtime/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.burst@1.1.1/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.burst@1.2.3/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Abstractions">
       <HintPath>D:/GitHub/ml-agents/com.unity.ml-agents/Plugins/System.IO.Abstractions.dll</HintPath>

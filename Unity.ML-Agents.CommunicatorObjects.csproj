@@ -67,6 +67,7 @@
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Grpc\CommunicatorObjects\AgentInfo.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Grpc\CommunicatorObjects\AgentInfoActionPair.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Grpc\CommunicatorObjects\BrainParameters.cs" />
+    <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Grpc\CommunicatorObjects\Capabilities.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Grpc\CommunicatorObjects\Command.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Grpc\CommunicatorObjects\CustomResetParameters.cs" />
     <Compile Include="D:\GitHub\ml-agents\com.unity.ml-agents\Runtime\Grpc\CommunicatorObjects\DemonstrationMeta.cs" />
@@ -280,10 +281,10 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Google.Protobuf">
-      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.barracuda@0.6.1-preview/Barracuda/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
+      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.barracuda@1.0.1/Barracuda/Runtime/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.burst@1.1.1/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/GitHub/DRL-highway/Library/PackageCache/com.unity.burst@1.2.3/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Abstractions">
       <HintPath>D:/GitHub/ml-agents/com.unity.ml-agents/Plugins/System.IO.Abstractions.dll</HintPath>
