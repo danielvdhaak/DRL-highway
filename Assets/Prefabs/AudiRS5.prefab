@@ -585,14 +585,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRange: 45
+  maxRange: 7
   noise: 0.2
   displayInGame: 0
   displayGizmos: 1
   gizmoSize: 0.15
-  startAzimuthal: -140
+  startAzimuthal: -150
   endAzimuthal: -170
-  aRays: 10
+  aRays: 4
   startPolar: 0
   endPolar: 0
   pRays: 1
@@ -600,36 +600,22 @@ MonoBehaviour:
     sensorPos: {x: -0.862, y: 0.535, z: -1.948}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: -10.848551, y: 0.535, z: -13.849506}
-      distance: 15.536313
-      normDistance: 0.3452514
-    - position: {x: -10.841316, y: 0.535, z: -15.352542}
-      distance: 16.711329
-      normDistance: 0.37136286
-    - position: {x: -10.844786, y: 0.535, z: -17.126091}
-      distance: 18.166739
-      normDistance: 0.4037053
-    - position: {x: -10.832279, y: 0.535, z: -19.217028}
-      distance: 19.940556
-      normDistance: 0.44312346
-    - position: {x: -10.818199, y: 0.535, z: -21.772413}
-      distance: 22.184078
-      normDistance: 0.49297953
-    - position: {x: -10.81683, y: 0.535, z: -25.025892}
-      distance: 25.1334
-      normDistance: 0.55852
-    - position: {x: -10.821478, y: 0.535, z: -29.311432}
-      distance: 29.119556
-      normDistance: 0.6471013
-    - position: {x: -10.824911, y: 0.535, z: -35.22644}
-      distance: 34.73779
-      normDistance: 0.77195084
-    - position: {x: -10.8094635, y: 0.535, z: -43.919662}
-      distance: 43.134354
-      normDistance: 0.9585412
-    - position: {x: -8.676172, y: 0.535, z: -46.26435}
-      distance: 45
+    - position: {x: -4.362001, y: 0.535, z: -8.010178}
+      distance: 7
       normDistance: 1
+      isHit: 0
+    - position: {x: -3.6345577, y: 0.535, z: -8.375513}
+      distance: 7
+      normDistance: 1
+      isHit: 0
+    - position: {x: -2.869623, y: 0.535, z: -8.653927}
+      distance: 7
+      normDistance: 1
+      isHit: 0
+    - position: {x: -2.077538, y: 0.535, z: -8.841654}
+      distance: 7
+      normDistance: 1
+      isHit: 0
 --- !u!1 &726254036883294255
 GameObject:
   m_ObjectHideFlags: 0
@@ -2170,33 +2156,43 @@ MonoBehaviour:
     - position: {x: -2.5, y: 0.535, z: 4.330127}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: -3.4312081, y: 0.535, z: 3.6368682}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: -4.1774387, y: 0.535, z: 2.7475452}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: -4.6984634, y: 0.535, z: 1.7101004}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: -4.966192, y: 0.535, z: 0.58046526}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: -4.966192, y: 0.535, z: -0.5804646}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: -4.6984634, y: 0.535, z: -1.7101008}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: -4.1774397, y: 0.535, z: -2.7475443}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: -3.4312084, y: 0.535, z: -3.636868}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: -2.5000005, y: 0.535, z: -4.330127}
       distance: 5
       normDistance: 1
+      isHit: 0
 --- !u!1 &3183736135327799725
 GameObject:
   m_ObjectHideFlags: 0
@@ -3109,14 +3105,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRange: 45
+  maxRange: 7
   noise: 0.2
   displayInGame: 0
   displayGizmos: 1
   gizmoSize: 0.15
-  startAzimuthal: 140
+  startAzimuthal: 150
   endAzimuthal: 170
-  aRays: 10
+  aRays: 4
   startPolar: 0
   endPolar: 0
   pRays: 1
@@ -3124,36 +3120,22 @@ MonoBehaviour:
     sensorPos: {x: 0.862, y: 0.535, z: -1.948}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: 10.838524, y: 0.535, z: -13.837557}
-      distance: 15.520715
-      normDistance: 0.34490478
-    - position: {x: 10.824617, y: 0.535, z: -15.330111}
-      distance: 16.683363
-      normDistance: 0.3707414
-    - position: {x: 10.836185, y: 0.535, z: -17.113014}
-      distance: 18.151089
-      normDistance: 0.40335754
-    - position: {x: 10.831303, y: 0.535, z: -19.215336}
-      distance: 19.938602
-      normDistance: 0.44308007
-    - position: {x: 10.837105, y: 0.535, z: -21.810057}
-      distance: 22.226202
-      normDistance: 0.4939156
-    - position: {x: 10.817432, y: 0.535, z: -25.02729}
-      distance: 25.134922
-      normDistance: 0.5585538
-    - position: {x: 10.82979, y: 0.535, z: -29.334269}
-      distance: 29.143858
-      normDistance: 0.6476413
-    - position: {x: 10.828196, y: 0.535, z: -35.23741}
-      distance: 34.74924
-      normDistance: 0.77220535
-    - position: {x: 10.810127, y: 0.535, z: -43.922462}
-      distance: 43.13723
-      normDistance: 0.9586051
-    - position: {x: 8.676172, y: 0.535, z: -46.26435}
-      distance: 45
+    - position: {x: 4.362001, y: 0.535, z: -8.010178}
+      distance: 7
       normDistance: 1
+      isHit: 0
+    - position: {x: 3.6345577, y: 0.535, z: -8.375513}
+      distance: 7
+      normDistance: 1
+      isHit: 0
+    - position: {x: 2.869623, y: 0.535, z: -8.653927}
+      distance: 7
+      normDistance: 1
+      isHit: 0
+    - position: {x: 2.077538, y: 0.535, z: -8.841654}
+      distance: 7
+      normDistance: 1
+      isHit: 0
 --- !u!1 &4296442360196899414
 GameObject:
   m_ObjectHideFlags: 0
@@ -3186,6 +3168,8 @@ Transform:
   - {fileID: 1527918421725542603}
   - {fileID: 2023374825168730710}
   - {fileID: 2772596775276787526}
+  - {fileID: 7473550989695177693}
+  - {fileID: 5566543124845789684}
   m_Father: {fileID: 6659627004403888616}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4013,7 +3997,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4722830704004413254
 Transform:
   m_ObjectHideFlags: 0
@@ -4055,606 +4039,806 @@ MonoBehaviour:
     sensorPos: {x: 0, y: 1.376, z: 0}
     sensorRotation: {x: -0, y: 0, z: 0}
     sensorPoints:
-    - position: {x: -2.6306138, y: 0.019798875, z: 7.2275515}
-      distance: 7.810052
-      normDistance: 0.09762565
-    - position: {x: -2.3613153, y: 0.020954967, z: 7.31307}
-      distance: 7.803393
-      normDistance: 0.09754241
-    - position: {x: -2.0927281, y: 0.019881845, z: 7.4007344}
-      distance: 7.809573
-      normDistance: 0.09761967
-    - position: {x: -1.8261235, y: 0.0149047375, z: 7.500041}
-      distance: 7.838235
-      normDistance: 0.097977936
-    - position: {x: -1.5520042, y: 0.012593627, z: 7.574904}
-      distance: 7.8515453
-      normDistance: 0.098144315
-    - position: {x: -1.2687665, y: 0.016795278, z: 7.6033006}
-      distance: 7.8273487
-      normDistance: 0.09784186
-    - position: {x: -0.9896233, y: 0.015386939, z: 7.6526985}
-      distance: 7.8354588
-      normDistance: 0.09794323
-    - position: {x: -0.7100354, y: 0.011146903, z: 7.7078323}
-      distance: 7.859876
-      normDistance: 0.09824845
-    - position: {x: -0.4255498, y: 0.013883829, z: 7.7132144}
-      distance: 7.8441143
-      normDistance: 0.09805143
-    - position: {x: -0.14215758, y: 0.011543512, z: 7.7369123}
-      distance: 7.8575926
-      normDistance: 0.09821991
-    - position: {x: 0.14102468, y: 0.022419333, z: 7.675243}
-      distance: 7.7949615
-      normDistance: 0.09743702
-    - position: {x: 0.42306128, y: 0.02184987, z: 7.668106}
-      distance: 7.79824
-      normDistance: 0.097478
-    - position: {x: 0.7077321, y: 0.015574813, z: 7.682826}
-      distance: 7.834377
-      normDistance: 0.09792971
-    - position: {x: 0.9913377, y: 0.013029933, z: 7.665955}
-      distance: 7.849032
-      normDistance: 0.098112896
-    - position: {x: 1.2648158, y: 0.021027684, z: 7.5796247}
-      distance: 7.802975
-      normDistance: 0.09753719
-    - position: {x: 1.5452176, y: 0.018555641, z: 7.541779}
-      distance: 7.817211
-      normDistance: 0.09771514
-    - position: {x: 1.8235507, y: 0.016822696, z: 7.4894743}
-      distance: 7.8271914
-      normDistance: 0.09783989
-    - position: {x: 2.094207, y: 0.018923521, z: 7.4059644}
-      distance: 7.815092
-      normDistance: 0.09768865
-    - position: {x: 2.3638654, y: 0.019491553, z: 7.320967}
-      distance: 7.81182
-      normDistance: 0.09764775
-    - position: {x: 2.630214, y: 0.020005107, z: 7.2264524}
-      distance: 7.808864
-      normDistance: 0.0976108
-    - position: {x: -2.9685946, y: 0.018536925, z: 8.156147}
-      distance: 8.785101
-      normDistance: 0.109813765
-    - position: {x: -2.676201, y: 0.013838649, z: 8.2882805}
-      distance: 8.815505
-      normDistance: 0.11019381
-    - position: {x: -2.3606591, y: 0.01916182, z: 8.348247}
-      distance: 8.781055
-      normDistance: 0.10976319
-    - position: {x: -2.0544758, y: 0.017782092, z: 8.437903}
-      distance: 8.789985
-      normDistance: 0.10987481
-    - position: {x: -1.74951, y: 0.012801647, z: 8.538877}
-      distance: 8.822217
-      normDistance: 0.11027771
-    - position: {x: -1.4284002, y: 0.018739581, z: 8.559934}
-      distance: 8.783789
-      normDistance: 0.10979736
-    - position: {x: -1.116206, y: 0.014808536, z: 8.631556}
-      distance: 8.809229
-      normDistance: 0.110115364
-    - position: {x: -0.79888725, y: 0.013923407, z: 8.67237}
-      distance: 8.814958
-      normDistance: 0.11018697
-    - position: {x: -0.47853613, y: 0.017409682, z: 8.673607}
-      distance: 8.792396
-      normDistance: 0.109904945
-    - position: {x: -0.15902953, y: 0.022127986, z: 8.655168}
-      distance: 8.76186
-      normDistance: 0.10952325
-    - position: {x: 0.15890126, y: 0.02322197, z: 8.648174}
-      distance: 8.75478
-      normDistance: 0.109434746
-    - position: {x: 0.47869605, y: 0.01695621, z: 8.676501}
-      distance: 8.79533
-      normDistance: 0.109941624
-    - position: {x: 0.79901123, y: 0.013712406, z: 8.673714}
-      distance: 8.816323
-      normDistance: 0.11020404
-    - position: {x: 1.1124924, y: 0.019337416, z: 8.602838}
-      distance: 8.77992
-      normDistance: 0.109749
-    - position: {x: 1.4272002, y: 0.019879818, z: 8.552742}
-      distance: 8.776409
-      normDistance: 0.10970511
-    - position: {x: 1.7385972, y: 0.021305084, z: 8.485613}
-      distance: 8.767185
-      normDistance: 0.109589815
-    - position: {x: 2.0541697, y: 0.017984629, z: 8.4366455}
-      distance: 8.788674
-      normDistance: 0.10985843
-    - position: {x: 2.3705223, y: 0.013492823, z: 8.383125}
-      distance: 8.817743
-      normDistance: 0.11022179
-    - position: {x: 2.675529, y: 0.014180899, z: 8.286199}
-      distance: 8.813291
-      normDistance: 0.11016613
-    - position: {x: 2.9693747, y: 0.01818037, z: 8.15829}
-      distance: 8.787409
-      normDistance: 0.10984261
-    - position: {x: -3.3985083, y: 0.01878488, z: 9.337324}
-      distance: 10.028834
-      normDistance: 0.12536043
-    - position: {x: -3.0414197, y: 0.024022698, z: 9.419374}
-      distance: 9.990129
-      normDistance: 0.12487662
-    - position: {x: -2.7024994, y: 0.01942563, z: 9.557131}
-      distance: 10.024098
-      normDistance: 0.12530123
-    - position: {x: -2.3485806, y: 0.020007968, z: 9.645815}
-      distance: 10.019795
-      normDistance: 0.12524745
-    - position: {x: -1.9938214, y: 0.01921177, z: 9.731291}
-      distance: 10.025679
-      normDistance: 0.12532099
-    - position: {x: -1.6293694, y: 0.023877501, z: 9.764275}
-      distance: 9.991203
-      normDistance: 0.124890044
-    - position: {x: -1.2754158, y: 0.017655611, z: 9.862715}
-      distance: 10.037177
-      normDistance: 0.12546471
-    - position: {x: -0.9108714, y: 0.019698143, z: 9.8880205}
-      distance: 10.022085
-      normDistance: 0.12527606
-    - position: {x: -0.5462763, y: 0.021529794, z: 9.901417}
-      distance: 10.00855
-      normDistance: 0.12510687
-    - position: {x: -0.18252312, y: 0.01893425, z: 9.933803}
-      distance: 10.02773
-      normDistance: 0.12534663
-    - position: {x: 0.18260966, y: 0.018292665, z: 9.9384985}
-      distance: 10.032471
-      normDistance: 0.12540588
-    - position: {x: 0.54874074, y: 0.01541996, z: 9.946082}
-      distance: 10.053698
-      normDistance: 0.12567122
-    - position: {x: 0.9085742, y: 0.023119092, z: 9.86308}
-      distance: 9.996807
-      normDistance: 0.12496009
-    - position: {x: 1.2742199, y: 0.018929482, z: 9.853466}
-      distance: 10.027764
-      normDistance: 0.12534705
-    - position: {x: 1.6327765, y: 0.021050215, z: 9.784692}
-      distance: 10.0120945
-      normDistance: 0.12515119
-    - position: {x: 1.9949943, y: 0.018413782, z: 9.737015}
-      distance: 10.031575
-      normDistance: 0.12539469
-    - position: {x: 2.3568928, y: 0.015209079, z: 9.679954}
-      distance: 10.055258
-      normDistance: 0.12569073
-    - position: {x: 2.706457, y: 0.017439246, z: 9.571125}
-      distance: 10.038776
-      normDistance: 0.1254847
-    - position: {x: 3.0504622, y: 0.02000308, z: 9.44738}
-      distance: 10.019832
-      normDistance: 0.1252479
-    - position: {x: 3.3874586, y: 0.02319777, z: 9.306965}
-      distance: 9.996226
-      normDistance: 0.12495283
-    - position: {x: -3.9666748, y: 0.020414114, z: 10.898349}
-      distance: 11.676734
-      normDistance: 0.14595917
-    - position: {x: -3.5593605, y: 0.022042155, z: 11.023454}
-      distance: 11.662709
-      normDistance: 0.14578387
-    - position: {x: -3.1530433, y: 0.021596432, z: 11.150438}
-      distance: 11.666549
-      normDistance: 0.14583185
-    - position: {x: -2.741845, y: 0.021326184, z: 11.260985}
-      distance: 11.668876
-      normDistance: 0.14586094
-    - position: {x: -2.3298936, y: 0.019243121, z: 11.371569}
-      distance: 11.68682
-      normDistance: 0.14608525
-    - position: {x: -1.9119033, y: 0.01830411, z: 11.457407}
-      distance: 11.694909
-      normDistance: 0.14618637
-    - position: {x: -1.4852998, y: 0.022331476, z: 11.485735}
-      distance: 11.660216
-      normDistance: 0.1457527
-    - position: {x: -1.0629361, y: 0.02160132, z: 11.538767}
-      distance: 11.666507
-      normDistance: 0.14583133
-    - position: {x: -0.64020944, y: 0.017626524, z: 11.603981}
-      distance: 11.700745
-      normDistance: 0.14625931
-    - position: {x: -0.21309425, y: 0.020202398, z: 11.597633}
-      distance: 11.678557
-      normDistance: 0.14598197
-    - position: {x: 0.21335733, y: 0.018530488, z: 11.611935}
-      distance: 11.692959
-      normDistance: 0.14616199
-    - position: {x: 0.638551, y: 0.02114582, z: 11.573917}
-      distance: 11.67043
-      normDistance: 0.14588037
-    - position: {x: 1.0644163, y: 0.019715548, z: 11.554832}
-      distance: 11.68275
-      normDistance: 0.14603437
-    - position: {x: 1.4850329, y: 0.022574902, z: 11.483669}
-      distance: 11.658119
-      normDistance: 0.14572649
-    - position: {x: 1.9035016, y: 0.024270415, z: 11.407059}
-      distance: 11.643517
-      normDistance: 0.14554396
-    - position: {x: 2.327136, y: 0.020849109, z: 11.358108}
-      distance: 11.672986
-      normDistance: 0.14591232
-    - position: {x: 2.7392893, y: 0.022589207, z: 11.250488}
-      distance: 11.657998
-      normDistance: 0.14572498
-    - position: {x: 3.1615334, y: 0.017949581, z: 11.180462}
-      distance: 11.697962
-      normDistance: 0.14622453
-    - position: {x: 3.55605, y: 0.023301482, z: 11.013202}
-      distance: 11.651862
-      normDistance: 0.14564827
-    - position: {x: 3.9710944, y: 0.018903852, z: 10.91049}
-      distance: 11.689743
-      normDistance: 0.14612179
-    - position: {x: -4.750928, y: 0.024874687, z: 13.053069}
-      distance: 13.956342
-      normDistance: 0.17445427
-    - position: {x: -4.2695475, y: 0.024451375, z: 13.222926}
-      distance: 13.960712
-      normDistance: 0.1745089
-    - position: {x: -3.783886, y: 0.023389101, z: 13.381353}
-      distance: 13.971684
-      normDistance: 0.17464605
-    - position: {x: -3.2864623, y: 0.024745584, z: 13.497775}
-      distance: 13.957673
-      normDistance: 0.17447092
-    - position: {x: -2.7923343, y: 0.022837281, z: 13.628613}
-      distance: 13.977385
-      normDistance: 0.1747173
-    - position: {x: -2.2864552, y: 0.024811387, z: 13.701974}
-      distance: 13.956994
-      normDistance: 0.17446242
-    - position: {x: -1.7816082, y: 0.024776816, z: 13.777071}
-      distance: 13.95735
-      normDistance: 0.17446688
-    - position: {x: -1.2792444, y: 0.019531608, z: 13.886918}
-      distance: 14.01153
-      normDistance: 0.17514412
-    - position: {x: -0.7676565, y: 0.020558596, z: 13.913998}
-      distance: 14.000923
-      normDistance: 0.17501155
-    - position: {x: -0.25488994, y: 0.02643907, z: 13.87236}
-      distance: 13.940182
-      normDistance: 0.17425227
-    - position: {x: 0.2561114, y: 0.019973636, z: 13.938819}
-      distance: 14.006966
-      normDistance: 0.17508706
-    - position: {x: 0.76607716, y: 0.023347735, z: 13.885366}
-      distance: 13.972113
-      normDistance: 0.17465141
-    - position: {x: 1.2787997, y: 0.020003796, z: 13.882085}
-      distance: 14.006653
-      normDistance: 0.17508316
-    - position: {x: 1.7821517, y: 0.024364829, z: 13.781272}
-      distance: 13.961606
-      normDistance: 0.17452008
-    - position: {x: 2.2914789, y: 0.021842718, z: 13.732078}
-      distance: 13.9876585
-      normDistance: 0.17484573
-    - position: {x: 2.7911983, y: 0.023388028, z: 13.623067}
-      distance: 13.971696
-      normDistance: 0.1746462
-    - position: {x: 3.2945292, y: 0.021429062, z: 13.530906}
-      distance: 13.991933
-      normDistance: 0.17489916
-    - position: {x: 3.7916474, y: 0.020614862, z: 13.4088}
-      distance: 14.000341
-      normDistance: 0.17500427
-    - position: {x: 4.2816377, y: 0.020624042, z: 13.26037}
-      distance: 14.000246
-      normDistance: 0.17500308
-    - position: {x: 4.7586975, y: 0.022665262, z: 13.074414}
-      distance: 13.979164
-      normDistance: 0.17473955
-    - position: {x: -5.942751, y: 0.02547419, z: 16.327574}
-      distance: 17.427847
-      normDistance: 0.21784809
-    - position: {x: -5.334057, y: 0.026708603, z: 16.519745}
-      distance: 17.411913
-      normDistance: 0.21764891
-    - position: {x: -4.7393956, y: 0.02219522, z: 16.760422}
-      distance: 17.470158
-      normDistance: 0.21837696
-    - position: {x: -4.1195006, y: 0.022521734, z: 16.919132}
-      distance: 17.465944
-      normDistance: 0.2183243
-    - position: {x: -3.489453, y: 0.024742126, z: 17.031057}
-      distance: 17.43729
-      normDistance: 0.21796612
-    - position: {x: -2.8592496, y: 0.025782824, z: 17.134544}
-      distance: 17.423862
-      normDistance: 0.21779828
-    - position: {x: -2.2315497, y: 0.02355504, z: 17.256441}
-      distance: 17.452612
-      normDistance: 0.21815765
-    - position: {x: -1.5955429, y: 0.024043202, z: 17.320515}
-      distance: 17.446312
-      normDistance: 0.2180789
-    - position: {x: -0.95867366, y: 0.023357987, z: 17.376238}
-      distance: 17.455153
-      normDistance: 0.2181894
-    - position: {x: -0.32006916, y: 0.021802783, z: 17.419733}
-      distance: 17.475222
-      normDistance: 0.21844026
-    - position: {x: 0.31901485, y: 0.026265502, z: 17.362326}
-      distance: 17.417633
-      normDistance: 0.21772042
-    - position: {x: 0.95819217, y: 0.024037838, z: 17.367504}
-      distance: 17.446379
-      normDistance: 0.21807973
-    - position: {x: 1.5966356, y: 0.02311778, z: 17.33237}
-      distance: 17.458254
-      normDistance: 0.21822818
-    - position: {x: 2.2322173, y: 0.023150444, z: 17.261602}
-      distance: 17.457832
-      normDistance: 0.2182229
-    - position: {x: 2.864097, y: 0.023493886, z: 17.163591}
-      distance: 17.4534
-      normDistance: 0.2181675
-    - position: {x: 3.4867995, y: 0.025770068, z: 17.018103}
-      distance: 17.424026
-      normDistance: 0.21780033
-    - position: {x: 4.1150746, y: 0.023976088, z: 16.900953}
-      distance: 17.447178
-      normDistance: 0.21808973
-    - position: {x: 4.7358947, y: 0.023195386, z: 16.74804}
-      distance: 17.45725
-      normDistance: 0.21821563
-    - position: {x: 5.343404, y: 0.024344206, z: 16.548693}
-      distance: 17.442425
-      normDistance: 0.2180303
-    - position: {x: 5.9472823, y: 0.02444446, z: 16.340023}
-      distance: 17.441135
-      normDistance: 0.2180142
-    - position: {x: -7.9270415, y: 0.026086688, z: 21.779367}
-      distance: 23.216396
-      normDistance: 0.29020494
-    - position: {x: -7.133978, y: 0.023743153, z: 22.094162}
-      distance: 23.256704
-      normDistance: 0.2907088
-    - position: {x: -6.3057346, y: 0.026266456, z: 22.299631}
-      distance: 23.213306
-      normDistance: 0.29016632
-    - position: {x: -5.4820027, y: 0.026337028, z: 22.515045}
-      distance: 23.212091
-      normDistance: 0.29015115
-    - position: {x: -4.6569686, y: 0.024663448, z: 22.729382}
-      distance: 23.240875
-      normDistance: 0.29051095
-    - position: {x: -3.820487, y: 0.024084449, z: 22.894926}
-      distance: 23.250837
-      normDistance: 0.29063547
-    - position: {x: -2.9691489, y: 0.027582526, z: 22.960253}
-      distance: 23.190672
-      normDistance: 0.2898834
-    - position: {x: -2.1261625, y: 0.026011348, z: 23.08069}
-      distance: 23.217693
-      normDistance: 0.29022115
-    - position: {x: -1.278924, y: 0.023814797, z: 23.180872}
-      distance: 23.25547
-      normDistance: 0.29069337
-    - position: {x: -0.42640743, y: 0.024107456, z: 23.207186}
-      distance: 23.250439
-      normDistance: 0.2906305
-    - position: {x: 0.42561504, y: 0.0266217, z: 23.164026}
-      distance: 23.2072
-      normDistance: 0.29009
-    - position: {x: 1.2782199, y: 0.024559736, z: 23.168102}
-      distance: 23.242659
-      normDistance: 0.29053324
-    - position: {x: 2.1238046, y: 0.027508855, z: 23.055088}
-      distance: 23.191938
-      normDistance: 0.28989923
-    - position: {x: 2.971765, y: 0.026394606, z: 22.980482}
-      distance: 23.211103
-      normDistance: 0.29013878
-    - position: {x: 3.814018, y: 0.026373625, z: 22.856157}
-      distance: 23.211466
-      normDistance: 0.2901433
-    - position: {x: 4.656484, y: 0.024804354, z: 22.727013}
-      distance: 23.238453
-      normDistance: 0.29048067
-    - position: {x: 5.4847317, y: 0.025665402, z: 22.52625}
-      distance: 23.223644
-      normDistance: 0.29029554
-    - position: {x: 6.306817, y: 0.026034951, z: 22.303457}
-      distance: 23.217289
-      normDistance: 0.29021612
-    - position: {x: 7.1198287, y: 0.026425123, z: 22.05034}
-      distance: 23.210577
-      normDistance: 0.29013222
-    - position: {x: 7.9361734, y: 0.024531722, z: 21.804455}
-      distance: 23.243141
-      normDistance: 0.29053926
-    - position: {x: -10.835101, y: 0.1466831, z: 29.769196}
-      distance: 31.703558
-      normDistance: 0.39629447
-    - position: {x: -10.677229, y: 0.027589321, z: 33.067726}
-      distance: 34.774933
-      normDistance: 0.43468666
-    - position: {x: -9.451179, y: 0.028172135, z: 33.42319}
-      distance: 34.759907
-      normDistance: 0.43449885
-    - position: {x: -8.22391, y: 0.027035117, z: 33.77629}
-      distance: 34.789227
-      normDistance: 0.43486533
-    - position: {x: -6.97634, y: 0.027273297, z: 34.04959}
-      distance: 34.783085
-      normDistance: 0.43478855
-    - position: {x: -5.718953, y: 0.027709365, z: 34.271805}
-      distance: 34.771843
-      normDistance: 0.43464804
-    - position: {x: -4.4545054, y: 0.028191924, z: 34.44643}
-      distance: 34.759396
-      normDistance: 0.43449244
-    - position: {x: -3.1887064, y: 0.027085662, z: 34.615204}
-      distance: 34.787926
-      normDistance: 0.43484908
-    - position: {x: -1.9160331, y: 0.026320815, z: 34.72866}
-      distance: 34.80765
-      normDistance: 0.43509564
-    - position: {x: -0.6389802, y: 0.026288271, z: 34.776443}
-      distance: 34.80849
-      normDistance: 0.43510613
-    - position: {x: 0.63845265, y: 0.027404547, z: 34.74768}
-      distance: 34.7797
-      normDistance: 0.43474627
-    - position: {x: 1.9129022, y: 0.028526783, z: 34.671898}
-      distance: 34.75076
-      normDistance: 0.4343845
-    - position: {x: 3.1867146, y: 0.02792859, z: 34.59357}
-      distance: 34.766186
-      normDistance: 0.43457732
-    - position: {x: 4.4565163, y: 0.027583718, z: 34.46197}
-      distance: 34.77508
-      normDistance: 0.4346885
-    - position: {x: 5.7213635, y: 0.027141213, z: 34.286247}
-      distance: 34.786495
-      normDistance: 0.4348312
-    - position: {x: 6.9805236, y: 0.0264647, z: 34.070004}
-      distance: 34.80394
-      normDistance: 0.43504924
-    - position: {x: 8.225014, y: 0.026854396, z: 33.780823}
-      distance: 34.79389
-      normDistance: 0.43492365
-    - position: {x: 9.462227, y: 0.026596665, z: 33.46226}
-      distance: 34.800537
-      normDistance: 0.4350067
-    - position: {x: 10.67907, y: 0.027356744, z: 33.07343}
-      distance: 34.78093
-      normDistance: 0.4347616
-    - position: {x: 10.8293915, y: 0.147331, z: 29.753506}
-      distance: 31.68685
-      normDistance: 0.39608562
-    - position: {x: -10.830538, y: 0.7618317, z: 29.75666}
-      distance: 31.67233
-      normDistance: 0.39590412
-    - position: {x: -10.823349, y: 0.69282526, z: 33.520264}
-      distance: 35.230946
-      normDistance: 0.44038683
-    - position: {x: -10.822881, y: 0.6045675, z: 38.27409}
-      distance: 39.782356
-      normDistance: 0.49727947
-    - position: {x: -10.821288, y: 0.4888283, z: 44.44393}
-      distance: 45.75096
-      normDistance: 0.571887
-    - position: {x: -10.80984, y: 0.33146715, z: 52.75985}
-      distance: 53.865993
-      normDistance: 0.67332494
-    - position: {x: -10.809323, y: 0.102285504, z: 64.776726}
-      distance: 65.68476
-      normDistance: 0.8210595
-    - position: {x: -8.912725, y: 0.028137326, z: 68.92158}
-      distance: 69.508545
-      normDistance: 0.8688568
-    - position: {x: -6.375685, y: 0.027958632, z: 69.21165}
-      distance: 69.51776
-      normDistance: 0.868972
-    - position: {x: -3.8281176, y: 0.028218985, z: 69.38575}
-      distance: 69.50434
-      normDistance: 0.8688043
-    - position: {x: -1.2759216, y: 0.028948903, z: 69.44192}
-      distance: 69.4667
-      normDistance: 0.8683337
-    - position: {x: 1.2767544, y: 0.028071642, z: 69.487144}
-      distance: 69.51194
-      normDistance: 0.8688992
-    - position: {x: 3.827943, y: 0.028280973, z: 69.38256}
-      distance: 69.501144
-      normDistance: 0.8687643
-    - position: {x: 6.3742805, y: 0.028256059, z: 69.19637}
-      distance: 69.50242
-      normDistance: 0.86878026
-    - position: {x: 8.910937, y: 0.028407931, z: 68.907745}
-      distance: 69.49459
-      normDistance: 0.8686824
-    - position: {x: 10.816489, y: 0.101441264, z: 64.819664}
-      distance: 65.7283
-      normDistance: 0.8216038
-    - position: {x: 10.815, y: 0.33096862, z: 52.785027}
-      distance: 53.891697
-      normDistance: 0.6736462
-    - position: {x: 10.817066, y: 0.48917454, z: 44.426594}
-      distance: 45.733112
-      normDistance: 0.5716639
-    - position: {x: 10.829218, y: 0.60411596, z: 38.296494}
-      distance: 39.805645
-      normDistance: 0.49757057
-    - position: {x: 10.831018, y: 0.6923412, z: 33.544014}
-      distance: 35.25591
-      normDistance: 0.44069886
-    - position: {x: 10.817378, y: 0.762578, z: 29.720503}
-      distance: 31.633846
-      normDistance: 0.39542308
+    - position: {x: -2.6294641, y: 0.020391583, z: 7.224393}
+      distance: 7.8066387
+      normDistance: 0.09758298
+      isHit: 1
+    - position: {x: -2.3621893, y: 0.020453453, z: 7.3157763}
+      distance: 7.806281
+      normDistance: 0.09757851
+      isHit: 1
+    - position: {x: -2.0874434, y: 0.023306489, z: 7.3820453}
+      distance: 7.7898517
+      normDistance: 0.09737314
+      isHit: 1
+    - position: {x: -1.8305342, y: 0.011617184, z: 7.5181565}
+      distance: 7.8571672
+      normDistance: 0.09821459
+      isHit: 1
+    - position: {x: -1.5527847, y: 0.011907935, z: 7.578714}
+      distance: 7.855494
+      normDistance: 0.098193675
+      isHit: 1
+    - position: {x: -1.2705208, y: 0.014915824, z: 7.613814}
+      distance: 7.838172
+      normDistance: 0.09797715
+      isHit: 1
+    - position: {x: -0.9907311, y: 0.013863802, z: 7.6612654}
+      distance: 7.84423
+      normDistance: 0.098052874
+      isHit: 1
+    - position: {x: -0.71007437, y: 0.01107192, z: 7.7082553}
+      distance: 7.8603077
+      normDistance: 0.098253846
+      isHit: 1
+    - position: {x: -0.4243189, y: 0.017823815, z: 7.690904}
+      distance: 7.821425
+      normDistance: 0.097767815
+      isHit: 1
+    - position: {x: -0.1419024, y: 0.013992786, z: 7.723024}
+      distance: 7.8434877
+      normDistance: 0.0980436
+      isHit: 1
+    - position: {x: 0.14102972, y: 0.022370934, z: 7.675517}
+      distance: 7.79524
+      normDistance: 0.097440496
+      isHit: 1
+    - position: {x: 0.42453572, y: 0.017130375, z: 7.694831}
+      distance: 7.8254185
+      normDistance: 0.097817734
+      isHit: 1
+    - position: {x: 0.7047045, y: 0.021394491, z: 7.6499605}
+      distance: 7.800863
+      normDistance: 0.097510785
+      isHit: 1
+    - position: {x: 0.99009544, y: 0.014737964, z: 7.6563487}
+      distance: 7.839196
+      normDistance: 0.097989954
+      isHit: 1
+    - position: {x: 1.2645102, y: 0.021355152, z: 7.577793}
+      distance: 7.80109
+      normDistance: 0.09751362
+      isHit: 1
+    - position: {x: 1.5495057, y: 0.014788747, z: 7.5627084}
+      distance: 7.8389044
+      normDistance: 0.0979863
+      isHit: 1
+    - position: {x: 1.826826, y: 0.014381409, z: 7.5029263}
+      distance: 7.84125
+      normDistance: 0.09801562
+      isHit: 1
+    - position: {x: 2.0951426, y: 0.018317461, z: 7.4092717}
+      distance: 7.8185825
+      normDistance: 0.09773228
+      isHit: 1
+    - position: {x: 2.3637054, y: 0.019583464, z: 7.320472}
+      distance: 7.811291
+      normDistance: 0.09764114
+      isHit: 1
+    - position: {x: 2.6394353, y: 0.01525116, z: 7.2517877}
+      distance: 7.8362412
+      normDistance: 0.097953014
+      isHit: 1
+    - position: {x: -2.9587162, y: 0.023054123, z: 8.129006}
+      distance: 8.755867
+      normDistance: 0.109448336
+      isHit: 1
+    - position: {x: -2.6644046, y: 0.019842982, z: 8.251746}
+      distance: 8.776647
+      normDistance: 0.109708086
+      isHit: 1
+    - position: {x: -2.361206, y: 0.018847346, z: 8.350181}
+      distance: 8.783091
+      normDistance: 0.109788634
+      isHit: 1
+    - position: {x: -2.0520856, y: 0.019362092, z: 8.428087}
+      distance: 8.779759
+      normDistance: 0.10974699
+      isHit: 1
+    - position: {x: -1.735643, y: 0.023606777, z: 8.471195}
+      distance: 8.75229
+      normDistance: 0.109403625
+      isHit: 1
+    - position: {x: -1.4282393, y: 0.018892407, z: 8.5589695}
+      distance: 8.7828
+      normDistance: 0.109785
+      isHit: 1
+    - position: {x: -1.1144245, y: 0.016981244, z: 8.617779}
+      distance: 8.795168
+      normDistance: 0.1099396
+      isHit: 1
+    - position: {x: -0.79484236, y: 0.020819902, z: 8.62846}
+      distance: 8.770326
+      normDistance: 0.10962907
+      isHit: 1
+    - position: {x: -0.4794429, y: 0.014835238, z: 8.6900425}
+      distance: 8.809056
+      normDistance: 0.1101132
+      isHit: 1
+    - position: {x: -0.15943539, y: 0.018672824, z: 8.677257}
+      distance: 8.784221
+      normDistance: 0.10980276
+      isHit: 1
+    - position: {x: 0.1600694, y: 0.013277173, z: 8.71175}
+      distance: 8.8191395
+      normDistance: 0.110239245
+      isHit: 1
+    - position: {x: 0.47825915, y: 0.018196583, z: 8.668583}
+      distance: 8.787303
+      normDistance: 0.10984129
+      isHit: 1
+    - position: {x: 0.79583436, y: 0.019128919, z: 8.639227}
+      distance: 8.781269
+      normDistance: 0.109765865
+      isHit: 1
+    - position: {x: 1.1157135, y: 0.01540947, z: 8.627746}
+      distance: 8.80534
+      normDistance: 0.11006675
+      isHit: 1
+    - position: {x: 1.4292197, y: 0.017960906, z: 8.564844}
+      distance: 8.788828
+      normDistance: 0.109860346
+      isHit: 1
+    - position: {x: 1.7462149, y: 0.015369415, z: 8.522793}
+      distance: 8.805599
+      normDistance: 0.11006999
+      isHit: 1
+    - position: {x: 2.0577023, y: 0.015649319, z: 8.451154}
+      distance: 8.803788
+      normDistance: 0.110047355
+      isHit: 1
+    - position: {x: 2.361071, y: 0.01892507, z: 8.349702}
+      distance: 8.782587
+      normDistance: 0.10978234
+      isHit: 1
+    - position: {x: 2.655693, y: 0.024277091, z: 8.224766}
+      distance: 8.747951
+      normDistance: 0.109349385
+      isHit: 1
+    - position: {x: 2.9655902, y: 0.019910932, z: 8.147892}
+      distance: 8.776209
+      normDistance: 0.10970261
+      isHit: 1
+    - position: {x: -3.4022262, y: 0.017300129, z: 9.347539}
+      distance: 10.039805
+      normDistance: 0.12549756
+      isHit: 1
+    - position: {x: -3.0592566, y: 0.01609373, z: 9.474616}
+      distance: 10.048718
+      normDistance: 0.12560898
+      isHit: 1
+    - position: {x: -2.6951363, y: 0.023121715, z: 9.531092}
+      distance: 9.996787
+      normDistance: 0.12495984
+      isHit: 1
+    - position: {x: -2.340297, y: 0.024790525, z: 9.611794}
+      distance: 9.984455
+      normDistance: 0.12480569
+      isHit: 1
+    - position: {x: -1.9922152, y: 0.0203048, z: 9.723452}
+      distance: 10.017602
+      normDistance: 0.12522003
+      isHit: 1
+    - position: {x: -1.6332729, y: 0.020638108, z: 9.787667}
+      distance: 10.01514
+      normDistance: 0.12518924
+      isHit: 1
+    - position: {x: -1.273011, y: 0.020216823, z: 9.844118}
+      distance: 10.018251
+      normDistance: 0.12522814
+      isHit: 1
+    - position: {x: -0.9095215, y: 0.02170825, z: 9.873366}
+      distance: 10.007233
+      normDistance: 0.1250904
+      isHit: 1
+    - position: {x: -0.5471792, y: 0.019291162, z: 9.917783}
+      distance: 10.025092
+      normDistance: 0.12531365
+      isHit: 1
+    - position: {x: -0.18203764, y: 0.022543788, z: 9.90738}
+      distance: 10.001059
+      normDistance: 0.12501323
+      isHit: 1
+    - position: {x: 0.18187633, y: 0.02374506, z: 9.898587}
+      distance: 9.992182
+      normDistance: 0.12490227
+      isHit: 1
+    - position: {x: 0.54729503, y: 0.019004464, z: 9.919878}
+      distance: 10.02721
+      normDistance: 0.12534013
+      isHit: 1
+    - position: {x: 0.9139167, y: 0.015164137, z: 9.921076}
+      distance: 10.055589
+      normDistance: 0.12569486
+      isHit: 1
+    - position: {x: 1.2730097, y: 0.020218372, z: 9.844107}
+      distance: 10.01824
+      normDistance: 0.125228
+      isHit: 1
+    - position: {x: 1.6351109, y: 0.019113064, z: 9.798681}
+      distance: 10.026409
+      normDistance: 0.12533012
+      isHit: 1
+    - position: {x: 1.9977577, y: 0.016533375, z: 9.750502}
+      distance: 10.04547
+      normDistance: 0.12556837
+      isHit: 1
+    - position: {x: 2.35541, y: 0.01606512, z: 9.673864}
+      distance: 10.048932
+      normDistance: 0.12561165
+      isHit: 1
+    - position: {x: 2.711653, y: 0.014830828, z: 9.589501}
+      distance: 10.05805
+      normDistance: 0.12572563
+      isHit: 1
+    - position: {x: 3.0488, y: 0.02074194, z: 9.442232}
+      distance: 10.014372
+      normDistance: 0.12517965
+      isHit: 1
+    - position: {x: 3.386015, y: 0.023774266, z: 9.302999}
+      distance: 9.991966
+      normDistance: 0.12489958
+      isHit: 1
+    - position: {x: -3.9574711, y: 0.023559332, z: 10.873061}
+      distance: 11.649641
+      normDistance: 0.14562051
+      isHit: 1
+    - position: {x: -3.569092, y: 0.018340468, z: 11.053593}
+      distance: 11.694595
+      normDistance: 0.14618245
+      isHit: 1
+    - position: {x: -3.1537552, y: 0.02129066, z: 11.152956}
+      distance: 11.669183
+      normDistance: 0.14586478
+      isHit: 1
+    - position: {x: -2.7376883, y: 0.023379922, z: 11.243914}
+      distance: 11.651185
+      normDistance: 0.1456398
+      isHit: 1
+    - position: {x: -2.3246965, y: 0.022269487, z: 11.346203}
+      distance: 11.660751
+      normDistance: 0.14575939
+      isHit: 1
+    - position: {x: -1.9083726, y: 0.0208112, z: 11.43625}
+      distance: 11.673313
+      normDistance: 0.14591642
+      isHit: 1
+    - position: {x: -1.4888523, y: 0.01909399, z: 11.513206}
+      distance: 11.688104
+      normDistance: 0.1461013
+      isHit: 1
+    - position: {x: -1.0625522, y: 0.022090316, z: 11.534601}
+      distance: 11.662294
+      normDistance: 0.14577869
+      isHit: 1
+    - position: {x: -0.63842976, y: 0.021402597, z: 11.571724}
+      distance: 11.668219
+      normDistance: 0.14585273
+      isHit: 1
+    - position: {x: -0.21232188, y: 0.025116563, z: 11.555597}
+      distance: 11.636228
+      normDistance: 0.14545284
+      isHit: 1
+    - position: {x: 0.21248505, y: 0.024080396, z: 11.564461}
+      distance: 11.645153
+      normDistance: 0.1455644
+      isHit: 1
+    - position: {x: 0.63751763, y: 0.023338437, z: 11.555187}
+      distance: 11.651544
+      normDistance: 0.14564429
+      isHit: 1
+    - position: {x: 1.0650762, y: 0.018874645, z: 11.561997}
+      distance: 11.689994
+      normDistance: 0.14612493
+      isHit: 1
+    - position: {x: 1.4824646, y: 0.024915695, z: 11.463808}
+      distance: 11.637957
+      normDistance: 0.14547446
+      isHit: 1
+    - position: {x: 1.909008, y: 0.020360112, z: 11.440056}
+      distance: 11.677198
+      normDistance: 0.14596498
+      isHit: 1
+    - position: {x: 2.3218539, y: 0.023924947, z: 11.332327}
+      distance: 11.646491
+      normDistance: 0.14558114
+      isHit: 1
+    - position: {x: 2.739888, y: 0.02229333, z: 11.252948}
+      distance: 11.660546
+      normDistance: 0.14575683
+      isHit: 1
+    - position: {x: 3.1479743, y: 0.023773909, z: 11.132511}
+      distance: 11.647792
+      normDistance: 0.1455974
+      isHit: 1
+    - position: {x: 3.5630345, y: 0.020644665, z: 11.034832}
+      distance: 11.674747
+      normDistance: 0.14593434
+      isHit: 1
+    - position: {x: 3.957185, y: 0.023657203, z: 10.872274}
+      distance: 11.648798
+      normDistance: 0.14560997
+      isHit: 1
+    - position: {x: -4.756994, y: 0.02314961, z: 13.069735}
+      distance: 13.97416
+      normDistance: 0.174677
+      isHit: 1
+    - position: {x: -4.275584, y: 0.02254033, z: 13.241623}
+      distance: 13.980453
+      normDistance: 0.17475566
+      isHit: 1
+    - position: {x: -3.7773814, y: 0.025714278, z: 13.358351}
+      distance: 13.947667
+      normDistance: 0.17434584
+      isHit: 1
+    - position: {x: -3.2906163, y: 0.023037672, z: 13.514835}
+      distance: 13.975315
+      normDistance: 0.17469144
+      isHit: 1
+    - position: {x: -2.791017, y: 0.023475647, z: 13.622184}
+      distance: 13.970791
+      normDistance: 0.17463489
+      isHit: 1
+    - position: {x: -2.2958748, y: 0.01924479, z: 13.758423}
+      distance: 14.014494
+      normDistance: 0.17518118
+      isHit: 1
+    - position: {x: -1.7821903, y: 0.024335384, z: 13.781573}
+      distance: 13.96191
+      normDistance: 0.17452388
+      isHit: 1
+    - position: {x: -1.2769903, y: 0.021921873, z: 13.862449}
+      distance: 13.98684
+      normDistance: 0.1748355
+      isHit: 1
+    - position: {x: -0.76608163, y: 0.023339272, z: 13.885453}
+      distance: 13.9722
+      normDistance: 0.1746525
+      isHit: 1
+    - position: {x: -0.25586158, y: 0.021294475, z: 13.925242}
+      distance: 13.993322
+      normDistance: 0.17491654
+      isHit: 1
+    - position: {x: 0.25552994, y: 0.023052335, z: 13.907173}
+      distance: 13.975164
+      normDistance: 0.17468956
+      isHit: 1
+    - position: {x: 0.7657231, y: 0.023972869, z: 13.878949}
+      distance: 13.965655
+      normDistance: 0.1745707
+      isHit: 1
+    - position: {x: 1.2757878, y: 0.023197412, z: 13.849391}
+      distance: 13.973665
+      normDistance: 0.17467082
+      isHit: 1
+    - position: {x: 1.7821434, y: 0.024371147, z: 13.781208}
+      distance: 13.961541
+      normDistance: 0.17451927
+      isHit: 1
+    - position: {x: 2.284974, y: 0.02568674, z: 13.693097}
+      distance: 13.947952
+      normDistance: 0.1743494
+      isHit: 1
+    - position: {x: 2.7919562, y: 0.023020744, z: 13.626766}
+      distance: 13.97549
+      normDistance: 0.17469361
+      isHit: 1
+    - position: {x: 3.299603, y: 0.0193429, z: 13.5517435}
+      distance: 14.013481
+      normDistance: 0.17516851
+      isHit: 1
+    - position: {x: 3.781102, y: 0.024384499, z: 13.371507}
+      distance: 13.961403
+      normDistance: 0.17451754
+      isHit: 1
+    - position: {x: 4.2729034, y: 0.023388982, z: 13.23332}
+      distance: 13.971686
+      normDistance: 0.17464608
+      isHit: 1
+    - position: {x: 4.758131, y: 0.022826314, z: 13.072858}
+      distance: 13.9775
+      normDistance: 0.17471875
+      isHit: 1
+    - position: {x: -5.9563756, y: 0.022377849, z: 16.365007}
+      distance: 17.467804
+      normDistance: 0.21834755
+      isHit: 1
+    - position: {x: -5.3514905, y: 0.022298694, z: 16.573736}
+      distance: 17.46882
+      normDistance: 0.21836026
+      isHit: 1
+    - position: {x: -4.7224784, y: 0.027027726, z: 16.700596}
+      distance: 17.407797
+      normDistance: 0.21759745
+      isHit: 1
+    - position: {x: -4.1077895, y: 0.026369333, z: 16.871035}
+      distance: 17.416292
+      normDistance: 0.21770366
+      isHit: 1
+    - position: {x: -3.490526, y: 0.024326682, z: 17.036295}
+      distance: 17.442652
+      normDistance: 0.21803315
+      isHit: 1
+    - position: {x: -2.8668082, y: 0.022213459, z: 17.17984}
+      distance: 17.469923
+      normDistance: 0.21837404
+      isHit: 1
+    - position: {x: -2.231399, y: 0.023646235, z: 17.255278}
+      distance: 17.451435
+      normDistance: 0.21814294
+      isHit: 1
+    - position: {x: -1.5949618, y: 0.024535656, z: 17.314205}
+      distance: 17.439957
+      normDistance: 0.21799946
+      isHit: 1
+    - position: {x: -0.9588587, y: 0.0230968, z: 17.379593}
+      distance: 17.458523
+      normDistance: 0.21823153
+      isHit: 1
+    - position: {x: -0.3194657, y: 0.024356127, z: 17.386887}
+      distance: 17.442272
+      normDistance: 0.2180284
+      isHit: 1
+    - position: {x: 0.31916228, y: 0.02564168, z: 17.37035}
+      distance: 17.425682
+      normDistance: 0.21782103
+      isHit: 1
+    - position: {x: 0.9591555, y: 0.022678614, z: 17.384966}
+      distance: 17.463919
+      normDistance: 0.21829899
+      isHit: 1
+    - position: {x: 1.5982256, y: 0.021770477, z: 17.349632}
+      distance: 17.47564
+      normDistance: 0.2184455
+      isHit: 1
+    - position: {x: 2.2318096, y: 0.023397565, z: 17.25845}
+      distance: 17.454643
+      normDistance: 0.21818304
+      isHit: 1
+    - position: {x: 2.8620923, y: 0.024440646, z: 17.151577}
+      distance: 17.441183
+      normDistance: 0.21801479
+      isHit: 1
+    - position: {x: 3.484873, y: 0.02651596, z: 17.008701}
+      distance: 17.4144
+      normDistance: 0.21768
+      isHit: 1
+    - position: {x: 4.115395, y: 0.023870826, z: 16.90227}
+      distance: 17.448536
+      normDistance: 0.2181067
+      isHit: 1
+    - position: {x: 4.7271695, y: 0.025687814, z: 16.717182}
+      distance: 17.425087
+      normDistance: 0.21781358
+      isHit: 1
+    - position: {x: 5.349167, y: 0.022886395, z: 16.566542}
+      distance: 17.461237
+      normDistance: 0.21826546
+      isHit: 1
+    - position: {x: 5.9438505, y: 0.025224447, z: 16.330593}
+      distance: 17.43107
+      normDistance: 0.21788839
+      isHit: 1
+    - position: {x: -7.9199886, y: 0.02728784, z: 21.759989}
+      distance: 23.19574
+      normDistance: 0.28994673
+      isHit: 1
+    - position: {x: -7.11942, y: 0.02650261, z: 22.049076}
+      distance: 23.209246
+      normDistance: 0.29011557
+      isHit: 1
+    - position: {x: -6.3122625, y: 0.024869204, z: 22.322716}
+      distance: 23.237337
+      normDistance: 0.29046673
+      isHit: 1
+    - position: {x: -5.4898343, y: 0.024408937, z: 22.547209}
+      distance: 23.24525
+      normDistance: 0.29056564
+      isHit: 1
+    - position: {x: -4.654275, y: 0.025445223, z: 22.716232}
+      distance: 23.22743
+      normDistance: 0.29034287
+      isHit: 1
+    - position: {x: -3.8116255, y: 0.02722013, z: 22.84182}
+      distance: 23.196907
+      normDistance: 0.28996134
+      isHit: 1
+    - position: {x: -2.9730783, y: 0.025797963, z: 22.990639}
+      distance: 23.221363
+      normDistance: 0.29026705
+      isHit: 1
+    - position: {x: -2.1278765, y: 0.024923086, z: 23.099297}
+      distance: 23.23641
+      normDistance: 0.29045513
+      isHit: 1
+    - position: {x: -1.2774462, y: 0.025377393, z: 23.154087}
+      distance: 23.228598
+      normDistance: 0.29035747
+      isHit: 1
+    - position: {x: -0.42580384, y: 0.026021123, z: 23.174335}
+      distance: 23.217527
+      normDistance: 0.2902191
+      isHit: 1
+    - position: {x: 0.4263848, y: 0.024181128, z: 23.205921}
+      distance: 23.249172
+      normDistance: 0.29061466
+      isHit: 1
+    - position: {x: 1.2771051, y: 0.025738597, z: 23.147894}
+      distance: 23.222385
+      normDistance: 0.2902798
+      isHit: 1
+    - position: {x: 2.1273222, y: 0.025275469, z: 23.093273}
+      distance: 23.23035
+      normDistance: 0.29037938
+      isHit: 1
+    - position: {x: 2.9751022, y: 0.024878979, z: 23.006289}
+      distance: 23.23717
+      normDistance: 0.2904646
+      isHit: 1
+    - position: {x: 3.8118014, y: 0.027157903, z: 22.842875}
+      distance: 23.197977
+      normDistance: 0.28997472
+      isHit: 1
+    - position: {x: 4.6565685, y: 0.024779797, z: 22.727425}
+      distance: 23.238874
+      normDistance: 0.29048592
+      isHit: 1
+    - position: {x: 5.4855847, y: 0.025455356, z: 22.529755}
+      distance: 23.227257
+      normDistance: 0.29034072
+      isHit: 1
+    - position: {x: 6.3102756, y: 0.025294662, z: 22.315687}
+      distance: 23.23002
+      normDistance: 0.29037526
+      isHit: 1
+    - position: {x: 7.1205516, y: 0.026288033, z: 22.05258}
+      distance: 23.212934
+      normDistance: 0.29016167
+      isHit: 1
+    - position: {x: 7.9304776, y: 0.025501728, z: 21.788807}
+      distance: 23.22646
+      normDistance: 0.29033074
+      isHit: 1
+    - position: {x: -10.829458, y: 0.14732325, z: 29.753693}
+      distance: 31.687048
+      normDistance: 0.3960881
+      isHit: 1
+    - position: {x: -10.67271, y: 0.028159976, z: 33.053734}
+      distance: 34.760216
+      normDistance: 0.4345027
+      isHit: 1
+    - position: {x: -9.466963, y: 0.025921106, z: 33.47901}
+      distance: 34.81796
+      normDistance: 0.43522447
+      isHit: 1
+    - position: {x: -8.222059, y: 0.027338743, z: 33.76869}
+      distance: 34.781395
+      normDistance: 0.43476743
+      isHit: 1
+    - position: {x: -6.970446, y: 0.0284127, z: 34.02083}
+      distance: 34.7537
+      normDistance: 0.43442124
+      isHit: 1
+    - position: {x: -5.716448, y: 0.028300047, z: 34.256794}
+      distance: 34.75661
+      normDistance: 0.43445763
+      isHit: 1
+    - position: {x: -4.456228, y: 0.027670741, z: 34.459747}
+      distance: 34.772835
+      normDistance: 0.43466043
+      isHit: 1
+    - position: {x: -3.1869483, y: 0.027829409, z: 34.59612}
+      distance: 34.768745
+      normDistance: 0.43460932
+      isHit: 1
+    - position: {x: -1.9149346, y: 0.027094483, z: 34.70875}
+      distance: 34.787697
+      normDistance: 0.43484622
+      isHit: 1
+    - position: {x: -0.6386961, y: 0.02688849, z: 34.76098}
+      distance: 34.79301
+      normDistance: 0.43491262
+      isHit: 1
+    - position: {x: 0.6383337, y: 0.02765584, z: 34.741207}
+      distance: 34.77322
+      normDistance: 0.43466526
+      isHit: 1
+    - position: {x: 1.91492, y: 0.02710545, z: 34.70847}
+      distance: 34.787415
+      normDistance: 0.43484268
+      isHit: 1
+    - position: {x: 3.1854112, y: 0.028480053, z: 34.579422}
+      distance: 34.751965
+      normDistance: 0.43439955
+      isHit: 1
+    - position: {x: 4.461595, y: 0.026046991, z: 34.501247}
+      distance: 34.814713
+      normDistance: 0.4351839
+      isHit: 1
+    - position: {x: 5.7232747, y: 0.026690722, z: 34.2977}
+      distance: 34.798115
+      normDistance: 0.43497643
+      isHit: 1
+    - position: {x: 6.9834847, y: 0.025892258, z: 34.084457}
+      distance: 34.818703
+      normDistance: 0.43523377
+      isHit: 1
+    - position: {x: 8.2227335, y: 0.027228475, z: 33.771454}
+      distance: 34.784245
+      normDistance: 0.43480307
+      isHit: 1
+    - position: {x: 9.451939, y: 0.028063774, z: 33.425877}
+      distance: 34.7627
+      normDistance: 0.43453375
+      isHit: 1
+    - position: {x: 10.6743765, y: 0.027949572, z: 33.05889}
+      distance: 34.76564
+      normDistance: 0.4345705
+      isHit: 1
+    - position: {x: 10.827914, y: 0.14749861, z: 29.749449}
+      distance: 31.682528
+      normDistance: 0.3960316
+      isHit: 1
+    - position: {x: -10.815632, y: 0.762677, z: 29.715706}
+      distance: 31.62874
+      normDistance: 0.39535925
+      isHit: 1
+    - position: {x: -10.824487, y: 0.69275343, z: 33.52379}
+      distance: 35.23465
+      normDistance: 0.4404331
+      isHit: 1
+    - position: {x: -10.823649, y: 0.6045128, z: 38.276806}
+      distance: 39.78518
+      normDistance: 0.49731475
+      isHit: 1
+    - position: {x: -10.821069, y: 0.4888463, z: 44.44303}
+      distance: 45.750034
+      normDistance: 0.57187545
+      isHit: 1
+    - position: {x: -10.811562, y: 0.33130074, z: 52.768253}
+      distance: 53.874573
+      normDistance: 0.6734322
+      isHit: 1
+    - position: {x: -10.813029, y: 0.10184884, z: 64.798935}
+      distance: 65.70728
+      normDistance: 0.82134104
+      isHit: 1
+    - position: {x: -8.905438, y: 0.029239297, z: 68.86523}
+      distance: 69.45171
+      normDistance: 0.8681464
+      isHit: 1
+    - position: {x: -6.3742537, y: 0.028261304, z: 69.196106}
+      distance: 69.50215
+      normDistance: 0.8687769
+      isHit: 1
+    - position: {x: -3.8255334, y: 0.02912879, z: 69.338905}
+      distance: 69.45742
+      normDistance: 0.86821777
+      isHit: 1
+    - position: {x: -1.2758772, y: 0.028995752, z: 69.4395}
+      distance: 69.46428
+      normDistance: 0.8683035
+      isHit: 1
+    - position: {x: 1.2759206, y: 0.028951883, z: 69.441765}
+      distance: 69.466545
+      normDistance: 0.8683318
+      isHit: 1
+    - position: {x: 3.829064, y: 0.02788639, z: 69.40287}
+      distance: 69.52149
+      normDistance: 0.8690187
+      isHit: 1
+    - position: {x: 6.3727603, y: 0.028577447, z: 69.17988}
+      distance: 69.48585
+      normDistance: 0.86857307
+      isHit: 1
+    - position: {x: 8.910739, y: 0.028437972, z: 68.90621}
+      distance: 69.49304
+      normDistance: 0.868663
+      isHit: 1
+    - position: {x: 10.811891, y: 0.10198319, z: 64.79211}
+      distance: 65.700356
+      normDistance: 0.82125443
+      isHit: 1
+    - position: {x: 10.811307, y: 0.33132553, z: 52.767002}
+      distance: 53.873295
+      normDistance: 0.6734162
+      isHit: 1
+    - position: {x: 10.817519, y: 0.4891374, z: 44.428455}
+      distance: 45.735027
+      normDistance: 0.5716878
+      isHit: 1
+    - position: {x: 10.81618, y: 0.60504526, z: 38.25039}
+      distance: 39.75772
+      normDistance: 0.49697152
+      isHit: 1
+    - position: {x: 10.821033, y: 0.6929715, z: 33.51309}
+      distance: 35.223404
+      normDistance: 0.44029254
+      isHit: 1
+    - position: {x: 10.827046, y: 0.76202977, z: 29.747066}
+      distance: 31.662119
+      normDistance: 0.39577648
+      isHit: 1
     - position: {x: -27.36161, y: 1.3760008, z: 75.17541}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: -24.581537, y: 1.3760008, z: 76.12981}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: -21.768276, y: 1.3760008, z: 76.98144}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: -18.92563, y: 1.3760008, z: 77.72915}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: -16.057438, y: 1.3760008, z: 78.371925}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: -13.167567, y: 1.3760008, z: 78.908905}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: -10.259922, y: 1.3760008, z: 79.33936}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: -7.3384233, y: 1.3760008, z: 79.66271}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: -4.40702, y: 1.3760008, z: 79.878525}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: -1.4696672, y: 1.3760008, z: 79.9865}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: 1.4696693, y: 1.3760008, z: 79.9865}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: 4.4070215, y: 1.3760008, z: 79.878525}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: 7.3384256, y: 1.3760008, z: 79.66271}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: 10.259923, y: 1.3760008, z: 79.33936}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: 13.167568, y: 1.3760008, z: 78.908905}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: 16.05744, y: 1.3760008, z: 78.371925}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: 18.925632, y: 1.3760008, z: 77.72915}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: 21.76828, y: 1.3760008, z: 76.98144}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: 24.581537, y: 1.3760008, z: 76.12981}
       distance: 80
       normDistance: 1
+      isHit: 0
     - position: {x: 27.361612, y: 1.3760008, z: 75.17541}
       distance: 80
       normDistance: 1
+      isHit: 0
 --- !u!1 &5655064433379460438
 GameObject:
   m_ObjectHideFlags: 0
@@ -5809,33 +5993,43 @@ MonoBehaviour:
     - position: {x: 2.5, y: 0.535, z: 4.330127}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: 3.4312081, y: 0.535, z: 3.6368682}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: 4.1774387, y: 0.535, z: 2.7475452}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: 4.6984634, y: 0.535, z: 1.7101004}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: 4.966192, y: 0.535, z: 0.58046526}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: 4.966192, y: 0.535, z: -0.5804646}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: 4.6984634, y: 0.535, z: -1.7101008}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: 4.1774397, y: 0.535, z: -2.7475443}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: 3.4312084, y: 0.535, z: -3.636868}
       distance: 5
       normDistance: 1
+      isHit: 0
     - position: {x: 2.5000005, y: 0.535, z: -4.330127}
       distance: 5
       normDistance: 1
+      isHit: 0
 --- !u!1 &6762041454739164797
 GameObject:
   m_ObjectHideFlags: 0
@@ -6464,10 +6658,15 @@ MonoBehaviour:
   lidar: {fileID: 7929967620460325}
   sideRadarL: {fileID: 7645663911476851594}
   sideRadarR: {fileID: 3579364212488512705}
+  frontRadarL: {fileID: 997991850514089663}
+  frontRadarR: {fileID: 407669904420991928}
   backRadarL: {fileID: 1058251311399037826}
   backRadarR: {fileID: 5656388863190761725}
-  targetLane: 4
+  targetLane: 3
   targetVelocity: 120
+  minVelocity: 80
+  observationGrid: []
+  laneObs: 
 --- !u!114 &7371215330335361717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6481,14 +6680,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 249
+    vectorObservationSize: 27
     numStackedVectorObservations: 1
-    vectorActionSize: 0400000003000000
+    vectorActionSize: 04000000
     vectorActionDescriptions: []
     vectorActionSpaceType: 0
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: HighwayAI
   TeamId: 0
   m_UseChildSensors: 1
@@ -6835,6 +7034,80 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &7880123707400698352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5566543124845789684}
+  - component: {fileID: 407669904420991928}
+  m_Layer: 8
+  m_Name: FrontRadarR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5566543124845789684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7880123707400698352}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.862, y: 0.535, z: 1.948}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 385968469158458076}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &407669904420991928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7880123707400698352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRange: 7
+  noise: 0.2
+  displayInGame: 0
+  displayGizmos: 1
+  gizmoSize: 0.15
+  startAzimuthal: 10
+  endAzimuthal: 30
+  aRays: 4
+  startPolar: 0
+  endPolar: 0
+  pRays: 1
+  data:
+    sensorPos: {x: 0.862, y: 0.535, z: 1.948}
+    sensorRotation: {x: -0, y: 0, z: 0}
+    sensorPoints:
+    - position: {x: 2.077537, y: 0.535, z: 8.841654}
+      distance: 7
+      normDistance: 1
+      isHit: 0
+    - position: {x: 2.8696225, y: 0.535, z: 8.653927}
+      distance: 7
+      normDistance: 1
+      isHit: 0
+    - position: {x: 3.6345582, y: 0.535, z: 8.375513}
+      distance: 7
+      normDistance: 1
+      isHit: 0
+    - position: {x: 4.362, y: 0.535, z: 8.010178}
+      distance: 7
+      normDistance: 1
+      isHit: 0
 --- !u!1 &7912874899316415452
 GameObject:
   m_ObjectHideFlags: 0
@@ -6993,6 +7266,80 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &8450935529744013932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7473550989695177693}
+  - component: {fileID: 997991850514089663}
+  m_Layer: 8
+  m_Name: FrontRadarL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7473550989695177693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8450935529744013932}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.862, y: 0.535, z: 1.948}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 385968469158458076}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &997991850514089663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8450935529744013932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5983d4e465301e7439068dd6c9a45168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRange: 7
+  noise: 0.2
+  displayInGame: 0
+  displayGizmos: 1
+  gizmoSize: 0.15
+  startAzimuthal: -10
+  endAzimuthal: -30
+  aRays: 4
+  startPolar: 0
+  endPolar: 0
+  pRays: 1
+  data:
+    sensorPos: {x: -0.862, y: 0.535, z: 1.948}
+    sensorRotation: {x: -0, y: 0, z: 0}
+    sensorPoints:
+    - position: {x: -2.077537, y: 0.535, z: 8.841654}
+      distance: 7
+      normDistance: 1
+      isHit: 0
+    - position: {x: -2.8696225, y: 0.535, z: 8.653927}
+      distance: 7
+      normDistance: 1
+      isHit: 0
+    - position: {x: -3.6345582, y: 0.535, z: 8.375513}
+      distance: 7
+      normDistance: 1
+      isHit: 0
+    - position: {x: -4.362, y: 0.535, z: 8.010178}
+      distance: 7
+      normDistance: 1
+      isHit: 0
 --- !u!1 &8484976837222141208
 GameObject:
   m_ObjectHideFlags: 0

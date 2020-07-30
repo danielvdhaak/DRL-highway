@@ -21,10 +21,11 @@ public class VehicleAgent : Agent
     [SerializeField] private RaySensor lidar;
     [SerializeField] private RaySensor sideRadarL;
     [SerializeField] private RaySensor sideRadarR;
+    [SerializeField] private RaySensor frontRadarL;
+    [SerializeField] private RaySensor frontRadarR;
     [SerializeField] private RaySensor backRadarL;
     [SerializeField] private RaySensor backRadarR;
 
-    private const int k_DoNothing = 0;
     private const int k_LeftLaneChange = 1;
     private const int k_KeepLane = 2;
     private const int k_RightLaneChange = 3;
@@ -34,12 +35,16 @@ public class VehicleAgent : Agent
     [Header("Parameters")]
     public int targetLane;
     public float targetVelocity;
+    public float minVelocity;
     private List<float> laneCenters;
 
-    private const float m_MaxFollowDistance = 100f;
+    private const float m_MaxFollowDistance = 55f;
+    private const float m_GridSize = 100f;
 
     private Vector3 initialLocalPos;
     private float initialVelocity;
+    public List<float> observationGrid;
+    public List<bool> laneObs = new List<bool>();
 
     private RandomNumber randomNumber = new RandomNumber();
 
@@ -51,8 +56,6 @@ public class VehicleAgent : Agent
         laneCenters = environment.centerList;
 
         control = GetComponent<VehicleControl>();
-
-        Events.Instance.onCutOff += OnCutOff;
     }
 
     public override void OnEpisodeBegin()
@@ -65,7 +68,7 @@ public class VehicleAgent : Agent
         int startPos = randomNumber.Next(1, 1);
 
         float trafficFlow = Academy.Instance.FloatProperties.GetPropertyWithDefault("traffic_flow", 6000f);
-        (initialLocalPos, initialVelocity) = environment.ResetArea(startLane, startPos, trafficFlow);
+        (initialLocalPos, initialVelocity) = environment.ResetArea(startLane, startPos);
         transform.localPosition = initialLocalPos;
         transform.localRotation = Quaternion.identity;
         control.targetVelocity = targetVelocity;
@@ -76,95 +79,152 @@ public class VehicleAgent : Agent
         control.laneCenter = laneCenters[targetLane - 1];
         control._TrackingMode = VehicleControl.TrackingMode.keepLane;
 
+        Events.Instance.NewEpisode();
     }
 
     private void FixedUpdate()
     {
         // Only request a new decision if agent is not performing a lane change
-        //if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
-        //    RequestDecision();
-        //else
-        //    RequestAction();
-        RequestDecision();
+        if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
+            RequestDecision();
+
+        // Regulate car controls
+        control.currentLane = GetCurrentLane();
+        control.laneCenter = laneCenters[targetLane - 1];
+        control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1, m_MaxFollowDistance);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.localPosition.z / Target.localPosition.z);
-        //sensor.AddObservation(control.velocity);
-        sensor.AddObservation(control.velocity / targetVelocity);
-
-        foreach (float lane in laneCenters)
-        {
-            if (control.currentLane == lane)
-                sensor.AddObservation(true);
-            else
-                sensor.AddObservation(false);
-        }
-
-        sensor.AddObservation(control.isFollowing);
+        //sensor.AddObservation(transform.localPosition.z / Target.localPosition.z);
+        sensor.AddObservation((control.velocity - minVelocity) / (targetVelocity - minVelocity));
         sensor.AddObservation(control.headway);
 
-        foreach (RaySensor raySensor in new RaySensor[] { lidar, sideRadarL, sideRadarR, backRadarL, backRadarR })
+        laneObs = new List<bool>();
+        for (int i = 0; i < laneCenters.Count; i++)
         {
-            SensorData data = raySensor.GetData();
-            foreach (RayPoint point in data.sensorPoints)
-            {
-                sensor.AddObservation(point.normDistance);
-            }
+            sensor.AddObservation(control.currentLane == i + 1 ? true : false);
+            laneObs.Add(control.currentLane == i + 1 ? true : false);
+        }
+
+        ////sensor.AddObservation(control.isFollowing);
+
+        //if (control.followTarget != null)
+        //    sensor.AddObservation(true);
+        //else
+        //    sensor.AddObservation(false);
+
+        //SensorData data = sideRadarL.GetData();
+        //foreach (RayPoint point in data.sensorPoints)
+        //{
+        //    sensor.AddObservation(point.normDistance);
+        //}
+
+        //foreach (RaySensor raySensor in new RaySensor[] { lidar, sideRadarL, sideRadarR, backRadarL, backRadarR })
+        //{
+        //    SensorData data = raySensor.GetData();
+        //    foreach (RayPoint point in data.sensorPoints)
+        //    {
+        //        sensor.AddObservation(point.normDistance);
+        //    }
+        //}
+
+        observationGrid = GetObservationGrid(environment.trafficList);
+        foreach (float obs in observationGrid)
+        {
+            sensor.AddObservation(obs);
         }
     }
 
     public override void CollectDiscreteActionMasks(DiscreteActionMasker actionMasker)
     {
         // Ensures the car does not crash into the barriers
-        int leftMostLane = 1;
-        int rightMostLane = laneCenters.Count;
         if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
         {
-            if (targetLane == leftMostLane)
+            if (targetLane == 1)
                 actionMasker.SetMask(0, new int[] { k_LeftLaneChange });
-            if (targetLane == rightMostLane)
+            if (targetLane == laneCenters.Count)
                 actionMasker.SetMask(0, new int[] { k_RightLaneChange });
         }
 
-        // Ensures the car does not crash into the preceding car
-        if (control.headway < 0.1f)
-            actionMasker.SetMask(1, new int[] { k_Cruise });
+        // Ensures no lane change when warnings are on
+        foreach (RaySensor raySensor in new RaySensor[] { sideRadarL, frontRadarL, backRadarL })
+        {
+            SensorData data = raySensor.GetData();
+            foreach (RayPoint point in data.sensorPoints)
+            {
+                if (point.isHit)
+                {
+                    actionMasker.SetMask(0, new int[] { k_LeftLaneChange });
+                    break;
+                }
+
+            }
+        }
+
+        // Ensures no lane change when warnings are on
+        foreach (RaySensor raySensor in new RaySensor[] { sideRadarR, frontRadarR, backRadarR })
+        {
+            SensorData data = raySensor.GetData();
+            foreach (RayPoint point in data.sensorPoints)
+            {
+                if (point.isHit)
+                {
+                    actionMasker.SetMask(0, new int[] { k_RightLaneChange });
+                    break;
+                }
+
+            }
+        }
 
         // Ensures that a lane change can not be cancelled once initiated
-        if (control._TrackingMode == VehicleControl.TrackingMode.leftLaneChange)
-            actionMasker.SetMask(0, new int[] { k_KeepLane, k_RightLaneChange });
-        if (control._TrackingMode == VehicleControl.TrackingMode.rightLaneChange)
-            actionMasker.SetMask(0, new int[] { k_LeftLaneChange, k_KeepLane });
+        //if (control._TrackingMode == VehicleControl.TrackingMode.leftLaneChange)
+        //    actionMasker.SetMask(0, new int[] { k_KeepLane, k_RightLaneChange });
+        //if (control._TrackingMode == VehicleControl.TrackingMode.rightLaneChange)
+        //    actionMasker.SetMask(0, new int[] { k_LeftLaneChange, k_KeepLane });
+
+
     }
 
     public override void OnActionReceived(float[] vectorAction)
     {
         var lateralAction = Mathf.FloorToInt(vectorAction[0]);
-        var longiAction = Mathf.FloorToInt(vectorAction[1]);
 
-        float normSpeed = (control.velocity - 80f) / (targetVelocity - 80f);
-        AddReward(0.1f * normSpeed);
+        //var longiAction = Mathf.FloorToInt(vectorAction[1]);
+        //switch (longiAction)
+        //{
+        //    //case k_DoNothing:
+        //    //    control.isFollowing = true;
+        //    //    break;
+        //    case k_Follow:
+        //        control.isFollowing = true;
+        //        break;
+        //    case k_Cruise:
+        //        control.isFollowing = false;
+        //        break;
+        //    default:
+        //        control.isFollowing = true;
+        //        //throw new ArgumentException("Invalid action value");
+        //        break;
+        //}
+
+        // Normalized speed reward
+        float normSpeed = (control.velocity - minVelocity) / (targetVelocity - minVelocity);
+        AddReward(0.01f * normSpeed);
+
         switch (lateralAction)
         {
-            //case k_DoNothing:
-            //    normSpeed = control.velocity / targetVelocity;
-            //    SetReward(0.01f * normSpeed);
-            //    break;
-            //case k_KeepLane:
-            //    normSpeed = control.velocity / targetVelocity;
-            //    SetReward(0.01f * normSpeed);
-            //    break;
             case k_LeftLaneChange:
                 if (control._TrackingMode != VehicleControl.TrackingMode.leftLaneChange)
                 {
                     control._TrackingMode = VehicleControl.TrackingMode.leftLaneChange;
                     if (targetLane != 1)
                         targetLane--;
-                    //AddReward(-0.05f);
+                    //SetReward(-0.05f);
+                    Events.Instance.LaneChange();
                 }
-                AddReward(-0.02f);
+                //control.isFollowing = true;
+                AddReward(-0.005f);
                 break;
             case k_RightLaneChange:
                 if (control._TrackingMode != VehicleControl.TrackingMode.rightLaneChange)
@@ -172,66 +232,52 @@ public class VehicleAgent : Agent
                     control._TrackingMode = VehicleControl.TrackingMode.rightLaneChange;
                     if (targetLane != laneCenters.Count)
                         targetLane++;
-                    //AddReward(-0.05f);
+                    //SetReward(-0.05f);
+                    Events.Instance.LaneChange();
                 }
-                AddReward(-0.02f);
+                //control.isFollowing = true;
+                AddReward(-0.005f);
                 break;
             default:
-                //normSpeed = control.velocity / targetVelocity;
-                //AddReward(0.1f * normSpeed);
-                //throw new ArgumentException("Invalid action value");
                 break;
         }
 
-        control.currentLane = GetCurrentLane();
-        control.laneCenter = laneCenters[targetLane - 1];
-        control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1);
-
-        switch (longiAction)
-        {
-            //case k_DoNothing:
-            //    control.isFollowing = true;
-            //    break;
-            case k_Follow:
-                control.isFollowing = true;
-                break;
-            case k_Cruise:
-                control.isFollowing = false;
-                break;
-            default:
-                control.isFollowing = true;
-                //throw new ArgumentException("Invalid action value");
-                break;
-        }
-
-        // Penalty for tailgating
+        // Penalty for tailgating i.e. dangerous driving
         if (control.headway < 0.9f)
-            AddReward(-0.03f * (1 - control.headway));
+            AddReward(-0.005f);
+        //AddReward(-0.03f * (1 - control.headway));
 
-        // Penalty for driving on the left
-        if (control.currentLane <= Mathf.CeilToInt(laneCenters.Count / 3))
-            AddReward(-0.02f);
+        // Reward for driving as much right as possible
+        AddReward(control.currentLane * 0.001f);
+        //if (control.currentLane <= Mathf.CeilToInt(laneCenters.Count / 3))
+        //    AddReward(-0.005f);
 
     }
 
-
     public override float[] Heuristic()
     {
-        int lat, longi;
+        //int lat, longi;
+
+        //if (Input.GetKey(KeyCode.A))
+        //    lat = k_LeftLaneChange;
+        //else if (Input.GetKey(KeyCode.D))
+        //    lat = k_RightLaneChange;
+        //else
+        //    lat = k_KeepLane;
+
+        //if (Input.GetKey(KeyCode.W))
+        //    longi = k_Cruise;
+        //else
+        //    longi = k_Follow;
+
+        //return new float[] { lat, longi };
 
         if (Input.GetKey(KeyCode.A))
-            lat = k_LeftLaneChange;
-        else if (Input.GetKey(KeyCode.D))
-            lat = k_RightLaneChange;
+            return new float[] { k_LeftLaneChange };
+        if (Input.GetKey(KeyCode.D))
+            return new float[] { k_RightLaneChange };
         else
-            lat = k_KeepLane;
-
-        if (Input.GetKey(KeyCode.W))
-            longi = k_Cruise;
-        else
-            longi = k_Follow;
-
-        return new float[] { lat, longi };
+            return new float[] { k_KeepLane };
     }
 
     private int GetCurrentLane()
@@ -241,7 +287,32 @@ public class VehicleAgent : Agent
         return errors.IndexOf(errors.Min()) + 1;
     }
 
-    private VehicleControl GetClosestVehicle(List<VehicleControl> vehicles, int lane, int dir)
+
+
+    private List<float> GetObservationGrid(List<VehicleControl> vehicles)
+    {
+        List<float> proximity = new List<float>();
+        Vector3 position = transform.localPosition;
+
+        for (int i = 0; i < laneCenters.Count; i++)
+        {
+            foreach (int dir in new int[] { 1, -1 })
+            {
+                VehicleControl inProx = GetClosestVehicle(vehicles, i + 1, dir, m_GridSize);
+                float pos = (inProx?.transform.localPosition.z ?? dir * m_GridSize + position.z) - position.z;
+                proximity.Add(pos / m_GridSize);
+                //float vel = (inProx?.velocity ?? control.velocity) - control.velocity;
+                //proximity.Add((vel - minVelocity) / (targetVelocity - minVelocity));
+                float normVel = ((inProx?.velocity ?? control.velocity) - minVelocity) / (targetVelocity - minVelocity);
+                float agentVel = (control.velocity - minVelocity) / (targetVelocity - minVelocity);
+                proximity.Add(normVel - agentVel);
+            }
+        }
+
+        return proximity;
+    }
+
+    private VehicleControl GetClosestVehicle(List<VehicleControl> vehicles, int lane, int dir, float maxDis)
     {
         VehicleControl target = null;
         float z = transform.localPosition.z;
@@ -252,13 +323,11 @@ public class VehicleAgent : Agent
             if (vehicle == control || vehicle.currentLane != lane || !vehicle.isActiveAndEnabled)
                 continue;
 
-            if (vehicle.transform.localPosition.z > z && Math.Abs(vehicle.transform.localPosition.z - z) <= m_MaxFollowDistance)
+            float distance = vehicle.transform.localPosition.z - z;
+            if (Mathf.Sign(distance) == dir && Math.Abs(distance) <= maxDis)
             {
-                if (Math.Abs(vehicle.transform.localPosition.z - z) < dz)
-                {
-                    target = vehicle;
-                    dz = Math.Abs(vehicle.transform.localPosition.z - z);
-                }
+                target = vehicle;
+                dz = Math.Abs(distance);
             }
         }
 
@@ -270,7 +339,7 @@ public class VehicleAgent : Agent
         if (InstanceID == control.GetInstanceID())
         {
             //Debug.Log("Cut off vehicle!");
-            SetReward(-0.2f);
+            SetReward(-0.5f);
         }   
     }
 
@@ -278,7 +347,7 @@ public class VehicleAgent : Agent
     {
         if (other.gameObject.CompareTag("Target"))
         {
-            SetReward(5f);
+            //SetReward(5f);
             EndEpisode();
         }
     }
@@ -287,7 +356,8 @@ public class VehicleAgent : Agent
     {
         if (collision.gameObject.CompareTag("Vehicle") || collision.gameObject.CompareTag("Railing"))
         {
-            SetReward(-5f);
+            SetReward(-1f);
+            Events.Instance.Crash();
             EndEpisode();
         }
     }
@@ -295,6 +365,38 @@ public class VehicleAgent : Agent
     private void OnDisable()
     {
         //Events.Instance.onCutOff -= OnCutOff;
+    }
+
+    private List<float> GetVehiclesInProximity(List<VehicleControl> vehicles, int lane)
+    {
+        List<float> proximity = new List<float>();
+        Vector3 position = transform.localPosition;
+
+        foreach (int i in new int[] { lane - 2, lane - 1, lane, lane + 1, lane + 2 })
+        {
+            foreach (int dir in new int[] { 1, -1 })
+            {
+                if (i < 1 || i > laneCenters.Count)
+                {
+                    float x = i < 1 ? -environment.laneWidth : environment.laneWidth;
+                    proximity.AddRange(new float[] { x, dir * m_GridSize, 0f });
+                }
+                else
+                {
+                    VehicleControl vehicle = GetClosestVehicle(vehicles, i, dir, m_GridSize);
+                    if (vehicle != null)
+                    {
+                        proximity.Add(vehicle.transform.localPosition.x - position.x);
+                        proximity.Add(vehicle.transform.localPosition.z - position.z);
+                        proximity.Add(vehicle.velocity - control.velocity);
+                    }
+                    else
+                        proximity.AddRange(new float[] { dir * environment.laneWidth, dir * m_GridSize, 0f });
+                }
+            }
+        }
+
+        return proximity;
     }
 
 }

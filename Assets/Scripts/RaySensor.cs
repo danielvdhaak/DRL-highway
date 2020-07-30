@@ -10,12 +10,14 @@ public class RayPoint
     public Vector3 position;
     public float distance;
     public float normDistance;
+    public bool isHit;
 
-    public RayPoint(Vector3 p, float d, float nd)
+    public RayPoint(Vector3 p, float d, float nd, bool hit)
     {
         position = p;
         distance = d;
         normDistance = nd;
+        isHit = hit;
     }
 }
 
@@ -106,11 +108,11 @@ public class RaySensor : MonoBehaviour
                     float normDistance = distance / maxRange;
                     Vector3 position = ray.GetPoint(distance);
 
-                    data.sensorPoints[p] = new RayPoint(position, distance, normDistance);
+                    data.sensorPoints[p] = new RayPoint(position, distance, normDistance, true);
                 }
                 else
                 {
-                    data.sensorPoints[p] = new RayPoint(ray.GetPoint(maxRange), maxRange, 1f);
+                    data.sensorPoints[p] = new RayPoint(ray.GetPoint(maxRange), maxRange, 1f, false);
                 }
                 p++;
             }

@@ -27,9 +27,27 @@ public class Events : MonoBehaviour
     private static Events instance;
     #endregion
 
-    public event Action<int> onCutOff;
+    public event Action OnLaneChange;
+    public void LaneChange()
+    {
+        OnLaneChange?.Invoke();
+    }
+
+    public event Action<int> OnCutOff;
     public void CutOff(int InstanceID)
     {
-        onCutOff?.Invoke(InstanceID);
+        OnCutOff?.Invoke(InstanceID);
+    }
+
+    public event Action OnCrash;
+    public void Crash()
+    {
+        OnCrash?.Invoke();
+    }
+
+    public event Action OnNewEpisode;
+    public void NewEpisode()
+    {
+        OnNewEpisode?.Invoke();
     }
 }

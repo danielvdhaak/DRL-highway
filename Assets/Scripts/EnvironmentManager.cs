@@ -100,13 +100,13 @@ public class EnvironmentManager : MonoBehaviour
         return list;
     }
 
-    public (Vector3, float) ResetArea(int startLane, int startPos, float trafficFlow)
+    public (Vector3, float) ResetArea(int startLane, int startPos)
     {
         // Despawn cars
         DespawnAll();
 
         // Set traffic flow from curriculum
-        //trafficFlow = trafficFlow;
+        trafficFlow = (int)Academy.Instance.FloatProperties.GetPropertyWithDefault("traffic_flow", 6000f);
 
         // For each lane
         density = 0;
