@@ -32,7 +32,6 @@ public class Logger : MonoBehaviour
         {
             m_Recorder.Add("Metrics/Lane changes per episode", laneChangeCount);
             m_Recorder.Add("Metrics/Collisions", collisionCount);
-            m_Recorder.Add("Metrics/Collision rate", collisionCount / episodeCount);
         }
     }
 

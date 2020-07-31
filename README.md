@@ -12,7 +12,7 @@ The following software was used to create this project:
 * Python version 3.6.10
 * Tensorflow version 1.7.1
 * Unity version 2019.3.5f1
-* [ml-agents](https://github.com/Unity-Technologies/ml-agents) version 0.15.0
+* [ml-agents](https://github.com/Unity-Technologies/ml-agents) version 0.18.0 (release 4)
 	* `mlagents` Python package
 	* `gym_unity` Python package
 	* `com.unity.ml-agents` Unity package
