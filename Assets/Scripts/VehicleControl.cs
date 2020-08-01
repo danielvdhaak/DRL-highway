@@ -236,7 +236,6 @@ public class VehicleControl : MonoBehaviour
     /// <summary>
     /// Returns the safe spacing in meters to a preceding car.
     /// </summary>
-    /// <param name="velocity">The velocity in [km/h].</param>
     private float CalcSpacing(float velocity)
     {
         return 3f + 0.0019f * (velocity / 3.6f) + 0.0448f * (float)Math.Pow(velocity / 3.6f, 2);

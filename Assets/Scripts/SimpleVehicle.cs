@@ -24,6 +24,8 @@ public class SimpleVehicle : MonoBehaviour
     public float targetVelocity;
     private List<float> laneCenters;
 
+    private bool isCutOff;
+
     private int currentLane;
     private float center;
     private float z;
@@ -39,6 +41,7 @@ public class SimpleVehicle : MonoBehaviour
 
     private void OnEnable()
     {
+        isCutOff = false;
         control.laneCenter = laneCenters[targetLane - 1];
         control.currentLane = targetLane;
         control.targetVelocity = targetVelocity;
@@ -51,11 +54,20 @@ public class SimpleVehicle : MonoBehaviour
         control.currentLane = currentLane;
         control.followTarget = GetClosestVehicle(environment.trafficList);
 
-        if (control.followTarget != null)
+        if (control.followTarget != null && control.followTarget?._TrackingMode != VehicleControl.TrackingMode.keepLane)
         {
-            if (control.headway <= 0.4f && control.followTarget._TrackingMode != VehicleControl.TrackingMode.keepLane)
-                Events.Instance.CutOff(control.followTarget.GetInstanceID());
+            if (control.headway <= 0.6f || control.throttle <= -500f)
+            {
+                if (!isCutOff)
+                {
+                    isCutOff = true;
+                    Events.Instance.CutOff(control.followTarget.GetInstanceID());
+                }
+            }
+            else if (control.headway > 0.6f)
+                isCutOff = false;
         }
+        
     }
 
     private int GetCurrentLane()
@@ -71,18 +83,16 @@ public class SimpleVehicle : MonoBehaviour
         float z = transform.localPosition.z;
         float dz = Mathf.Infinity;
 
-        foreach(VehicleControl vehicle in vehicles)
+        foreach (VehicleControl vehicle in vehicles)
         {
             if (vehicle == control || vehicle.currentLane != currentLane || !vehicle.isActiveAndEnabled)
                 continue;
 
-            if (vehicle.transform.localPosition.z > z && Math.Abs(vehicle.transform.localPosition.z - z) <= m_MaxFollowDistance)
+            float distance = vehicle.transform.localPosition.z - z;
+            if (Mathf.Sign(distance) == 1 && (Math.Abs(distance) <= m_MaxFollowDistance) && (Math.Abs(distance) < dz))
             {
-                if (Math.Abs(vehicle.transform.localPosition.z - z) < dz)
-                {
-                    target = vehicle;
-                    dz = Math.Abs(vehicle.transform.localPosition.z - z);
-                }
+                target = vehicle;
+                dz = Math.Abs(distance);
             }
         }
 

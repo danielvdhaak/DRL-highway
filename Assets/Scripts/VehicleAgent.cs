@@ -15,13 +15,13 @@ using Unity.MLAgents.Sensors;
 public class VehicleAgent : Agent
 {
     [Header("ML-Agents")]
-    [SerializeField] private RaySensor lidar;
-    [SerializeField] private RaySensor sideRadarL;
-    [SerializeField] private RaySensor sideRadarR;
-    [SerializeField] private RaySensor frontRadarL;
-    [SerializeField] private RaySensor frontRadarR;
-    [SerializeField] private RaySensor backRadarL;
-    [SerializeField] private RaySensor backRadarR;
+    //[SerializeField] private RaySensor lidar;
+    //[SerializeField] private RaySensor sideRadarL;
+    //[SerializeField] private RaySensor sideRadarR;
+    //[SerializeField] private RaySensor frontRadarL;
+    //[SerializeField] private RaySensor frontRadarR;
+    //[SerializeField] private RaySensor backRadarL;
+    //[SerializeField] private RaySensor backRadarR;
     private EnvironmentManager environment;
     private VehicleControl control;
     private Transform Target;
@@ -35,15 +35,25 @@ public class VehicleAgent : Agent
     private const int k_Cruise = 2;
 
     [Header("Safety module")]
+    public bool applyToHeuristic = false;
     public float minClearance = 5f;
     public float minTTC = 1.5f;
+
+    public VehicleControl leftFront;
+    public bool isClearToLeftFront;
+    public VehicleControl rightFront;
+    public bool isClearToRightFront;
+    public VehicleControl leftBack;
+    public bool isClearToLeftBack;
+    public VehicleControl rightBack;
+    public bool isClearToRightBack;
 
     [Header("Reward function")]
     public float r_Speed = 0.01f;
     public float r_RightDriving = 0.001f;
+    public float r_LaneChange = -0.05f;
     public float r_Collision = -1f;
     public float r_HeadwayViolation = -0.005f;
-    public float r_LaneChange = -0.05f;
     public float r_DangerousDriving = -0.005f;
 
     [Header("Parameters")]
@@ -69,6 +79,8 @@ public class VehicleAgent : Agent
         laneCenters = environment.centerList;
 
         control = GetComponent<VehicleControl>();
+
+        Events.Instance.OnCutOff += OnCutOff;
 
         m_Recorder = Academy.Instance.StatsRecorder;
     }
@@ -96,6 +108,15 @@ public class VehicleAgent : Agent
 
     private void FixedUpdate()
     {
+        //leftFront = GetClosestVehicle(environment.trafficList, control.currentLane - 1, 1, 100f);
+        //isClearToLeftFront = IsClearTo(leftFront);
+        //rightFront = GetClosestVehicle(environment.trafficList, control.currentLane + 1, 1, 100f);
+        //isClearToRightFront = IsClearTo(rightFront);
+        //leftBack = GetClosestVehicle(environment.trafficList, control.currentLane - 1, -1, 100f);
+        //isClearToLeftBack = IsClearTo(leftBack);
+        //rightBack = GetClosestVehicle(environment.trafficList, control.currentLane + 1, -1, 100f);
+        //isClearToRightBack = IsClearTo(rightBack);
+
         // Only request a new decision if agent is not performing a lane change
         if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
             RequestDecision();
@@ -117,7 +138,6 @@ public class VehicleAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        //sensor.AddObservation(transform.localPosition.z / Target.localPosition.z);
         sensor.AddObservation((control.velocity - minVelocity) / (targetVelocity - minVelocity));
         sensor.AddObservation(control.headway);
 
@@ -203,9 +223,6 @@ public class VehicleAgent : Agent
         if (control.headway < 0.95f)
             AddReward(r_HeadwayViolation);
 
-        // Implement TTC violations here! If it does not work, we have to RequestAction() each FixedUpdate() and implement the mask
-
-
         // Reward for driving as much right as possible
         AddReward(control.currentLane * r_RightDriving);
 
@@ -236,9 +253,38 @@ public class VehicleAgent : Agent
         actionsOut[0] = k_KeepLane;
 
         if (Input.GetKey(KeyCode.A))
-            actionsOut[0] = k_LeftLaneChange;
+        {
+            if (applyToHeuristic)
+            {
+                if (control.currentLane != 1)
+                {
+                    VehicleControl front = GetClosestVehicle(environment.trafficList, control.currentLane - 1, 1, 100f);
+                    VehicleControl back = GetClosestVehicle(environment.trafficList, control.currentLane - 1, -1, 100f);
+
+                    if (IsClearTo(front) && IsClearTo(back))
+                        actionsOut[0] = k_LeftLaneChange;
+                }
+            }
+            else
+                actionsOut[0] = k_LeftLaneChange;
+        }
+
         if (Input.GetKey(KeyCode.D))
-            actionsOut[0] = k_RightLaneChange;
+        {
+            if (applyToHeuristic)
+            {
+                if (control.currentLane != laneCenters.Count)
+                {
+                    VehicleControl front = GetClosestVehicle(environment.trafficList, control.currentLane + 1, 1, 100f);
+                    VehicleControl back = GetClosestVehicle(environment.trafficList, control.currentLane + 1, -1, 100f);
+
+                    if (IsClearTo(front) && IsClearTo(back))
+                        actionsOut[0] = k_RightLaneChange;
+                }
+            }
+            else
+                actionsOut[0] = k_RightLaneChange;
+        }
     }
 
     private int GetCurrentLane()
@@ -281,7 +327,7 @@ public class VehicleAgent : Agent
                 continue;
 
             float distance = vehicle.transform.localPosition.z - z;
-            if (Mathf.Sign(distance) == dir && Math.Abs(distance) <= maxDis)
+            if (Mathf.Sign(distance) == dir && (Math.Abs(distance) <= maxDis) && (Math.Abs(distance) < dz))
             {
                 target = vehicle;
                 dz = Math.Abs(distance);
@@ -305,12 +351,12 @@ public class VehicleAgent : Agent
             case -1:
                 // Vehicle is behind
                 gap = environment.transform.InverseTransformDirection(control.backOffset.position - vehicle.frontOffset.position).z;
-                TTC = gap / (vehicle.velocity - control.velocity);
+                TTC = gap / ((vehicle.velocity - control.velocity) / 3.6f);
                 break;
             case 1:
                 // Vehicle is in front
                 gap = environment.transform.InverseTransformDirection(vehicle.backOffset.position - control.frontOffset.position).z;
-                TTC = gap / (control.velocity - vehicle.velocity);
+                TTC = gap / ((control.velocity - vehicle.velocity) / 3.6f);
                 break;
             default:
                 return true;
@@ -329,13 +375,11 @@ public class VehicleAgent : Agent
             return true;
     }
 
-    // Will become obsolete!!
     private void OnCutOff(int InstanceID)
     {
         if (InstanceID == control.GetInstanceID())
         {
-            Debug.Log("Cut off vehicle!");
-            AddReward(-0.005f);
+            AddReward(r_DangerousDriving);
         }   
     }
 
@@ -343,7 +387,6 @@ public class VehicleAgent : Agent
     {
         if (other.gameObject.CompareTag("Target"))
         {
-            //SetReward(5f);
             EndEpisode();
         }
     }

@@ -6662,12 +6662,28 @@ MonoBehaviour:
   frontRadarR: {fileID: 407669904420991928}
   backRadarL: {fileID: 1058251311399037826}
   backRadarR: {fileID: 5656388863190761725}
-  maskHeuristic: 1
+  observationGrid: []
+  laneObs: 
+  applyToHeuristic: 0
+  minClearance: 3
+  minTTC: 1
+  leftFront: {fileID: 0}
+  isClearToLeftFront: 0
+  rightFront: {fileID: 0}
+  isClearToRightFront: 0
+  leftBack: {fileID: 0}
+  isClearToLeftBack: 0
+  rightBack: {fileID: 0}
+  isClearToRightBack: 0
+  r_Speed: 0.01
+  r_RightDriving: 0.001
+  r_Collision: -1
+  r_HeadwayViolation: -0.005
+  r_LaneChange: -0.05
+  r_DangerousDriving: -0.005
   targetLane: 3
   targetVelocity: 120
   minVelocity: 80
-  observationGrid: []
-  laneObs: 
 --- !u!114 &7371215330335361717
 MonoBehaviour:
   m_ObjectHideFlags: 0
