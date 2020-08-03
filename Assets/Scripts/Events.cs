@@ -50,4 +50,5 @@ public class Events : MonoBehaviour
     {
         OnNewEpisode?.Invoke();
     }
+
 }

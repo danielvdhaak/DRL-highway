@@ -50,4 +50,5 @@ public class Logger : MonoBehaviour
     {
         laneChangeCount++;
     }
+
 }

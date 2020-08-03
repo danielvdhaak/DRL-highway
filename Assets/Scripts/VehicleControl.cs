@@ -114,7 +114,7 @@ public class VehicleControl : MonoBehaviour
             float gap = environment.transform.InverseTransformDirection(followTarget.backOffset.position - frontOffset.position).z;
             headway = Mathf.Clamp(gap / spacing, 0f, 1f);
             Debug.DrawLine(frontOffset.position, frontOffset.position + frontOffset.forward * spacing, Color.green);
-            Debug.DrawLine(frontOffset.position, frontOffset.position + frontOffset.forward * 0.4f * spacing, Color.red);
+            Debug.DrawLine(frontOffset.position, frontOffset.position + frontOffset.forward * 0.6f * spacing, Color.red);
             
             if (isFollowing)
                 (mTorque, bTorque) = CalcTorques(velocity, targetVelocity, (gap - spacing), followTarget.velocity, followTarget.throttle);

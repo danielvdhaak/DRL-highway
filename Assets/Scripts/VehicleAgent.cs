@@ -39,15 +39,6 @@ public class VehicleAgent : Agent
     public float minClearance = 5f;
     public float minTTC = 1.5f;
 
-    public VehicleControl leftFront;
-    public bool isClearToLeftFront;
-    public VehicleControl rightFront;
-    public bool isClearToRightFront;
-    public VehicleControl leftBack;
-    public bool isClearToLeftBack;
-    public VehicleControl rightBack;
-    public bool isClearToRightBack;
-
     [Header("Reward function")]
     public float r_Speed = 0.01f;
     public float r_RightDriving = 0.001f;
@@ -108,15 +99,6 @@ public class VehicleAgent : Agent
 
     private void FixedUpdate()
     {
-        //leftFront = GetClosestVehicle(environment.trafficList, control.currentLane - 1, 1, 100f);
-        //isClearToLeftFront = IsClearTo(leftFront);
-        //rightFront = GetClosestVehicle(environment.trafficList, control.currentLane + 1, 1, 100f);
-        //isClearToRightFront = IsClearTo(rightFront);
-        //leftBack = GetClosestVehicle(environment.trafficList, control.currentLane - 1, -1, 100f);
-        //isClearToLeftBack = IsClearTo(leftBack);
-        //rightBack = GetClosestVehicle(environment.trafficList, control.currentLane + 1, -1, 100f);
-        //isClearToRightBack = IsClearTo(rightBack);
-
         // Only request a new decision if agent is not performing a lane change
         if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
             RequestDecision();

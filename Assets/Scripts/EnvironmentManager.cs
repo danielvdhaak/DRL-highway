@@ -44,10 +44,11 @@ public class EnvironmentManager : MonoBehaviour
     public TextMeshPro cumulativeRewardText;
 
     [Header("Environment parameters")]
-    private int numberOfLanes;
     public float laneWidth = 3.5f;
+    private int numberOfLanes;
     [SerializeField] private int trafficFlow = 4000;
     private int density;
+    [SerializeField] private float amountOfKms = 1f;
     [SerializeField] private float minHeadway = 1f;
 
     [Header("Traffic")]
@@ -106,13 +107,13 @@ public class EnvironmentManager : MonoBehaviour
         DespawnAll();
 
         // Set traffic flow from curriculum
-        trafficFlow = (int)Academy.Instance.EnvironmentParameters.GetWithDefault("traffic_flow", 6000f);
+        //trafficFlow = (int)Academy.Instance.EnvironmentParameters.GetWithDefault("traffic_flow", 6000f);
 
         // For each lane
         density = 0;
         foreach (TrafficParameters lane in trafficParameters)
         {
-            lane.laneDensity = (int)Math.Ceiling((trafficFlow * lane.trafficFraction) / lane.meanVehicleSpeed);
+            lane.laneDensity = (int)Math.Ceiling((trafficFlow * lane.trafficFraction * amountOfKms) / lane.meanVehicleSpeed);
             density += lane.laneDensity;
             GenerateSpawnParameters(lane);
         }
@@ -146,7 +147,7 @@ public class EnvironmentManager : MonoBehaviour
     {
         lane.spawnParameters = new List<TrafficParameters.SpawnParameters>();
 
-        float meanHeadway = 3600 / (trafficFlow * lane.trafficFraction);
+        float meanHeadway = 3600f / (trafficFlow * lane.trafficFraction);
 
         float pos = randomNumber.Uniform(0f, 20f);
         float speed = randomNumber.Gaussian(lane.meanVehicleSpeed, lane.stdVehicleSpeed);

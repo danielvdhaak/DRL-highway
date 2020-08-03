@@ -103,8 +103,14 @@
     <Reference Include="Unity.Burst.Editor">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Recorder.Editor">
+      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Recorder.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Recorder">
+      <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>D:/GitHub/DRL-highway/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>

@@ -58,14 +58,15 @@ public class SimpleVehicle : MonoBehaviour
         {
             if (control.headway <= 0.6f || control.throttle <= -500f)
             {
-                if (!isCutOff)
-                {
-                    isCutOff = true;
-                    Events.Instance.CutOff(control.followTarget.GetInstanceID());
-                }
+                Events.Instance.CutOff(control.followTarget.GetInstanceID());
+            //    if (!isCutOff)
+            //    {
+            //        isCutOff = true;
+            //        Events.Instance.CutOff(control.followTarget.GetInstanceID());
+            //    }
             }
-            else if (control.headway > 0.6f)
-                isCutOff = false;
+            //else if (control.headway > 0.6f)
+            //    isCutOff = false;
         }
         
     }

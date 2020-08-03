@@ -124,10 +124,10 @@ public class RaySensor : MonoBehaviour
         if (!displayGizmos)
             return;
 
-        if (!EditorApplication.isPlaying)
-        {
-            GetOutput();
-        }
+        //if (!EditorApplication.isPlaying)
+        //{
+        //    GetOutput();
+        //}
 
         for (int i = 0; i < data.sensorPoints.Length; i++)
         {
