@@ -15,13 +15,6 @@ using Unity.MLAgents.Sensors;
 public class VehicleAgent : Agent
 {
     [Header("ML-Agents")]
-    //[SerializeField] private RaySensor lidar;
-    //[SerializeField] private RaySensor sideRadarL;
-    //[SerializeField] private RaySensor sideRadarR;
-    //[SerializeField] private RaySensor frontRadarL;
-    //[SerializeField] private RaySensor frontRadarR;
-    //[SerializeField] private RaySensor backRadarL;
-    //[SerializeField] private RaySensor backRadarR;
     private EnvironmentManager environment;
     private VehicleControl control;
     private Transform Target;
@@ -31,8 +24,6 @@ public class VehicleAgent : Agent
     private const int k_LeftLaneChange = 1;
     private const int k_KeepLane = 2;
     private const int k_RightLaneChange = 3;
-    private const int k_Follow = 1;
-    private const int k_Cruise = 2;
 
     [Header("Safety module")]
     public bool applyToHeuristic = false;
@@ -40,8 +31,7 @@ public class VehicleAgent : Agent
     public float minTTC = 1.5f;
 
     [Header("Reward function")]
-    public float r_Speed = 0.01f;
-    public float r_RightDriving = 0.001f;
+    public float r_Speed = 0.001f;
     public float r_LaneChange = -0.05f;
     public float r_Collision = -1f;
     public float r_HeadwayViolation = -0.005f;
@@ -100,13 +90,10 @@ public class VehicleAgent : Agent
     private void FixedUpdate()
     {
         // Only request a new decision if agent is not performing a lane change
-        if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
-            RequestDecision();
+        //if (control._TrackingMode == VehicleControl.TrackingMode.keepLane)
+        //    RequestDecision();
 
-        // Regulate car controls
-        control.currentLane = GetCurrentLane();
-        control.laneCenter = laneCenters[targetLane - 1];
-        control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1, m_MaxFollowDistance);
+
     }
 
     private void Update()
@@ -126,8 +113,8 @@ public class VehicleAgent : Agent
         laneObs = new List<bool>();
         for (int i = 0; i < laneCenters.Count; i++)
         {
-            sensor.AddObservation(control.currentLane == i + 1 ? true : false);
-            laneObs.Add(control.currentLane == i + 1 ? true : false);
+            sensor.AddObservation(GetCurrentLane() == i + 1 ? 1.0f : 0.0f);
+            laneObs.Add(GetCurrentLane() == i + 1 ? true : false);
         }
 
         observationGrid = GetObservationGrid(environment.trafficList);
@@ -139,6 +126,11 @@ public class VehicleAgent : Agent
 
     public override void CollectDiscreteActionMasks(DiscreteActionMasker actionMasker)
     {
+        if (control._TrackingMode == VehicleControl.TrackingMode.leftLaneChange)
+            actionMasker.SetMask(0, new int[] { k_KeepLane, k_RightLaneChange });
+        if (control._TrackingMode == VehicleControl.TrackingMode.rightLaneChange)
+            actionMasker.SetMask(0, new int[] { k_KeepLane, k_LeftLaneChange });
+
         // Ensures the car does not crash into the barriers
         if (control.currentLane == 1)
             actionMasker.SetMask(0, new int[] { k_LeftLaneChange });
@@ -162,35 +154,6 @@ public class VehicleAgent : Agent
             if (!IsClearTo(front) || !IsClearTo(back))
                 actionMasker.SetMask(0, new int[] { k_RightLaneChange });
         }
-
-
-        //// Ensures no lane change when warnings are on
-        //foreach (RaySensor raySensor in new RaySensor[] { sideRadarL, frontRadarL, backRadarL })
-        //{
-        //    SensorData data = raySensor.GetData();
-        //    foreach (RayPoint point in data.sensorPoints)
-        //    {
-        //        if (point.isHit)
-        //        {
-        //            actionMasker.SetMask(0, new int[] { k_LeftLaneChange });
-        //            break;
-        //        }
-        //    }
-        //}
-
-        //// Ensures no lane change when warnings are on
-        //foreach (RaySensor raySensor in new RaySensor[] { sideRadarR, frontRadarR, backRadarR })
-        //{
-        //    SensorData data = raySensor.GetData();
-        //    foreach (RayPoint point in data.sensorPoints)
-        //    {
-        //        if (point.isHit)
-        //        {
-        //            actionMasker.SetMask(0, new int[] { k_RightLaneChange });
-        //            break;
-        //        }
-        //    }
-        //}
     }
 
     public override void OnActionReceived(float[] vectorAction)
@@ -205,29 +168,37 @@ public class VehicleAgent : Agent
         if (control.headway < 0.95f)
             AddReward(r_HeadwayViolation);
 
-        // Reward for driving as much right as possible
-        AddReward(control.currentLane * r_RightDriving);
-
         // Lane change initiation
         switch (action)
         {
             case k_LeftLaneChange:
-                control._TrackingMode = VehicleControl.TrackingMode.leftLaneChange;
-                if (targetLane != 1)
-                    targetLane--;
-                Events.Instance.LaneChange();
-                SetReward(r_LaneChange);
+                if (control._TrackingMode != VehicleControl.TrackingMode.leftLaneChange)
+                {
+                    control._TrackingMode = VehicleControl.TrackingMode.leftLaneChange;
+                    if (targetLane != 1)
+                        targetLane--;
+                    Events.Instance.LaneChange();
+                }
+                AddReward(r_LaneChange);
                 break;
             case k_RightLaneChange:
-                control._TrackingMode = VehicleControl.TrackingMode.rightLaneChange;
-                if (targetLane != laneCenters.Count)
-                    targetLane++;
-                Events.Instance.LaneChange();
-                SetReward(r_LaneChange);
+                if (control._TrackingMode != VehicleControl.TrackingMode.rightLaneChange)
+                {
+                    control._TrackingMode = VehicleControl.TrackingMode.rightLaneChange;
+                    if (targetLane != laneCenters.Count)
+                        targetLane++;
+                    Events.Instance.LaneChange();
+                }
+                AddReward(r_LaneChange);
                 break;
             default:
                 break;
         }
+
+        // Regulate car controls
+        control.currentLane = GetCurrentLane();
+        control.laneCenter = laneCenters[targetLane - 1];
+        control.followTarget = GetClosestVehicle(environment.trafficList, targetLane, 1, m_MaxFollowDistance);
     }
 
     public override void Heuristic(float[] actionsOut)
@@ -290,7 +261,9 @@ public class VehicleAgent : Agent
                 proximity.Add((pos - position.z) / m_GridSize);
                 float normVel = ((inProx?.velocity ?? control.velocity) - minVelocity) / (targetVelocity - minVelocity);
                 float agentVel = (control.velocity - minVelocity) / (targetVelocity - minVelocity);
+                //float vel = (inProx?.velocity ?? control.velocity) - control.velocity;
                 proximity.Add(normVel - agentVel);
+                //proximity.Add((vel - minVelocity) / (targetVelocity - minVelocity));
             }
         }
 

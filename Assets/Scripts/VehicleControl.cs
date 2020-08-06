@@ -65,6 +65,10 @@ public class VehicleControl : MonoBehaviour
     private readonly int k_RightLC = 1;
     private readonly int k_LeftLC = -1;
 
+    public int Rank { get; set; }
+    public float Compare { get; set; }
+    private VehicleRanker ranker;
+
     public TrackingMode _TrackingMode
     {
         get { return trackingMode; }
@@ -96,6 +100,8 @@ public class VehicleControl : MonoBehaviour
         // Calculate wheel seperation w and base l
         w = Math.Abs(wheelFrontLeft.transform.localPosition.x - wheelFrontRight.transform.localPosition.x);
         l = Math.Abs(wheelFrontLeft.transform.localPosition.z - wheelBackLeft.transform.localPosition.z);
+
+        ranker = FindObjectOfType<VehicleRanker>();
     }
 
     private void OnEnable()

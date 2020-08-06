@@ -6654,18 +6654,17 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 10000
+  MaxStep: 5000
   observationGrid: []
   laneObs: 
-  applyToHeuristic: 0
+  applyToHeuristic: 1
   minClearance: 2
   minTTC: 1
   r_Speed: 0.01
-  r_RightDriving: 0
   r_LaneChange: -0.05
   r_Collision: -1
   r_HeadwayViolation: -0.005
-  r_DangerousDriving: -0.05
+  r_DangerousDriving: -0.005
   targetLane: 3
   targetVelocity: 120
   minVelocity: 80
