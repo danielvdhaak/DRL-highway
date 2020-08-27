@@ -16,57 +16,50 @@ public class SimpleVehicle : MonoBehaviour
     private VehicleControl control;
     private EnvironmentManager environment;
 
-    private float m_MaxFollowDistance = 100f;
+    // Properties
+    public int TargetLane { get; set; }
+    public float TargetVelocity { get; set; }
 
-    [Header("Parameters")]
-    public int targetLane;
-    public float initialVelocity;
-    public float targetVelocity;
+    [Header("Appearance")]
+    [SerializeField] private MeshRenderer[] bodyMeshes;
+    [SerializeField] private Color[] colors;
+
+    private const float m_MaxFollowDistance = 100f;
     private List<float> laneCenters;
-
-    private bool isCutOff;
-
     private int currentLane;
-    private float center;
-    private float z;
-    private float dz;
+
+    private RandomNumber randomNumber = new RandomNumber();
 
     private void Awake()
     {
         environment = GetComponentInParent<EnvironmentManager>();
-        laneCenters = environment.centerList;
+        laneCenters = environment.LaneCenters;
 
         control = GetComponent<VehicleControl>();
+
+        Color color = colors[randomNumber.Next(colors.Length - 1)];
+        foreach (MeshRenderer mesh in bodyMeshes)
+        {
+            mesh.material.color = color;
+        }
     }
 
     private void OnEnable()
     {
-        isCutOff = false;
-        control.laneCenter = laneCenters[targetLane - 1];
-        control.currentLane = targetLane;
-        control.targetVelocity = targetVelocity;
-        control.SetInitialVelocity(initialVelocity);
+        control.LaneCenter = laneCenters[TargetLane - 1];
+        control.Lane = TargetLane;
     }
 
     private void FixedUpdate()
     {
         currentLane = GetCurrentLane();
-        control.currentLane = currentLane;
-        control.followTarget = GetClosestVehicle(environment.trafficList);
+        control.Lane = currentLane;
+        control.followTarget = GetClosestVehicle(environment.Traffic);
 
-        if (control.followTarget != null && control.followTarget?._TrackingMode != VehicleControl.TrackingMode.keepLane)
+        if (control.followTarget != null && control.followTarget?.TrackingMode != VehicleControl._TrackingMode.keepLane)
         {
-            if (control.headway <= 0.6f || control.throttle <= -500f)
-            {
+            if (control.Headway <= 0.6f || control.Throttle <= -500f)
                 Events.Instance.CutOff(control.followTarget.GetInstanceID());
-            //    if (!isCutOff)
-            //    {
-            //        isCutOff = true;
-            //        Events.Instance.CutOff(control.followTarget.GetInstanceID());
-            //    }
-            }
-            //else if (control.headway > 0.6f)
-            //    isCutOff = false;
         }
         
     }
@@ -86,7 +79,7 @@ public class SimpleVehicle : MonoBehaviour
 
         foreach (VehicleControl vehicle in vehicles)
         {
-            if (vehicle == control || vehicle.currentLane != currentLane || !vehicle.isActiveAndEnabled)
+            if (vehicle == control || vehicle.Lane != currentLane || !vehicle.isActiveAndEnabled)
                 continue;
 
             float distance = vehicle.transform.localPosition.z - z;
@@ -111,7 +104,7 @@ public class SimpleVehicle : MonoBehaviour
         if (other.gameObject.CompareTag("Finish"))
         {
             environment.Despawn(gameObject);
-            environment.Spawn(new Vector3(laneCenters[targetLane - 1], 0f, 0f), targetLane, targetVelocity);
+            environment.Spawn(new Vector3(laneCenters[TargetLane - 1], 0f, 0f), TargetLane, TargetVelocity);
         }
     }
 

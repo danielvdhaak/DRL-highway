@@ -1,0 +1,268 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0463e48d1dd4e40ac0799bbd065e81, type: 3}
+  m_Name: Original 1
+  m_EditorClassIdentifier: 
+  flow: 4000
+  minHeadway: 2
+  targetVelocity: 120
+  trafficParameters:
+  - trafficFraction: 0.2
+    meanVehicleSpeed: 112
+    stdVehicleSpeed: 6
+    laneDensity: 15
+    spawnParameters:
+    - pos: 12.827768
+      speed: 110.100464
+      headway: 2.604702
+    - pos: 92.48858
+      speed: 109.40353
+      headway: 4.542876
+    - pos: 230.54597
+      speed: 108.689835
+      headway: 3.7143714
+    - pos: 342.68887
+      speed: 109.583435
+      headway: 2.2113657
+    - pos: 410.0025
+      speed: 113.39792
+      headway: 2.5809999
+    - pos: 491.30252
+      speed: 130.17557
+      headway: 3.27063
+    - pos: 609.5681
+      speed: 117.33902
+      headway: 2.2206404
+    - pos: 681.94806
+      speed: 113.7053
+      headway: 5.8686643
+    - pos: 867.30865
+      speed: 122.18862
+      headway: 4.8336563
+    - pos: 1031.3691
+      speed: 114.25697
+      headway: 13.531189
+    - pos: 1460.8226
+      speed: 112.40311
+      headway: 6.1954513
+    - pos: 1654.2638
+      speed: 106.73748
+      headway: 4.135434
+    - pos: 1776.8765
+      speed: 113.32866
+      headway: 7.250773
+    - pos: 2005.1321
+      speed: 116.66056
+      headway: 6.300565
+    - pos: 2209.3064
+      speed: 119.29368
+      headway: 2.6881404
+  - trafficFraction: 0.2
+    meanVehicleSpeed: 112
+    stdVehicleSpeed: 6
+    laneDensity: 15
+    spawnParameters:
+    - pos: 16.793007
+      speed: 102.58544
+      headway: 2.024857
+    - pos: 74.49325
+      speed: 119.08574
+      headway: 2.2414806
+    - pos: 148.64001
+      speed: 108.380775
+      headway: 2.2399433
+    - pos: 216.07524
+      speed: 113.457504
+      headway: 3.2351649
+    - pos: 318.0346
+      speed: 120.34264
+      headway: 4.1912684
+    - pos: 458.1425
+      speed: 119.12248
+      headway: 4.0214424
+    - pos: 591.2103
+      speed: 116.06446
+      headway: 4.458104
+    - pos: 734.9402
+      speed: 112.8798
+      headway: 6.357492
+    - pos: 934.28253
+      speed: 105.91434
+      headway: 6.4030557
+    - pos: 1122.6646
+      speed: 112.49269
+      headway: 2.639188
+    - pos: 1205.1338
+      speed: 109.90562
+      headway: 3.388245
+    - pos: 1308.5747
+      speed: 107.09775
+      headway: 2.9764695
+    - pos: 1397.1228
+      speed: 125.99177
+      headway: 5.55637
+    - pos: 1591.583
+      speed: 106.67213
+      headway: 2.8403325
+    - pos: 1675.7454
+      speed: 113.99559
+      headway: 12.79246
+  - trafficFraction: 0.2
+    meanVehicleSpeed: 112
+    stdVehicleSpeed: 6
+    laneDensity: 15
+    spawnParameters:
+    - pos: 0.52767277
+      speed: 116.34316
+      headway: 11.343258
+    - pos: 367.11392
+      speed: 108.39303
+      headway: 4.183302
+    - pos: 493.0697
+      speed: 117.09273
+      headway: 5.220765
+    - pos: 662.879
+      speed: 115.80994
+      headway: 4.253185
+    - pos: 799.70154
+      speed: 107.30506
+      headway: 3.9448485
+    - pos: 917.28546
+      speed: 120.82171
+      headway: 8.26217
+    - pos: 1194.577
+      speed: 109.57039
+      headway: 2.5037172
+    - pos: 1270.7808
+      speed: 107.40165
+      headway: 2.2280328
+    - pos: 1337.2515
+      speed: 101.76265
+      headway: 3.4035733
+    - pos: 1433.4617
+      speed: 115.21317
+      headway: 10.745464
+    - pos: 1777.3558
+      speed: 123.206894
+      headway: 3.463258
+    - pos: 1895.8828
+      speed: 118.7266
+      headway: 5.347748
+    - pos: 2072.2495
+      speed: 114.90764
+      headway: 11.798621
+    - pos: 2448.8472
+      speed: 107.199745
+      headway: 4.1896253
+    - pos: 2573.6045
+      speed: 114.277435
+      headway: 8.4879055
+  - trafficFraction: 0.2
+    meanVehicleSpeed: 112
+    stdVehicleSpeed: 6
+    laneDensity: 15
+    spawnParameters:
+    - pos: 4.436989
+      speed: 104.64203
+      headway: 8.183973
+    - pos: 242.32243
+      speed: 109.767845
+      headway: 4.923139
+    - pos: 392.4342
+      speed: 115.62234
+      headway: 3.746845
+    - pos: 512.7728
+      speed: 121.71912
+      headway: 5.6529627
+    - pos: 703.9044
+      speed: 115.40758
+      headway: 8.511048
+    - pos: 976.7487
+      speed: 106.26722
+      headway: 9.395915
+    - pos: 1254.1036
+      speed: 112.813675
+      headway: 3.6267056
+    - pos: 1367.7542
+      speed: 103.95786
+      headway: 2.051958
+    - pos: 1427.0089
+      speed: 122.31337
+      headway: 9.864384
+    - pos: 1762.1606
+      speed: 107.71188
+      headway: 5.280235
+    - pos: 1920.1451
+      speed: 109.570335
+      headway: 2.2337644
+    - pos: 1988.1324
+      speed: 108.00541
+      headway: 3.9047153
+    - pos: 2105.2798
+      speed: 112.250626
+      headway: 3.7792406
+    - pos: 2223.1194
+      speed: 108.5422
+      headway: 2.1269372
+    - pos: 2287.2478
+      speed: 109.19079
+      headway: 10.763929
+  - trafficFraction: 0.2
+    meanVehicleSpeed: 112
+    stdVehicleSpeed: 6
+    laneDensity: 15
+    spawnParameters:
+    - pos: 13.965509
+      speed: 116.91661
+      headway: 3.4889023
+    - pos: 127.274025
+      speed: 128.4417
+      headway: 4.765636
+    - pos: 297.3036
+      speed: 120.38774
+      headway: 2.0011425
+    - pos: 364.22388
+      speed: 120.71242
+      headway: 3.2932084
+    - pos: 474.6492
+      speed: 103.20734
+      headway: 2.9474373
+    - pos: 559.14844
+      speed: 110.52657
+      headway: 2.752264
+    - pos: 643.64795
+      speed: 118.388756
+      headway: 3.4095597
+    - pos: 755.7739
+      speed: 110.16521
+      headway: 4.1482716
+    - pos: 882.71704
+      speed: 106.84851
+      headway: 3.645232
+    - pos: 990.908
+      speed: 106.214294
+      headway: 2.7395012
+    - pos: 1071.7341
+      speed: 111.71021
+      headway: 3.4020903
+    - pos: 1177.3031
+      speed: 120.28638
+      headway: 6.242707
+    - pos: 1385.8899
+      speed: 113.95255
+      headway: 4.3966002
+    - pos: 1525.0576
+      speed: 107.041916
+      headway: 4.6497884
+    - pos: 1663.3138
+      speed: 116.00991
+      headway: 4.552864

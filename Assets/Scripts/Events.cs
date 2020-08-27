@@ -51,4 +51,10 @@ public class Events : MonoBehaviour
         OnNewEpisode?.Invoke();
     }
 
+    public event Action<int, int> OnOvertake;
+    public void Overtake(int InstanceID, int dir)
+    {
+        OnOvertake?.Invoke(InstanceID, dir);
+    }
+
 }

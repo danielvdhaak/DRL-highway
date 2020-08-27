@@ -10,104 +10,104 @@ using UnityEngine;
 using TMPro;
 using Unity.MLAgents;
 
-public class EnvironmentManager : MonoBehaviour
+[Serializable]
+public class TrafficParameters
 {
     [Serializable]
-    public class TrafficParameters
+    public class SpawnParameters
     {
-        [Serializable]
-        public class SpawnParameters
+        public float pos;
+        public float speed;
+        public float headway;
+
+        public SpawnParameters(float pos, float speed, float headway)
         {
-            public float pos;
-            public float speed;
-            public float headway;
-
-            public SpawnParameters(float pos, float speed, float headway)
-            {
-                this.pos = pos;
-                this.speed = speed;
-                this.headway = headway;
-            }
+            this.pos = pos;
+            this.speed = speed;
+            this.headway = headway;
         }
-
-        public float trafficFraction;
-        public float meanVehicleSpeed;
-        public float stdVehicleSpeed;
-        public int laneDensity;
-        public List<SpawnParameters> spawnParameters;
     }
 
-    private RandomNumber randomNumber = new RandomNumber();
+    public float trafficFraction;
+    public float meanVehicleSpeed;
+    public float stdVehicleSpeed;
+    public int laneDensity;
+    public List<SpawnParameters> spawnParameters;
+}
+
+public class EnvironmentManager : MonoBehaviour
+{
+    // Properties
+    public int NumberOfLanes { get { return numberOfLanes; } }
+    public float LaneWidth { get { return laneWidth; } }
+    public List<float> LaneCenters { get; private set; }
+    public List<VehicleControl> Traffic { get; private set; }
 
     [Header("ML-Agents")]
     public VehicleAgent agent;
-    public TextMeshPro cumulativeRewardText;
+    private int targetVelocity;
+    private VehicleRanker ranker;
 
     [Header("Environment parameters")]
     public float laneWidth = 3.5f;
-    private int numberOfLanes;
-    [SerializeField] private int trafficFlow = 4000;
-    private int density;
+    [SerializeField] private int numberOfLanes;
+    private int trafficFlow = 4000;
     [SerializeField] private float amountOfKms = 1f;
-    [SerializeField] private float minHeadway = 1f;
+    private float minHeadway = 1f;
 
     [Header("Traffic")]
+    private int density;
+    [SerializeField] private List<TrafficTemplate> trafficTemplates = new List<TrafficTemplate>();
     [SerializeField] private List<GameObject> vehiclePrefabs = new List<GameObject>();
-    [SerializeField] private TrafficParameters[] trafficParameters;
-    //private List<GameObject> vehicleList;
-    public List<VehicleControl> trafficList;
-    public List<float> centerList;
+    private TrafficParameters[] trafficParameters;
     private Queue<GameObject> vehiclePool;
+
+    private RandomNumber randomNumber = new RandomNumber();
 
     private void Awake()
     {
-        numberOfLanes = trafficParameters.Length;
-        centerList = DetermineLaneCenters();
-
-        //// Determine total density and density per lane
-        //density = 0;
-        //foreach (TrafficParameters laneData in trafficParameters)
-        //{
-        //    laneData.laneDensity = (int)Math.Ceiling((trafficFlow * laneData.trafficFraction) / laneData.meanVehicleSpeed);
-        //    density += laneData.laneDensity;
-        //}
-
-        //// Seed vehicle lists (implement queue??)
-        //vehicleList = new List<GameObject>();
-        //trafficList = new List<VehicleControl>();
-        //trafficList.Add(agent.GetComponent<VehicleControl>());
-        //for (int i = 0; i < density - 1; i++)
-        //{
-        //    GameObject obj = vehiclePrefabs[randomNumber.Next(vehiclePrefabs.Count - 1)];
-        //    obj.SetActive(false);
-        //    GameObject instance = Instantiate(obj, transform);
-        //    VehicleControl vc = instance.GetComponent<VehicleControl>();
-        //    vehicleList.Add(instance);
-        //    trafficList.Add(vc);
-        //}
-
+        // Initialize lists & arrays
+        LaneCenters = DetermineLaneCenters();
         vehiclePool = new Queue<GameObject>();
-        trafficList = new List<VehicleControl>();
+        Traffic = new List<VehicleControl>();
+
+        // Initialize vehicle ranker
+        ranker = FindObjectOfType<VehicleRanker>();
     }
 
+    private void FixedUpdate()
+    {
+        ranker.UpdateRanks(Traffic);
+    }
+
+    /// <summary>
+    /// Returns a list of local lateral lane center coordinates.
+    /// </summary>
     private List<float> DetermineLaneCenters()
     {
         List<float> list = new List<float>();
-        for (int i = 0; i < trafficParameters.Length; i++)
+        for (int i = 0; i < numberOfLanes; i++)
         {
-            list.Add(-0.5f * trafficParameters.Length * laneWidth + ((float)i + 0.5f) * laneWidth);
+            list.Add(-0.5f * numberOfLanes * laneWidth + (i + 0.5f) * laneWidth);
         }
 
         return list;
     }
 
-    public (Vector3, float) ResetArea(int startLane, int startPos)
+    public void ResetArea(int startLane, int startPos)
     {
         // Despawn cars
         DespawnAll();
 
-        // Set traffic flow from curriculum
-        //trafficFlow = (int)Academy.Instance.EnvironmentParameters.GetWithDefault("traffic_flow", 6000f);
+        // Import random traffic template from list
+        if (trafficTemplates.Count > 0)
+        {
+            int lesson = Mathf.FloorToInt(Academy.Instance.EnvironmentParameters.GetWithDefault("traffic_template", 0.0f));
+            TrafficTemplate template = trafficTemplates[lesson];
+            ImportTrafficTemplate(template);
+            agent.targetVelocity = template.targetVelocity;
+        }
+            
 
         // For each lane
         density = 0;
@@ -118,7 +118,7 @@ public class EnvironmentManager : MonoBehaviour
             GenerateSpawnParameters(lane);
         }
 
-        // Spawn cars with offset
+        // Spawn traffic
         int vID = 0;
         for (int l = 0; l < numberOfLanes; l++)
         {
@@ -130,16 +130,25 @@ public class EnvironmentManager : MonoBehaviour
                 if (l == startLane - 1 && p == startPos - 1)
                     continue;
 
-                Vector3 location = new Vector3(
-                    centerList[l],
-                    0f,
-                    trafficParameters[l].spawnParameters[p].pos - trafficParameters[startLane - 1].spawnParameters[startPos - 1].pos);
+                //Vector3 location = new Vector3(
+                //    LaneCenters[l],
+                //    0f,
+                //    trafficParameters[l].spawnParameters[p].pos - trafficParameters[startLane - 1].spawnParameters[startPos - 1].pos);
+                Vector3 location = new Vector3(LaneCenters[l], 0f, trafficParameters[l].spawnParameters[p].pos);
                 Spawn(location, l + 1, trafficParameters[l].spawnParameters[p].speed);
                 vID++;
             }
         }
 
-        return (new Vector3(centerList[startLane - 1], 0f, 0f), trafficParameters[startLane - 1].spawnParameters[startPos - 1].speed);
+        // Set agent position and speed
+        Vector3 agentPos = new Vector3(LaneCenters[startLane - 1], 0f, trafficParameters[startLane - 1].spawnParameters[startPos - 1].pos);
+        float agentInitVel = trafficParameters[startLane - 1].spawnParameters[startPos - 1].speed;
+        agent.transform.localPosition = agentPos;
+        agent.transform.localRotation = Quaternion.identity;
+        agent.GetComponent<VehicleControl>().SetInitialVelocity(agentInitVel);
+        Traffic.Add(agent.GetComponent<VehicleControl>());
+
+        ranker.SetInitialRanks(Traffic);
     }
 
 
@@ -174,25 +183,27 @@ public class EnvironmentManager : MonoBehaviour
         obj.transform.localRotation = Quaternion.identity;
 
         SimpleVehicle sv = obj.GetComponent<SimpleVehicle>();
-        sv.targetLane = targetLane;
-        sv.targetVelocity = velocity;
-        sv.initialVelocity = velocity;
+        sv.TargetLane = targetLane;
+        sv.TargetVelocity = velocity;
 
-        trafficList.Add(obj.GetComponent<VehicleControl>());
+        VehicleControl vc = obj.GetComponent<VehicleControl>();
+        vc.TargetVelocity = velocity;
 
+        Traffic.Add(vc);
         obj.SetActive(true);
+        vc.SetInitialVelocity(velocity);
     }
 
     public void Despawn(GameObject obj)
     {
         obj.SetActive(false);
-        trafficList.Remove(obj.GetComponent<VehicleControl>());
+        Traffic.Remove(obj.GetComponent<VehicleControl>());
         vehiclePool.Enqueue(obj);
     }
 
     private void DespawnAll()
     {
-        foreach(VehicleControl vehicle in trafficList)
+        foreach(VehicleControl vehicle in Traffic)
         {
             if (!vehicle.gameObject.CompareTag("Agent"))
             {
@@ -201,8 +212,7 @@ public class EnvironmentManager : MonoBehaviour
             }
         }
 
-        trafficList.Clear();
-        trafficList.Add(agent.GetComponent<VehicleControl>());
+        Traffic.Clear();
     }
 
     private void CreateVehicleInstance()
@@ -214,25 +224,33 @@ public class EnvironmentManager : MonoBehaviour
         vehiclePool.Enqueue(instance);
     }
 
-    private void OnDrawGizmosSelected()
+    private void ImportTrafficTemplate(TrafficTemplate template)
     {
-        Vector3 position = transform.position;
-        Vector3 direction = transform.TransformDirection(transform.forward);
+        trafficFlow = template.flow;
+        minHeadway = template.minHeadway;
+        targetVelocity = template.targetVelocity;
+        trafficParameters = template.trafficParameters;
+    }
+
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Vector3 position = transform.position;
+    //    Vector3 direction = transform.TransformDirection(transform.forward);
         
-        // Draw centerline, borders and lane centers
-        List<float> centers = DetermineLaneCenters();
+    //    // Draw centerline, borders and lane centers
+    //    List<float> centers = DetermineLaneCenters();
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(position, 100 * direction);
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawRay(position, 100 * direction);
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.TransformPoint(new Vector3(-0.5f * centers.Count * laneWidth, position.y, position.z)), 100 * direction);
-        Gizmos.DrawRay(transform.TransformPoint(new Vector3(0.5f * centers.Count * laneWidth, position.y, position.z)), 100 * direction);
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawRay(transform.TransformPoint(new Vector3(-0.5f * centers.Count * laneWidth, position.y, position.z)), 100 * direction);
+    //    Gizmos.DrawRay(transform.TransformPoint(new Vector3(0.5f * centers.Count * laneWidth, position.y, position.z)), 100 * direction);
 
-        Gizmos.color = Color.cyan;
-        foreach(float center in centers)
-        {
-            Gizmos.DrawRay(transform.TransformPoint(new Vector3(center, position.y, position.z)), 100 * direction);
-        }
-    } 
+    //    Gizmos.color = Color.cyan;
+    //    foreach(float center in centers)
+    //    {
+    //        Gizmos.DrawRay(transform.TransformPoint(new Vector3(center, position.y, position.z)), 100 * direction);
+    //    }
+    //} 
 }

@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0463e48d1dd4e40ac0799bbd065e81, type: 3}
+  m_Name: 3L_1500_Descending
+  m_EditorClassIdentifier: 
+  flow: 1500
+  minHeadway: 2
+  targetVelocity: 120
+  trafficParameters:
+  - trafficFraction: 0.33
+    meanVehicleSpeed: 120
+    stdVehicleSpeed: 2
+    laneDensity: 9
+    spawnParameters:
+    - pos: 3.6102653
+      speed: 120.38523
+      headway: 2.4394615
+    - pos: 85.18669
+      speed: 118.04194
+      headway: 8.663768
+    - pos: 369.2667
+      speed: 120.25452
+      headway: 26.008642
+    - pos: 1238.0603
+      speed: 121.01606
+      headway: 2.551564
+    - pos: 1323.8326
+      speed: 119.40321
+      headway: 8.420549
+    - pos: 1603.1217
+      speed: 121.128006
+      headway: 6.9766994
+    - pos: 1837.8644
+      speed: 121.92169
+      headway: 2.0920165
+    - pos: 1908.715
+      speed: 120.019035
+      headway: 6.3539968
+    - pos: 2120.5483
+      speed: 121.81174
+      headway: 8.569176
+  - trafficFraction: 0.33
+    meanVehicleSpeed: 116
+    stdVehicleSpeed: 5
+    laneDensity: 9
+    spawnParameters:
+    - pos: 4.106791
+      speed: 118.77164
+      headway: 22.639637
+    - pos: 751.03644
+      speed: 118.14439
+      headway: 3.6494043
+    - pos: 870.8022
+      speed: 109.93769
+      headway: 8.424184
+    - pos: 1128.062
+      speed: 111.8465
+      headway: 11.730443
+    - pos: 1492.5089
+      speed: 107.83992
+      headway: 13.935745
+    - pos: 1909.9615
+      speed: 114.2937
+      headway: 16.906748
+    - pos: 2446.7212
+      speed: 116.19037
+      headway: 3.8796422
+    - pos: 2571.937
+      speed: 115.2134
+      headway: 6.6211615
+    - pos: 2783.8389
+      speed: 119.022545
+      headway: 13.069006
+  - trafficFraction: 0.33
+    meanVehicleSpeed: 112
+    stdVehicleSpeed: 5
+    laneDensity: 9
+    spawnParameters:
+    - pos: 15.93751
+      speed: 112.02367
+      headway: 6.3364916
+    - pos: 213.11447
+      speed: 120.48465
+      headway: 4.0506225
+    - pos: 348.68054
+      speed: 109.78531
+      headway: 6.0575004
+    - pos: 533.4096
+      speed: 115.695404
+      headway: 4.0883327
+    - pos: 664.7989
+      speed: 121.16801
+      headway: 9.6227045
+    - pos: 988.6778
+      speed: 110.75261
+      headway: 7.3309913
+    - pos: 1214.2129
+      speed: 110.872154
+      headway: 6.1928506
+    - pos: 1404.9392
+      speed: 114.67844
+      headway: 4.6684957
+    - pos: 1553.6547
+      speed: 103.44394
+      headway: 2.6882167
