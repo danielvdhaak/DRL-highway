@@ -117,16 +117,31 @@ public class VehicleAgent : Agent
         // Check whether right lane has space
         if (control.Lane <= Mathf.CeilToInt(laneCenters.Count / 3))
         {
+            bool hasSpaceFront, hasSpaceBehind;
             VehicleControl rightLead = GetClosestVehicle(environment.Traffic, control.Lane + 1, 1, 300f);
+            VehicleControl rightBehind = GetClosestVehicle(environment.Traffic, control.Lane + 1, -1, 300f);
 
+            // Check space in front
             if (rightLead == null)
-                keepRight = false;
+                hasSpaceFront = true;
             else
             {
                 float gap = environment.transform.InverseTransformDirection(rightLead.Back.position - control.Front.position).z;
                 float TTC = gap / ((control.Velocity - rightLead.Velocity) / 3.6f);
-                keepRight = (Math.Sign(gap) == 1 && Math.Sign(TTC) == 1 && TTC >= 20f) ? true : false;
+                hasSpaceFront = (Math.Sign(gap) == 1 && Math.Sign(TTC) == 1 && TTC >= 20f) ? true : false;
             }
+
+            // Check space behind
+            if (rightBehind == null)
+                hasSpaceBehind = true;
+            else
+            {
+                float gap = environment.transform.InverseTransformDirection(control.Back.position - rightBehind.Front.position).z;
+                hasSpaceBehind = (Math.Sign(gap) == 1 && Mathf.Clamp(gap / rightBehind.Spacing, 0f, 1f) > 0.6f) ? true : false;
+            }
+
+            // Determine clearance flag
+            keepRight = (hasSpaceFront & hasSpaceBehind) ? true : false;
         }
         else
             keepRight = false;

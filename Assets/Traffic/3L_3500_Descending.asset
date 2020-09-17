@@ -16,240 +16,225 @@ MonoBehaviour:
   minHeadway: 2
   targetVelocity: 120
   trafficParameters:
-  - trafficFraction: 0.25
+  - trafficFraction: 0.3
     meanVehicleSpeed: 120
-    stdVehicleSpeed: 1
-    laneDensity: 15
-    spawnParameters:
-    - pos: 14.44659
-      speed: 117.81854
-      headway: 2.3864405
-    - pos: 92.54852
-      speed: 119.65502
-      headway: 6.098997
-    - pos: 295.26398
-      speed: 120.52927
-      headway: 2.0815349
-    - pos: 364.9545
-      speed: 121.029015
-      headway: 4.107984
-    - pos: 503.06152
-      speed: 120.60581
-      headway: 4.5660763
-    - pos: 656.0325
-      speed: 119.17702
-      headway: 2.3574977
-    - pos: 734.0768
-      speed: 119.40536
-      headway: 2.7832909
-    - pos: 826.39343
-      speed: 119.79147
-      headway: 4.3681755
-    - pos: 971.7463
-      speed: 121.52988
-      headway: 2.3076315
-    - pos: 1049.648
-      speed: 120.31777
-      headway: 6.6075163
-    - pos: 1270.4817
-      speed: 119.295944
-      headway: 4.0210586
-    - pos: 1403.7306
-      speed: 121.62999
-      headway: 3.4973962
-    - pos: 1521.894
-      speed: 119.37117
-      headway: 6.150905
-    - pos: 1725.8499
-      speed: 119.06485
-      headway: 4.778377
-    - pos: 1883.8878
-      speed: 119.979645
-      headway: 3.5199785
-  - trafficFraction: 0.25
-    meanVehicleSpeed: 101
-    stdVehicleSpeed: 2
+    stdVehicleSpeed: 2.5
     laneDensity: 18
     spawnParameters:
-    - pos: 4.393394
-      speed: 98.74273
-      headway: 2.0429797
-    - pos: 60.429337
-      speed: 103.01248
-      headway: 2.6428983
-    - pos: 136.05476
-      speed: 100.51067
-      headway: 2.5924065
-    - pos: 208.4338
-      speed: 98.96115
-      headway: 4.036797
-    - pos: 319.40216
-      speed: 98.284355
-      headway: 4.1590476
-    - pos: 432.9492
-      speed: 101.42206
-      headway: 3.727849
-    - pos: 537.9731
-      speed: 100.66274
-      headway: 9.145034
-    - pos: 793.68536
-      speed: 100.17758
-      headway: 2.7826772
-    - pos: 871.1192
-      speed: 101.94053
-      headway: 2.824771
-    - pos: 951.1077
-      speed: 98.400665
-      headway: 3.5928316
-    - pos: 1049.3125
-      speed: 101.10936
-      headway: 12.323143
-    - pos: 1395.4194
-      speed: 100.98493
-      headway: 4.0886197
-    - pos: 1510.1108
-      speed: 102.90575
-      headway: 3.2691295
-    - pos: 1603.5587
-      speed: 101.10995
-      headway: 4.181599
-    - pos: 1721.0035
-      speed: 100.356926
-      headway: 6.6037283
-    - pos: 1905.0952
-      speed: 102.485405
-      headway: 7.8980474
-    - pos: 2129.9382
-      speed: 101.87581
-      headway: 3.7096243
-    - pos: 2234.9163
-      speed: 96.38846
-      headway: 3.7366347
-  - trafficFraction: 0.5
+    - pos: 2.4641895
+      speed: 118.78785
+      headway: 3.375957
+    - pos: 113.85938
+      speed: 119.88329
+      headway: 2.0836565
+    - pos: 183.24706
+      speed: 121.14438
+      headway: 2.2153354
+    - pos: 257.79578
+      speed: 119.32584
+      headway: 3.5947683
+    - pos: 376.9482
+      speed: 117.7538
+      headway: 3.8819892
+    - pos: 503.92572
+      speed: 118.646225
+      headway: 3.077085
+    - pos: 605.3381
+      speed: 122.82337
+      headway: 2.0048368
+    - pos: 673.7383
+      speed: 116.46738
+      headway: 3.2914197
+    - pos: 780.2225
+      speed: 118.7236
+      headway: 3.2109601
+    - pos: 886.116
+      speed: 121.07415
+      headway: 3.1262121
+    - pos: 991.25586
+      speed: 122.36038
+      headway: 5.455353
+    - pos: 1176.6779
+      speed: 119.7977
+      headway: 2.450374
+    - pos: 1258.2192
+      speed: 117.23235
+      headway: 3.2727165
+    - pos: 1364.7937
+      speed: 121.739494
+      headway: 2.7473104
+    - pos: 1457.6982
+      speed: 121.46479
+      headway: 2.1902368
+    - pos: 1531.5973
+      speed: 123.80611
+      headway: 2.4937434
+    - pos: 1617.3586
+      speed: 123.57116
+      headway: 2.5814137
+    - pos: 1705.9666
+      speed: 120.76946
+      headway: 3.0899472
+  - trafficFraction: 0.3
+    meanVehicleSpeed: 105
+    stdVehicleSpeed: 5
+    laneDensity: 21
+    spawnParameters:
+    - pos: 8.278175
+      speed: 105.855705
+      headway: 2.6800656
+    - pos: 87.0838
+      speed: 109.56965
+      headway: 2.0509818
+    - pos: 149.5075
+      speed: 101.64564
+      headway: 2.847918
+    - pos: 229.91818
+      speed: 109.51776
+      headway: 5.077634
+    - pos: 384.38794
+      speed: 109.56571
+      headway: 2.21232
+    - pos: 451.71973
+      speed: 97.11201
+      headway: 2.3817818
+    - pos: 515.9696
+      speed: 108.21222
+      headway: 2.477409
+    - pos: 590.4379
+      speed: 103.23273
+      headway: 2.3237655
+    - pos: 657.07367
+      speed: 102.013504
+      headway: 4.1290216
+    - pos: 774.0781
+      speed: 101.60262
+      headway: 7.381345
+    - pos: 982.4015
+      speed: 107.00799
+      headway: 6.6611347
+    - pos: 1180.4
+      speed: 99.892395
+      headway: 3.49988
+    - pos: 1277.5143
+      speed: 107.1367
+      headway: 8.866217
+    - pos: 1541.3746
+      speed: 106.121056
+      headway: 4.855028
+    - pos: 1684.4915
+      speed: 106.63088
+      headway: 2.5441658
+    - pos: 1759.8489
+      speed: 105.68361
+      headway: 6.664852
+    - pos: 1955.506
+      speed: 104.92418
+      headway: 4.345273
+    - pos: 2082.1516
+      speed: 103.575935
+      headway: 6.3092713
+    - pos: 2263.6763
+      speed: 98.93093
+      headway: 3.2872593
+    - pos: 2354.013
+      speed: 105.850655
+      headway: 2.464979
+    - pos: 2426.4907
+      speed: 102.112076
+      headway: 4.352429
+  - trafficFraction: 0.4
     meanVehicleSpeed: 95
     stdVehicleSpeed: 5
-    laneDensity: 41
+    laneDensity: 30
     spawnParameters:
-    - pos: 6.768464
-      speed: 101.25599
-      headway: 1.9758285
-    - pos: 62.34193
-      speed: 106.828766
-      headway: 1.7886186
-    - pos: 115.41857
-      speed: 91.08413
-      headway: 1.973587
-    - pos: 165.35258
-      speed: 88.837006
-      headway: 1.9774227
-    - pos: 214.14934
-      speed: 94.8329
-      headway: 1.9418031
-    - pos: 265.30124
-      speed: 93.752495
-      headway: 1.9691967
-    - pos: 316.58377
-      speed: 99.017265
-      headway: 1.9488882
-    - pos: 370.18753
-      speed: 99.93427
-      headway: 1.7540839
-    - pos: 418.88007
-      speed: 90.09113
-      headway: 1.9167019
-    - pos: 466.84613
-      speed: 98.646866
-      headway: 1.7934997
-    - pos: 515.99146
-      speed: 99.02049
-      headway: 1.7656062
-    - pos: 564.55566
-      speed: 99.165344
-      headway: 1.8324308
-    - pos: 615.0317
-      speed: 91.5115
-      headway: 1.9636106
-    - pos: 664.9464
-      speed: 85.858765
-      headway: 1.4526331
-    - pos: 699.5912
-      speed: 89.166794
-      headway: 1.9300925
-    - pos: 747.3968
-      speed: 102.63254
-      headway: 1.8352807
-    - pos: 799.7189
-      speed: 96.88234
-      headway: 1.8050808
-    - pos: 848.29675
-      speed: 93.725174
-      headway: 1.9139762
-    - pos: 898.1267
-      speed: 93.335106
-      headway: 1.9934552
-    - pos: 949.8099
-      speed: 90.86302
-      headway: 1.9075149
-    - pos: 997.955
-      speed: 94.73132
-      headway: 1.982568
-    - pos: 1050.1249
-      speed: 96.71574
-      headway: 1.9186475
-    - pos: 1101.6703
-      speed: 92.65962
-      headway: 1.9821838
-    - pos: 1152.6893
-      speed: 98.24884
-      headway: 1.9629868
-    - pos: 1206.2618
-      speed: 82.03336
-      headway: 1.937011
-    - pos: 1250.4006
-      speed: 94.148186
-      headway: 1.9248143
-    - pos: 1300.7389
-      speed: 90.79964
-      headway: 1.9320039
-    - pos: 1349.4681
-      speed: 96.64046
-      headway: 1.9421827
-    - pos: 1401.6052
-      speed: 95.848915
-      headway: 1.9319134
-    - pos: 1453.0419
-      speed: 99.46776
-      headway: 1.7370049
-    - pos: 1501.0352
-      speed: 102.280716
-      headway: 1.7451957
-    - pos: 1550.6184
-      speed: 86.86743
-      headway: 1.7859911
-    - pos: 1593.7141
-      speed: 91.08276
-      headway: 1.9289134
-    - pos: 1642.5171
-      speed: 83.21927
-      headway: 1.824772
-    - pos: 1684.6993
-      speed: 88.7423
-      headway: 1.9971302
-    - pos: 1733.9299
-      speed: 90.46843
-      headway: 1.9671664
-    - pos: 1783.3651
-      speed: 94.44799
-      headway: 1.8910213
-    - pos: 1832.977
-      speed: 100.20524
-      headway: 1.6128378
-    - pos: 1877.87
-      speed: 92.93835
-      headway: 1.5848743
-    - pos: 1918.7854
-      speed: 89.20577
-      headway: 1.9847937
-    - pos: 1967.9674
-      speed: 96.695724
-      headway: 1.9547964
+    - pos: 6.6337786
+      speed: 105.99907
+      headway: 2.5760818
+    - pos: 82.48441
+      speed: 94.232864
+      headway: 2.4068027
+    - pos: 145.48439
+      speed: 95.611465
+      headway: 2.5476382
+    - pos: 213.14645
+      speed: 96.402306
+      headway: 2.0511074
+    - pos: 268.07187
+      speed: 102.18912
+      headway: 2.2817261
+    - pos: 332.84064
+      speed: 104.114624
+      headway: 2.1815884
+    - pos: 395.93378
+      speed: 97.69718
+      headway: 2.4109755
+    - pos: 461.3631
+      speed: 95.47886
+      headway: 3.368896
+    - pos: 550.71265
+      speed: 96.65915
+      headway: 2.6010063
+    - pos: 620.5491
+      speed: 101.034706
+      headway: 3.0099275
+    - pos: 705.02325
+      speed: 95.46518
+      headway: 3.0155416
+    - pos: 784.9897
+      speed: 90.83678
+      headway: 2.1216345
+    - pos: 838.5237
+      speed: 93.84447
+      headway: 2.425172
+    - pos: 901.74286
+      speed: 98.93626
+      headway: 2.048303
+    - pos: 958.0349
+      speed: 97.8347
+      headway: 2.8144794
+    - pos: 1034.5221
+      speed: 93.52009
+      headway: 2.2329073
+    - pos: 1092.5281
+      speed: 85.0899
+      headway: 2.2627957
+    - pos: 1146.0117
+      speed: 93.07937
+      headway: 2.2089458
+    - pos: 1203.1249
+      speed: 100.06756
+      headway: 2.109011
+    - pos: 1261.748
+      speed: 87.677216
+      headway: 2.6764133
+    - pos: 1326.9315
+      speed: 85.27027
+      headway: 2.0677903
+    - pos: 1375.9095
+      speed: 89.28831
+      headway: 2.505364
+    - pos: 1438.0483
+      speed: 91.77808
+      headway: 2.2780466
+    - pos: 1496.1246
+      speed: 91.69581
+      headway: 2.2092657
+    - pos: 1552.397
+      speed: 100.808685
+      headway: 2.0124438
+    - pos: 1608.7502
+      speed: 92.620544
+      headway: 2.730235
+    - pos: 1678.9935
+      speed: 92.284096
+      headway: 2.7808998
+    - pos: 1750.2804
+      speed: 96.98779
+      headway: 2.6239614
+    - pos: 1820.9727
+      speed: 89.497955
+      headway: 3.351516
+    - pos: 1904.2932
+      speed: 96.362114
+      headway: 2.4879925

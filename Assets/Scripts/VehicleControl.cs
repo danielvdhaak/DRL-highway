@@ -23,6 +23,7 @@ public class VehicleControl : MonoBehaviour
     public float Velocity { get; private set; }
     public float TargetVelocity { get; set; }
     public float Throttle { get; private set; }
+    public float Spacing { get; private set; }
     public float Headway { get; private set; } = 1f;
     public int Rank { get; set; }
     public float Compare { get; set; }
@@ -111,17 +112,17 @@ public class VehicleControl : MonoBehaviour
     private void FixedUpdate()
     {
         Velocity = GetSpeed();
-        float spacing = CalcSpacing(Velocity);
+        Spacing = CalcSpacing(Velocity);
 
         if (followTarget != null)
         {
             float gap = environment.transform.InverseTransformDirection(followTarget.Back.position - Front.position).z;
-            Headway = Mathf.Clamp(gap / spacing, 0f, 1f);
-            Debug.DrawLine(Front.position, Front.position + Front.forward * spacing, Color.green);
-            Debug.DrawLine(Front.position, Front.position + Front.forward * 0.6f * spacing, Color.red);
+            Headway = Mathf.Clamp(gap / Spacing, 0f, 1f);
+            Debug.DrawLine(Front.position, Front.position + Front.forward * Spacing, Color.green);
+            Debug.DrawLine(Front.position, Front.position + Front.forward * 0.6f * Spacing, Color.red);
             
             if (isFollowing)
-                (mTorque, bTorque) = CalcTorques(Velocity, TargetVelocity, (gap - spacing), followTarget.Velocity, followTarget.Throttle);
+                (mTorque, bTorque) = CalcTorques(Velocity, TargetVelocity, (gap - Spacing), followTarget.Velocity, followTarget.Throttle);
             else
                 (mTorque, bTorque) = CalcTorques(Velocity, TargetVelocity, Mathf.Infinity, 0f, 0f);
         }

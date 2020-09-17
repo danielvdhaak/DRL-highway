@@ -83,7 +83,6 @@
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\EnvironmentManager.cs" />
     <Compile Include="Assets\Scripts\Events.cs" />
-    <Compile Include="Assets\Scripts\LidarSensor.cs" />
     <Compile Include="Assets\Scripts\Logger.cs" />
     <Compile Include="Assets\Scripts\RandomNumber.cs" />
     <Compile Include="Assets\Scripts\RaySensor.cs" />
@@ -92,6 +91,7 @@
     <Compile Include="Assets\Scripts\VehicleAgent.cs" />
     <Compile Include="Assets\Scripts\VehicleControl.cs" />
     <Compile Include="Assets\Scripts\VehicleRanker.cs" />
+    <Compile Include="Assets\Scripts\WheelSuspension.cs" />
     <Compile Include="Assets\Scripts\WindTurbineRotor.cs" />
     <None Include="Assets\RoadArchitect\Shaders\GSDShoulderDirtDX11.shader" />
     <None Include="Assets\RoadArchitect\Shaders\GSDStandardTiling.shader" />
