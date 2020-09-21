@@ -1623,6 +1623,7 @@ GameObject:
   - component: {fileID: 7127911739677563656}
   - component: {fileID: 250412228848079656}
   - component: {fileID: 549873111793063612}
+  - component: {fileID: 3218858597691347461}
   m_Layer: 8
   m_Name: MercedesCLA
   m_TagString: Vehicle
@@ -1869,6 +1870,47 @@ MonoBehaviour:
   tracker: {fileID: 5748761414690288840}
   m_GainParameter: 0.4
   lc_Time: 2.5
+--- !u!114 &3218858597691347461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223002772083156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228a8c61c97c914e8bc535ea06ce672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheels:
+  - wheelCollider: {fileID: 5441912658050750299}
+    wheelMeshes:
+    - {fileID: 1358510313662670}
+    - {fileID: 1323833933502328}
+    - {fileID: 1873106056893074}
+    - {fileID: 1856827301093562}
+    brakeCalMeshes: []
+  - wheelCollider: {fileID: 4725982324828679410}
+    wheelMeshes:
+    - {fileID: 1314131947524996}
+    - {fileID: 1709811178996374}
+    - {fileID: 1126130155311954}
+    - {fileID: 1282313929469532}
+    brakeCalMeshes: []
+  - wheelCollider: {fileID: 8698125063228500266}
+    wheelMeshes:
+    - {fileID: 1513726268336108}
+    - {fileID: 1019930097223226}
+    - {fileID: 1350914725118442}
+    - {fileID: 1766953051369212}
+    brakeCalMeshes: []
+  - wheelCollider: {fileID: 4623257587642369871}
+    wheelMeshes:
+    - {fileID: 1910043220722576}
+    - {fileID: 1247463479474764}
+    - {fileID: 1761298487731584}
+    - {fileID: 1658672517954644}
+    brakeCalMeshes: []
 --- !u!1 &1229904327595818
 GameObject:
   m_ObjectHideFlags: 0

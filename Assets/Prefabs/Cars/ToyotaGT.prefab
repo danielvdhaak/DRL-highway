@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 2449068023841622288}
   - component: {fileID: 520749032416667642}
   - component: {fileID: 7783895216602977785}
+  - component: {fileID: 8134898746289840753}
   m_Layer: 8
   m_Name: ToyotaGT
   m_TagString: Vehicle
@@ -361,6 +362,43 @@ MonoBehaviour:
   tracker: {fileID: 7535479139452653460}
   m_GainParameter: 0.4
   lc_Time: 2.5
+--- !u!114 &8134898746289840753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094918606176732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228a8c61c97c914e8bc535ea06ce672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheels:
+  - wheelCollider: {fileID: 7829228276855887706}
+    wheelMeshes:
+    - {fileID: 1842769279058854}
+    - {fileID: 1591706633865542}
+    - {fileID: 1141946195778436}
+    brakeCalMeshes: []
+  - wheelCollider: {fileID: 7739100910403316913}
+    wheelMeshes:
+    - {fileID: 1850679205813198}
+    - {fileID: 1258740314968498}
+    - {fileID: 1887458339815028}
+    brakeCalMeshes: []
+  - wheelCollider: {fileID: 3475416942544884387}
+    wheelMeshes:
+    - {fileID: 1065311495344778}
+    - {fileID: 1105226973929536}
+    - {fileID: 1054949267686566}
+    brakeCalMeshes: []
+  - wheelCollider: {fileID: 2988560358147558959}
+    wheelMeshes:
+    - {fileID: 1322665081494282}
+    - {fileID: 1725088133920658}
+    - {fileID: 1317270609904504}
+    brakeCalMeshes: []
 --- !u!1 &1105226973929536
 GameObject:
   m_ObjectHideFlags: 0

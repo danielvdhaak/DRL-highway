@@ -80,9 +80,8 @@ public class VehicleAgent : Agent
     {
         Target = GameObject.FindGameObjectWithTag("Target").transform;
 
-        int startLane = randomNumber.Next(2,4);
-        startLane = 2;
-        int startPos = randomNumber.Next(2,6);
+        int startLane = 2;
+        int startPos = randomNumber.Next(2,4);
 
         //(initialLocalPos, initialVelocity) = environment.ResetArea(startLane, startPos);
         //transform.localPosition = initialLocalPos;
@@ -114,6 +113,9 @@ public class VehicleAgent : Agent
 
     private void FixedUpdate()
     {
+        // Get current lane
+        control.Lane = GetCurrentLane();
+
         // Check whether right lane has space
         if (control.Lane <= Mathf.CeilToInt(laneCenters.Count / 3))
         {
@@ -128,7 +130,7 @@ public class VehicleAgent : Agent
             {
                 float gap = environment.transform.InverseTransformDirection(rightLead.Back.position - control.Front.position).z;
                 float TTC = gap / ((control.Velocity - rightLead.Velocity) / 3.6f);
-                hasSpaceFront = (Math.Sign(gap) == 1 && Math.Sign(TTC) == 1 && TTC >= 20f) ? true : false;
+                hasSpaceFront = (Math.Sign(gap) == 1 && gap >= control.Velocity * 0.83f && Math.Sign(TTC) == 1 && TTC >= 20f) ? true : false;
             }
 
             // Check space behind
@@ -181,7 +183,6 @@ public class VehicleAgent : Agent
             AddReward(r_LeftDriving);
 
         // Regulate car controls
-        control.Lane = GetCurrentLane();
         control.LaneCenter = laneCenters[targetLane - 1];
         control.followTarget = GetClosestVehicle(environment.Traffic, targetLane, 1, m_MaxFollowDistance);
     }
@@ -190,7 +191,7 @@ public class VehicleAgent : Agent
     {
         // Normalized velocity and headway
         sensor.AddObservation((control.Velocity - minVelocity) / (targetVelocity - minVelocity));
-        sensor.AddObservation(control.Headway);
+        //sensor.AddObservation(control.Headway);
 
         // One hot-style lane position
         laneObs = new List<bool>();
@@ -352,10 +353,10 @@ public class VehicleAgent : Agent
             {
                 VehicleControl inProx = GetClosestVehicle(vehicles, control.Lane + i, dir, m_GridSize);
                 float pos = inProx?.transform.localPosition.z ?? (dir * m_GridSize + position.z);
-                proximity.Add((pos - position.z) / m_GridSize);
+                proximity.Add(Mathf.Clamp((pos - position.z) / m_GridSize, -1f, 1f));
                 float normVel = ((inProx?.Velocity ?? control.Velocity) - minVelocity) / (targetVelocity - minVelocity);
                 float agentVel = (control.Velocity - minVelocity) / (targetVelocity - minVelocity);
-                proximity.Add(normVel - agentVel);
+                proximity.Add(Mathf.Clamp(normVel - agentVel, -1f, 1f));
             }
         }
 

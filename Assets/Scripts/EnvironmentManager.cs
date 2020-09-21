@@ -102,8 +102,7 @@ public class EnvironmentManager : MonoBehaviour
         // Import random traffic template from list
         if (trafficTemplates.Count > 0)
         {
-            int lesson = Mathf.FloorToInt(Academy.Instance.EnvironmentParameters.GetWithDefault("traffic_template", 0.0f));
-            TrafficTemplate template = trafficTemplates[lesson];
+            TrafficTemplate template = trafficTemplates[randomNumber.Next(trafficTemplates.Count - 1)];
             ImportTrafficTemplate(template);
             agent.targetVelocity = template.targetVelocity;
         }

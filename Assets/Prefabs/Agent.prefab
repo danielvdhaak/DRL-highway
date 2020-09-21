@@ -463,6 +463,98 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 2
   m_Enabled: 1
+--- !u!1 &438582777320668063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 362085249808487522}
+  - component: {fileID: 8240047915095428028}
+  m_Layer: 8
+  m_Name: Point Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &362085249808487522
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438582777320668063}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.2092, z: -0.122}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6659627004403888616}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &8240047915095428028
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438582777320668063}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 2
+  m_Shape: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.5
+  m_Range: 5
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &486301182503168743
 GameObject:
   m_ObjectHideFlags: 0
@@ -4068,6 +4160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5787559676601440903}
+  - component: {fileID: 3416000950024925835}
   m_Layer: 8
   m_Name: SteeringWheelModel
   m_TagString: Untagged
@@ -4095,6 +4188,26 @@ Transform:
   m_Father: {fileID: 1517117352719089215}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3416000950024925835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5274690079570425372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1980332b7509294099606eab6abbd60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshes:
+  - {fileID: 90605783315328111}
+  - {fileID: 4336679443467397807}
+  - {fileID: 203012470914542688}
+  - {fileID: 3414834365188773556}
+  - {fileID: 3926696296198542607}
+  - {fileID: 3328537737487705365}
+  multiplier: 20
 --- !u!1 &5284183739593129531
 GameObject:
   m_ObjectHideFlags: 0
@@ -5245,8 +5358,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 45
+  far clip plane: 300
+  field of view: 30
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -6807,7 +6920,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 300
   field of view: 45
   orthographic: 0
   orthographic size: 5
@@ -6919,6 +7032,7 @@ GameObject:
   - component: {fileID: 7550677827306913715}
   - component: {fileID: 7371215330335361717}
   - component: {fileID: 6918137807124011795}
+  - component: {fileID: 6077082859154408104}
   m_Layer: 8
   m_Name: Agent
   m_TagString: Agent
@@ -6949,6 +7063,7 @@ Transform:
   - {fileID: 1407614220520335956}
   - {fileID: 385968469158458076}
   - {fileID: 9217048223491328052}
+  - {fileID: 362085249808487522}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7001,7 +7116,7 @@ MonoBehaviour:
   observationGrid: []
   laneObs: 
   keepRight: 0
-  decisionInterval: 1
+  decisionInterval: 0.1
   rewardField: {fileID: 0}
   speedField: {fileID: 0}
   applyToHeuristic: 1
@@ -7014,7 +7129,7 @@ MonoBehaviour:
   r_HeadwayViolation: -0.05
   r_DangerousDriving: -0.05
   r_LeftDriving: -0.01
-  targetLane: 3
+  targetLane: 2
   targetVelocity: 120
   minVelocity: 80
 --- !u!114 &7371215330335361717
@@ -7030,9 +7145,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 27
+    VectorObservationSize: 17
     NumStackedVectorObservations: 1
-    VectorActionSize: 04000000
+    VectorActionSize: 03000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
   m_Model: {fileID: 0}
@@ -7073,6 +7188,59 @@ MonoBehaviour:
   tracker: {fileID: 6300847735248186717}
   m_GainParameter: 0.4
   lc_Time: 2.5
+--- !u!114 &6077082859154408104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651869346091844603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228a8c61c97c914e8bc535ea06ce672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheels:
+  - wheelCollider: {fileID: 6805575942674354466}
+    wheelMeshes:
+    - {fileID: 4591736955734685042}
+    - {fileID: 5760082498093037849}
+    - {fileID: 5864948114854997360}
+    - {fileID: 193203594874585477}
+    - {fileID: 2916548335161319740}
+    brakeCalMeshes:
+    - {fileID: 1579935985158561607}
+    - {fileID: 7120636519759435939}
+  - wheelCollider: {fileID: 3111098587671252747}
+    wheelMeshes:
+    - {fileID: 5910706702468410956}
+    - {fileID: 5791128657521917240}
+    - {fileID: 7876957485346611003}
+    - {fileID: 3208302768280308519}
+    - {fileID: 6936133684873807887}
+    brakeCalMeshes:
+    - {fileID: 268928977311656886}
+    - {fileID: 7264418128134916112}
+  - wheelCollider: {fileID: 3065211363426962883}
+    wheelMeshes:
+    - {fileID: 4456991275520578895}
+    - {fileID: 6971776267633774321}
+    - {fileID: 1423457550832922431}
+    - {fileID: 8484976837222141208}
+    - {fileID: 2903939267978076176}
+    brakeCalMeshes:
+    - {fileID: 8971724850375772785}
+    - {fileID: 818747716024398070}
+  - wheelCollider: {fileID: 3789124193223852639}
+    wheelMeshes:
+    - {fileID: 7874867723217788845}
+    - {fileID: 5950943781697309256}
+    - {fileID: 4512295287143747065}
+    - {fileID: 7689914650016505846}
+    - {fileID: 6531514854714155406}
+    brakeCalMeshes:
+    - {fileID: 8506966799061296401}
+    - {fileID: 3538956128170742493}
 --- !u!1 &7689914650016505846
 GameObject:
   m_ObjectHideFlags: 0
@@ -8086,7 +8254,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 300
   field of view: 45
   orthographic: 0
   orthographic size: 5
