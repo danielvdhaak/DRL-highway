@@ -83,12 +83,15 @@
     <Compile Include="Assets\Scripts\EnvironmentManager.cs" />
     <Compile Include="Assets\Scripts\Events.cs" />
     <Compile Include="Assets\Scripts\Logger.cs" />
+    <Compile Include="Assets\Scripts\MobilAgent.cs" />
     <Compile Include="Assets\Scripts\RaySensor.cs" />
     <Compile Include="Assets\Scripts\SimpleVehicle.cs" />
+    <Compile Include="Assets\Scripts\Speedometer.cs" />
     <Compile Include="Assets\Scripts\SteeringWheel.cs" />
-    <Compile Include="Assets\Scripts\TrafficTemplate.cs" />
+    <Compile Include="Assets\Scripts\Utilities\CSVReport.cs" />
     <Compile Include="Assets\Scripts\Utilities\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Utilities\RandomNumber.cs" />
+    <Compile Include="Assets\Scripts\Utilities\TrafficTemplate.cs" />
     <Compile Include="Assets\Scripts\VehicleAgent.cs" />
     <Compile Include="Assets\Scripts\VehicleControl.cs" />
     <Compile Include="Assets\Scripts\VehicleRanker.cs" />

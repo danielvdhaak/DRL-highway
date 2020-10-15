@@ -7,7 +7,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using Unity.MLAgents;
 
 [Serializable]
@@ -44,7 +43,7 @@ public class EnvironmentManager : MonoBehaviour
     public List<VehicleControl> Traffic { get; private set; }
 
     [Header("ML-Agents")]
-    public VehicleAgent agent;
+    public VehicleControl agent;
     private int targetVelocity;
     private VehicleRanker ranker;
 
@@ -104,7 +103,7 @@ public class EnvironmentManager : MonoBehaviour
         {
             TrafficTemplate template = trafficTemplates[randomNumber.Next(trafficTemplates.Count - 1)];
             ImportTrafficTemplate(template);
-            agent.targetVelocity = template.targetVelocity;
+            //agent.targetVelocity = template.targetVelocity;
         }
             
 
@@ -144,8 +143,8 @@ public class EnvironmentManager : MonoBehaviour
         float agentInitVel = trafficParameters[startLane - 1].spawnParameters[startPos - 1].speed;
         agent.transform.localPosition = agentPos;
         agent.transform.localRotation = Quaternion.identity;
-        agent.GetComponent<VehicleControl>().SetInitialVelocity(agentInitVel);
-        Traffic.Add(agent.GetComponent<VehicleControl>());
+        agent.SetInitialVelocity(agentInitVel);
+        Traffic.Add(agent);
 
         ranker.SetInitialRanks(Traffic);
     }

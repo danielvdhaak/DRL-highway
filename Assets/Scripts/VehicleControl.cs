@@ -114,29 +114,11 @@ public class VehicleControl : MonoBehaviour
         Velocity = GetSpeed();
         Spacing = CalcSpacing(Velocity);
 
-        if (followTarget != null)
-        {
-            float gap = environment.transform.InverseTransformDirection(followTarget.Back.position - Front.position).z;
-            Headway = Mathf.Clamp(gap / Spacing, 0f, 1f);
-            Debug.DrawLine(Front.position, Front.position + Front.forward * Spacing, Color.green);
-            Debug.DrawLine(Front.position, Front.position + Front.forward * 0.6f * Spacing, Color.red);
-            
-            if (isFollowing)
-                (mTorque, bTorque) = CalcTorques(Velocity, TargetVelocity, (gap - Spacing), followTarget.Velocity, followTarget.Throttle);
-            else
-                (mTorque, bTorque) = CalcTorques(Velocity, TargetVelocity, Mathf.Infinity, 0f, 0f);
-        }
-        else
-        {
-            Headway = 1f;
-            (mTorque, bTorque) = CalcTorques(Velocity, TargetVelocity, Mathf.Infinity, 0f, 0f);
-        }
-            
-        wheelcolBL.motorTorque = mTorque;
-        wheelcolBL.brakeTorque = bTorque;
-        wheelcolBR.motorTorque = mTorque;
-        wheelcolBR.brakeTorque = bTorque;
+        float gap = (followTarget == null) ? Spacing : environment.transform.InverseTransformDirection(followTarget.Back.position - Front.position).z;
+        Headway = Mathf.Clamp(gap / Spacing, 0f, 1f);
 
+        Throttle = CalcThrottle(followTarget);
+        ApplyThrottle(Throttle);
     }
 
     /// <summary>
@@ -162,7 +144,7 @@ public class VehicleControl : MonoBehaviour
         }
     }
 
-    IEnumerator KeepLane (float center)
+    IEnumerator KeepLane(float center)
     {
         while (true)
         {
@@ -175,7 +157,7 @@ public class VehicleControl : MonoBehaviour
         }
     }
 
-    IEnumerator ChangeLane (int dir, float center)
+    IEnumerator ChangeLane(int dir, float center)
     {
         lc_Length = (Velocity / 3.6f) * lc_Time;
         m_Delta = environment.transform.InverseTransformPoint(tracker.position).z;
@@ -247,16 +229,30 @@ public class VehicleControl : MonoBehaviour
         return 3f + 0.0019f * (velocity / 3.6f) + 0.0448f * (float)Math.Pow(velocity / 3.6f, 2);
     }
 
+    public float CalcThrottle(VehicleControl followTarget)
+    {
+        float gap = (followTarget ==  null) ? Mathf.Infinity : environment.transform.InverseTransformDirection(followTarget.Back.position - Front.position).z;
+        float fCarVelocity = followTarget?.Velocity ?? 0f;
+        float fCarThrottle = followTarget?.Throttle ?? 0f;
+
+        float freeThrottle = m_K * ((TargetVelocity - Velocity) / 3.6f);
+        float referenceThrottle = m_Kt * fCarThrottle + m_Kv * ((fCarVelocity - Velocity) / 3.6f) + m_Kd * (gap - Spacing);
+
+        return Mathf.Min(freeThrottle, referenceThrottle);
+    }
+
     /// <summary>
     /// Returns motor and braking torques calculated using Adaptive Cruise Control (ACC).
     /// </summary>
-    private (float, float) CalcTorques(float velocity, float desVelocity, float spacingError, float fCarVelocity, float fCarThrottle)
+    private void ApplyThrottle(float throttle)
     {
-        float freeThrottle = m_K * ((desVelocity - velocity) / 3.6f);
-        float referenceThrottle = m_Kt * fCarThrottle + m_Kv * ((fCarVelocity - velocity) / 3.6f) + m_Kd * spacingError;
-        Throttle = Mathf.Min(freeThrottle, referenceThrottle);
+        mTorque = Mathf.Clamp(throttle, 0f, m_maxMotorTorque);
+        bTorque = -Mathf.Clamp(throttle, -m_maxBrakeTorque, 0f);
 
-        return (Mathf.Clamp(Throttle, 0f, m_maxMotorTorque), -Mathf.Clamp(Throttle, -m_maxBrakeTorque, 0f));
+        wheelcolBL.motorTorque = mTorque;
+        wheelcolBL.brakeTorque = bTorque;
+        wheelcolBR.motorTorque = mTorque;
+        wheelcolBR.brakeTorque = bTorque;
     }
 
     /// <summary>

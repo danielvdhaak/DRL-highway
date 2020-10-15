@@ -18,12 +18,9 @@ public class VehicleAgent : Agent
     [Header("ML-Agents")]
     public float normSpeed;
     public List<float> observationGrid;
-    public List<bool> laneObs = new List<bool>();
     public bool keepRight;
     [SerializeField] private float decisionInterval = 0.1f;
     private float timeSinceDecision;
-    [SerializeField] private Text rewardField;
-    [SerializeField] private Text speedField;
     private EnvironmentManager environment;
     private VehicleControl control;
     private Transform Target;
@@ -31,6 +28,10 @@ public class VehicleAgent : Agent
     private const int k_LeftLaneChange = 0;
     private const int k_KeepLane = 1;
     private const int k_RightLaneChange = 2;
+
+    [Header("UI/Debugging")]
+    [SerializeField] private Text rewardField;
+    [SerializeField] private Text velocityField;
 
     [Header("Safety module")]
     public bool applyToHeuristic = false;
@@ -55,9 +56,6 @@ public class VehicleAgent : Agent
     private const float m_MaxFollowDistance = 55f;
     private const float m_GridSize = 200f;
 
-    private Vector3 initialLocalPos;
-    private float initialVelocity;
-
     private StatsRecorder m_Recorder;
     private RandomNumber randomNumber = new RandomNumber();
 
@@ -81,15 +79,11 @@ public class VehicleAgent : Agent
         Target = GameObject.FindGameObjectWithTag("Target").transform;
 
         int startLane = 2;
-        int startPos = randomNumber.Next(2,4);
+        int startPos = randomNumber.Next(2, 4);
 
-        //(initialLocalPos, initialVelocity) = environment.ResetArea(startLane, startPos);
-        //transform.localPosition = initialLocalPos;
-        //transform.localRotation = Quaternion.identity;
+
         environment.ResetArea(startLane, startPos);
         control.TargetVelocity = targetVelocity;
-        //control.SetInitialVelocity(initialVelocity);
-
         targetLane = startLane;
         control.Lane = startLane;
         control.LaneCenter = laneCenters[targetLane - 1];
@@ -107,46 +101,21 @@ public class VehicleAgent : Agent
             m_Recorder.Add("Metrics/Velocity", (control.Velocity - minVelocity) / (targetVelocity - minVelocity));
         }
 
-        rewardField.text = GetCumulativeReward().ToString();
-        speedField.text = normSpeed.ToString();
+        // Update UI
+        if (rewardField != null && velocityField != null)
+        {
+            rewardField.text = GetCumulativeReward().ToString();
+            velocityField.text = normSpeed.ToString();
+        }
     }
 
     private void FixedUpdate()
     {
-        // Get current lane
+        // Get current state
+        normSpeed = (control.Velocity - minVelocity) / (targetVelocity - minVelocity);
         control.Lane = GetCurrentLane();
-
-        // Check whether right lane has space
-        if (control.Lane <= Mathf.CeilToInt(laneCenters.Count / 3))
-        {
-            bool hasSpaceFront, hasSpaceBehind;
-            VehicleControl rightLead = GetClosestVehicle(environment.Traffic, control.Lane + 1, 1, 300f);
-            VehicleControl rightBehind = GetClosestVehicle(environment.Traffic, control.Lane + 1, -1, 300f);
-
-            // Check space in front
-            if (rightLead == null)
-                hasSpaceFront = true;
-            else
-            {
-                float gap = environment.transform.InverseTransformDirection(rightLead.Back.position - control.Front.position).z;
-                float TTC = gap / ((control.Velocity - rightLead.Velocity) / 3.6f);
-                hasSpaceFront = (Math.Sign(gap) == 1 && gap >= control.Velocity * 0.83f && Math.Sign(TTC) == 1 && TTC >= 20f) ? true : false;
-            }
-
-            // Check space behind
-            if (rightBehind == null)
-                hasSpaceBehind = true;
-            else
-            {
-                float gap = environment.transform.InverseTransformDirection(control.Back.position - rightBehind.Front.position).z;
-                hasSpaceBehind = (Math.Sign(gap) == 1 && Mathf.Clamp(gap / rightBehind.Spacing, 0f, 1f) > 0.6f) ? true : false;
-            }
-
-            // Determine clearance flag
-            keepRight = (hasSpaceFront & hasSpaceBehind) ? true : false;
-        }
-        else
-            keepRight = false;
+        observationGrid = GetObservationGrid(environment.Traffic);
+        KeepRight();
 
         // Only request decision while lanekeeping per interval
         if (control.TrackingMode == VehicleControl._TrackingMode.keepLane)
@@ -163,16 +132,16 @@ public class VehicleAgent : Agent
             }
         }
 
+        // Regulate car controls
+        control.LaneCenter = laneCenters[targetLane - 1];
+        control.followTarget = GetClosestVehicle(environment.Traffic, targetLane, 1, m_MaxFollowDistance);
+
         // Normalized speed reward
-        normSpeed = (control.Velocity - minVelocity) / (targetVelocity - minVelocity);
         AddReward(r_Speed * normSpeed);
 
         // Penalty for tailgating i.e. dangerous driving
         if (control.Headway < 0.6f)
             AddReward(r_HeadwayViolation);
-
-        //if (control.Lane > Mathf.CeilToInt(laneCenters.Count / 3))
-        //    AddReward(r_LeftDriving);
 
         // Penalty for lane changing
         if (control.TrackingMode == VehicleControl._TrackingMode.leftLaneChange || control.TrackingMode == VehicleControl._TrackingMode.rightLaneChange)
@@ -181,28 +150,20 @@ public class VehicleAgent : Agent
         // Penalty for driving on overtake lanes
         if (keepRight)
             AddReward(r_LeftDriving);
-
-        // Regulate car controls
-        control.LaneCenter = laneCenters[targetLane - 1];
-        control.followTarget = GetClosestVehicle(environment.Traffic, targetLane, 1, m_MaxFollowDistance);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Normalized velocity and headway
-        sensor.AddObservation((control.Velocity - minVelocity) / (targetVelocity - minVelocity));
-        //sensor.AddObservation(control.Headway);
+        // Normalized velocity
+        sensor.AddObservation(normSpeed);
 
         // One hot-style lane position
-        laneObs = new List<bool>();
         for (int i = 0; i < laneCenters.Count; i++)
         {
-            sensor.AddObservation(GetCurrentLane() == i + 1 ? 1.0f : 0.0f);
-            laneObs.Add(GetCurrentLane() == i + 1 ? true : false);
+            sensor.AddObservation(control.Lane == i + 1 ? 1.0f : 0.0f);
         }
 
         // Observation grid (relative positions & velocities)
-        observationGrid = GetObservationGrid(environment.Traffic);
         foreach (float obs in observationGrid)
         {
             sensor.AddObservation(obs);
@@ -334,19 +295,6 @@ public class VehicleAgent : Agent
         List<float> proximity = new List<float>();
         Vector3 position = transform.localPosition;
 
-        //for (int i = 0; i < laneCenters.Count; i++)
-        //{
-        //    foreach (int dir in new int[] { 1, -1 })
-        //    {
-        //        VehicleControl inProx = GetClosestVehicle(vehicles, i + 1, dir, m_GridSize);
-        //        float pos = inProx?.transform.localPosition.z ?? (dir * m_GridSize + position.z);
-        //        proximity.Add((pos - position.z) / m_GridSize);
-        //        float normVel = ((inProx?.Velocity ?? control.Velocity) - minVelocity) / (targetVelocity - minVelocity);
-        //        float agentVel = (control.Velocity - minVelocity) / (targetVelocity - minVelocity);
-        //        proximity.Add(normVel - agentVel);
-        //    }
-        //}
-
         foreach (int i in new int[] { -1, 0, 1 })
         {
             foreach (int dir in new int[] { 1, -1 })
@@ -354,9 +302,8 @@ public class VehicleAgent : Agent
                 VehicleControl inProx = GetClosestVehicle(vehicles, control.Lane + i, dir, m_GridSize);
                 float pos = inProx?.transform.localPosition.z ?? (dir * m_GridSize + position.z);
                 proximity.Add(Mathf.Clamp((pos - position.z) / m_GridSize, -1f, 1f));
-                float normVel = ((inProx?.Velocity ?? control.Velocity) - minVelocity) / (targetVelocity - minVelocity);
-                float agentVel = (control.Velocity - minVelocity) / (targetVelocity - minVelocity);
-                proximity.Add(Mathf.Clamp(normVel - agentVel, -1f, 1f));
+                float dv = (inProx?.Velocity ?? control.Velocity) - control.Velocity;
+                proximity.Add(Mathf.Clamp(dv / (targetVelocity - minVelocity), -1f, 1f));
             }
         }
 
@@ -383,6 +330,40 @@ public class VehicleAgent : Agent
         }
 
         return target;
+    }
+
+    private void KeepRight()
+    {
+        if (control.Lane <= Mathf.CeilToInt(laneCenters.Count / 3))
+        {
+            bool hasSpaceFront, hasSpaceBehind;
+            VehicleControl rightLead = GetClosestVehicle(environment.Traffic, control.Lane + 1, 1, 300f);
+            VehicleControl rightBehind = GetClosestVehicle(environment.Traffic, control.Lane + 1, -1, 300f);
+
+            // Check space in front
+            if (rightLead == null)
+                hasSpaceFront = true;
+            else
+            {
+                float gap = environment.transform.InverseTransformDirection(rightLead.Back.position - control.Front.position).z;
+                float TTC = gap / ((control.Velocity - rightLead.Velocity) / 3.6f);
+                hasSpaceFront = (Math.Sign(gap) == 1 && gap >= control.Velocity * 0.83f && Math.Sign(TTC) == 1 && TTC >= 20f) ? true : false;
+            }
+
+            // Check space behind
+            if (rightBehind == null)
+                hasSpaceBehind = true;
+            else
+            {
+                float gap = environment.transform.InverseTransformDirection(control.Back.position - rightBehind.Front.position).z;
+                hasSpaceBehind = (Math.Sign(gap) == 1 && Mathf.Clamp(gap / rightBehind.Spacing, 0f, 1f) > 0.6f) ? true : false;
+            }
+
+            // Determine clearance flag
+            keepRight = (hasSpaceFront & hasSpaceBehind) ? true : false;
+        }
+        else
+            keepRight = false;
     }
 
     private bool IsClearTo(VehicleControl vehicle)
@@ -423,6 +404,22 @@ public class VehicleAgent : Agent
             return true;
     }
 
+    public EnvironmentState LogStats()
+    {
+        float[] a = GetAction();
+        float speed = control.Velocity;
+        int cLane = control.Lane;
+
+        float[] oGrid = observationGrid.ToArray();
+        for (int i = 0; i < observationGrid.Count; i+=2)
+        {
+            oGrid[i] = oGrid[i] * m_GridSize;
+            oGrid[i + 1] = oGrid[i + 1] * (targetVelocity - minVelocity);
+        }
+
+        return new EnvironmentState(a, speed, cLane, oGrid);
+    }
+
     private void OnCutOff(int InstanceID)
     {
         if (InstanceID == control.GetInstanceID())
@@ -451,9 +448,7 @@ public class VehicleAgent : Agent
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Target"))
-        {
             EndEpisode();
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -461,8 +456,8 @@ public class VehicleAgent : Agent
         if (collision.gameObject.CompareTag("Vehicle") || collision.gameObject.CompareTag("Railing"))
         {
             SetReward(r_Collision);
-            EndEpisode();
             Events.Instance.Crash();
+            EndEpisode();
         }
     }
 }
