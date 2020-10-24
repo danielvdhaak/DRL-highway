@@ -80,7 +80,7 @@ public class CSVReport
 
     private string GetFilePath()
     {
-        return GetDirectoryPath() + "/" + reportName;
+        return GetDirectoryPath() + "/" + reportName + ".csv";
     }
 
     private static string GetTimeStamp()

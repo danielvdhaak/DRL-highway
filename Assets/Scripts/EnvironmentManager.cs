@@ -50,7 +50,7 @@ public class EnvironmentManager : MonoBehaviour
     [Header("Environment parameters")]
     public float laneWidth = 3.5f;
     [SerializeField] private int numberOfLanes;
-    private int trafficFlow = 4000;
+    public int trafficFlow = 4000;
     [SerializeField] private float amountOfKms = 1f;
     private float minHeadway = 1f;
 

@@ -15,7 +15,10 @@ using UnityEngine.UI;
 public class MobilAgent : MonoBehaviour
 {
     [Header("Agent")]
+    [SerializeField] private uint MaxSteps = 0;
+    private uint fixedUpdateCount = 0;
     [SerializeField] private float decisionInterval = 0.1f;
+    public List<float> trafficGrid;
     private float timeSinceDecision;
     private float[] action;
     private EnvironmentManager environment;
@@ -68,7 +71,7 @@ public class MobilAgent : MonoBehaviour
     {
         // Reset area with given start location
         int startLane = 2;
-        int startPos = randomNumber.Next(2, 4);
+        int startPos = randomNumber.Next(2, 3);
         environment.ResetArea(startLane, startPos);
 
         // Set initial control values
@@ -78,6 +81,9 @@ public class MobilAgent : MonoBehaviour
         control.LaneCenter = laneCenters[targetLane - 1];
         control.TrackingMode = VehicleControl._TrackingMode.keepLane;
 
+        // Reset FixedUpdate counter
+        fixedUpdateCount = 0;
+
         Events.Instance.NewEpisode();
     }
 
@@ -85,6 +91,7 @@ public class MobilAgent : MonoBehaviour
     {
         // Get current state
         control.Lane = GetCurrentLane();
+        trafficGrid = GetTrafficGrid(environment.Traffic);
 
         // Only request decision while lanekeeping per interval
         if (control.TrackingMode == VehicleControl._TrackingMode.keepLane)
@@ -101,14 +108,18 @@ public class MobilAgent : MonoBehaviour
         // Regulate car controls
         control.LaneCenter = laneCenters[targetLane - 1];
         control.followTarget = GetClosestVehicle(environment.Traffic, targetLane, 1, m_MaxFollowDistance);
+
+        // Manually update fixedUpdate counter and terminate episode if needed
+        fixedUpdateCount++;
+        if (MaxSteps != 0 && fixedUpdateCount >= MaxSteps)
+            OnEpisodeBegin();
+
     }
 
     private void RequestDecision()
     {
         if (IsRightLCViable())
         {
-            action = new float[] { k_RightLaneChange };
-
             if (control.TrackingMode != VehicleControl._TrackingMode.rightLaneChange)
             {
                 control.TrackingMode = VehicleControl._TrackingMode.rightLaneChange;
@@ -120,8 +131,6 @@ public class MobilAgent : MonoBehaviour
         } 
         else if (IsLeftLCViable())
         {
-            action = new float[] { k_LeftLaneChange };
-
             if (control.TrackingMode != VehicleControl._TrackingMode.leftLaneChange)
             {
                 control.TrackingMode = VehicleControl._TrackingMode.leftLaneChange;
@@ -129,10 +138,6 @@ public class MobilAgent : MonoBehaviour
                     targetLane--;
                 Events.Instance.LaneChange();
             }
-        }
-        else
-        {
-            action = new float[] { k_KeepLane };
         }
     }
 
@@ -163,6 +168,24 @@ public class MobilAgent : MonoBehaviour
         List<float> errors = laneCenters.Select(c => Math.Abs(c - transform.localPosition.x)).ToList();
 
         return errors.IndexOf(errors.Min()) + 1;
+    }
+
+    private float[] GetAction()
+    {
+        switch (control.TrackingMode)
+        {
+            case VehicleControl._TrackingMode.leftLaneChange:
+                return new float[] { k_LeftLaneChange };
+
+            case VehicleControl._TrackingMode.keepLane:
+                return new float[] { k_KeepLane };
+
+            case VehicleControl._TrackingMode.rightLaneChange:
+                return new float[] { k_RightLaneChange };
+
+            default:
+                return new float[] { 0f };
+        }
     }
 
     private bool IsRightLCViable()
@@ -218,6 +241,40 @@ public class MobilAgent : MonoBehaviour
         hasIncentive = (newT - T + politenessFactor * (leftNewT - leftT) > threshold + bias) ? true : false;
 
         return (isSafe & hasIncentive);
+    }
+
+    private List<float> GetTrafficGrid(List<VehicleControl> vehicles)
+    {
+        List<float> grid = new List<float>();
+        Vector3 position = transform.localPosition;
+
+        for (int lane = 0; lane < laneCenters.Count; lane++)
+        {
+            foreach (int dir in new int[] { 1, -1 })
+            {
+                VehicleControl inProx = GetClosestVehicle(vehicles, lane + 1, dir, m_GridSize);
+
+                // Relative position
+                float dz = (inProx?.transform.localPosition.z ?? (dir * m_GridSize + position.z)) - position.z;
+                grid.Add(Mathf.Clamp(dz / m_GridSize, -1f, 1f));
+
+                // Relative velocity
+                float dv = (inProx?.Velocity ?? control.Velocity) - control.Velocity;
+                grid.Add(Mathf.Clamp(dv / (targetVelocity - minVelocity), -1f, 1f));
+            }
+        }
+
+        return grid;
+    }
+
+    public EnvironmentState LogStats()
+    {
+        float[] a = GetAction();
+        float speed = control.Velocity;
+        int currentLane = control.Lane;
+        float[] tGrid = trafficGrid.ToArray();
+
+        return new EnvironmentState(a, speed, currentLane, tGrid);
     }
 
     private void OnTriggerEnter(Collider other)

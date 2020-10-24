@@ -17,10 +17,11 @@ public class VehicleAgent : Agent
 {
     [Header("ML-Agents")]
     public float normSpeed;
+    private List<float> trafficGrid;
     public List<float> observationGrid;
     public bool keepRight;
     [SerializeField] private float decisionInterval = 0.1f;
-    private float timeSinceDecision;
+    private float timeSinceDecision = 0f;
     private EnvironmentManager environment;
     private VehicleControl control;
     private Transform Target;
@@ -114,7 +115,7 @@ public class VehicleAgent : Agent
         // Get current state
         normSpeed = (control.Velocity - minVelocity) / (targetVelocity - minVelocity);
         control.Lane = GetCurrentLane();
-        observationGrid = GetObservationGrid(environment.Traffic);
+        trafficGrid = GetTrafficGrid(environment.Traffic);
         KeepRight();
 
         // Only request decision while lanekeeping per interval
@@ -126,10 +127,7 @@ public class VehicleAgent : Agent
                 RequestDecision();
             }
             else
-            {
-                //RequestAction();
                 timeSinceDecision += Time.fixedDeltaTime;
-            }
         }
 
         // Regulate car controls
@@ -164,6 +162,7 @@ public class VehicleAgent : Agent
         }
 
         // Observation grid (relative positions & velocities)
+        observationGrid = GetObservationGrid(trafficGrid, control.Lane);
         foreach (float obs in observationGrid)
         {
             sensor.AddObservation(obs);
@@ -290,24 +289,49 @@ public class VehicleAgent : Agent
         return errors.IndexOf(errors.Min()) + 1;
     }
 
-    private List<float> GetObservationGrid(List<VehicleControl> vehicles)
+    private List<float> GetObservationGrid(List<float> trafficGrid, int lane)
     {
-        List<float> proximity = new List<float>();
+        List<float> observationGrid = new List<float>(); 
+
+        List<float> emptyLane = new List<float>();
+        for (int i = 0; i < 2; i++)
+        {
+            emptyLane.Add(1f);
+            emptyLane.Add(0f);
+        }
+
+        observationGrid.AddRange(emptyLane);
+        observationGrid.AddRange(trafficGrid);
+        observationGrid.AddRange(emptyLane);
+
+        int start = lane * 4 - 4;
+
+        return observationGrid.GetRange(lane * 4 - 4, 12);
+
+    }
+
+    private List<float> GetTrafficGrid(List<VehicleControl> vehicles)
+    {
+        List<float> grid = new List<float>();
         Vector3 position = transform.localPosition;
 
-        foreach (int i in new int[] { -1, 0, 1 })
+        for (int lane = 0; lane < laneCenters.Count; lane++)
         {
             foreach (int dir in new int[] { 1, -1 })
             {
-                VehicleControl inProx = GetClosestVehicle(vehicles, control.Lane + i, dir, m_GridSize);
-                float pos = inProx?.transform.localPosition.z ?? (dir * m_GridSize + position.z);
-                proximity.Add(Mathf.Clamp((pos - position.z) / m_GridSize, -1f, 1f));
+                VehicleControl inProx = GetClosestVehicle(vehicles, lane + 1, dir, m_GridSize);
+
+                // Relative position
+                float dz = (inProx?.transform.localPosition.z ?? (dir * m_GridSize + position.z)) - position.z;
+                grid.Add(Mathf.Clamp(dz / m_GridSize, -1f, 1f));
+
+                // Relative velocity
                 float dv = (inProx?.Velocity ?? control.Velocity) - control.Velocity;
-                proximity.Add(Mathf.Clamp(dv / (targetVelocity - minVelocity), -1f, 1f));
+                grid.Add(Mathf.Clamp(dv / (targetVelocity - minVelocity), -1f, 1f));
             }
         }
 
-        return proximity;
+        return grid;
     }
 
     private VehicleControl GetClosestVehicle(List<VehicleControl> vehicles, int lane, int dir, float maxDis)
@@ -408,16 +432,17 @@ public class VehicleAgent : Agent
     {
         float[] a = GetAction();
         float speed = control.Velocity;
-        int cLane = control.Lane;
+        int currentLane = control.Lane;
+        float[] tGrid = trafficGrid.ToArray();
 
-        float[] oGrid = observationGrid.ToArray();
-        for (int i = 0; i < observationGrid.Count; i+=2)
-        {
-            oGrid[i] = oGrid[i] * m_GridSize;
-            oGrid[i + 1] = oGrid[i + 1] * (targetVelocity - minVelocity);
-        }
+        //float[] oGrid = trafficGrid.ToArray();
+        //for (int i = 0; i < trafficGrid.Count; i+=2)
+        //{
+        //    oGrid[i] = oGrid[i] * m_GridSize;
+        //    oGrid[i + 1] = oGrid[i + 1] * (targetVelocity - minVelocity);
+        //}
 
-        return new EnvironmentState(a, speed, cLane, oGrid);
+        return new EnvironmentState(a, speed, currentLane, tGrid);
     }
 
     private void OnCutOff(int InstanceID)
